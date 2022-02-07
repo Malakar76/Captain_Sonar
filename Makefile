@@ -6,11 +6,14 @@ LDFLAGS= -lSDL2
 all:  main
 all: LDFLAGS += -lm
 
-main: main.o 
+main: main.o
 	$(CC) $^ $(LDFLAGS) -o $@
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $<  -o $@
+
+
+
 
 clean:
 	rm -f *~ *.d *.o
