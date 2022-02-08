@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g -I./view -I./modele -I./controller
-LDFLAGS= -lSDL2 -L./lib -lnomdelib.a -lnomdelibmodele.a
+LDFLAGS= -lSDL2 -L./lib -libview.a -libmodel.a -libcontroller.a
 
 
 
