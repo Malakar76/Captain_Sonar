@@ -1,0 +1,3 @@
+08/02 Robin - Mise en place changelog pour noter les MAJ du projet afin de donner une descritpion plus complète des problèmes   rencontrés et des modifications faites.
+    -Concernant les Makefile, il faut juste modifier le Makefile principale afin qu'il exécute correctement les règles qui génèrent les bibliothèques. Sinon le projet compile et s'exécute correctement. 
+
