@@ -1,20 +1,22 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g -I./view -I./modele -I./controller
-LDFLAGS= -lSDL2 -L./lib -libview.a -libmodel.a -libcontroller.a
+CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g -I./view -I./model -I./controller
+LDFLAGS=  -L./lib -lview -lmodel -lcontroller  -lSDL2
+
+
 
 
 
 all:  view model controller main
-all: LDFLAGS += -lm
+all : LDFLAGS +=
 
 view :
-	$(MAKE) -C ./view
+	 make -C ./view
 
 model :
-	$(MAKE) -C ./model
+	make -C ./model
 
 controller :
-	$(MAKE) -C ./controller
+	make -C ./controller
 
 main: main.o
 	$(CC) $^ $(LDFLAGS) -o $@

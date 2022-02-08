@@ -1,0 +1,28 @@
+CC=gcc
+CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g 
+LDFLAGS= -lSDL2 
+DIRLIB=../lib
+
+
+
+all: libview.a
+all: LDFLAGS += -lm
+
+
+libview.a: main_view.o
+	ar -rv $(DIRLIB)/$@ $^
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<  -o $@
+
+
+
+
+clean:
+	rm -f *~ *.d *.o
+	
+distclean:
+	rm ../lib/libview.a
+
+include $(wildcart .d)
+
