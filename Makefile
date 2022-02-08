@@ -1,30 +1,33 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g -I./view -I./model -I./controller
 LDFLAGS=  -L./lib -lview -lmodel -lcontroller  -lSDL2
+MAKE=/usr/bin/make
 
 
 
 
 
-all:  view model controller main
-all : LDFLAGS +=
+all:  view_Make model_Make controller_Make main
 
-view :
-	 make -C ./view
 
-model :
-	make -C ./model
+view_Make :
+	$(MAKE) -C ./view
+	$(MAKE) -C ./view clean
 
-controller :
-	make -C ./controller
+model_Make :
+	$(MAKE) -C ./model
+	$(MAKE) -C ./model clean
+
+controller_Make :
+	$(MAKE) -C ./controller
+	$(MAKE) -C ./controller clean
 
 main: main.o
 	$(CC) $^ $(LDFLAGS) -o $@
+	rm -f *~ *.d *.o
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<  -o $@
-
-
 
 
 clean:

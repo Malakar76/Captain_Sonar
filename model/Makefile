@@ -6,7 +6,7 @@ DIRLIB=../lib
 
 
 all: libmodel.a
-all: LDFLAGS += -lm
+
 
 
 libmodel.a: main_model.o

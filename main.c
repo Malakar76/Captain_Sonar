@@ -6,8 +6,12 @@
 
 int main (int argc, char *argv[]){
     View_elements app;
-    init_view(&app);
-    SDL_Delay(3000);
+    if(init_view(&app) !=EXIT_SUCCESS){
+        free_view(&app);
+        return EXIT_FAILURE;
+    }
+    controller(&app);
     free_view(&app);
+    return EXIT_SUCCESS;
 }
 

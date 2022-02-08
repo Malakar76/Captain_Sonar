@@ -6,7 +6,7 @@ DIRLIB=../lib
 
 
 all: libcontroller.a
-all: LDFLAGS += -lm
+
 
 
 libcontroller.a: main_controller.o

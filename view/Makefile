@@ -6,7 +6,7 @@ DIRLIB=../lib
 
 
 all: libview.a
-all: LDFLAGS += -lm
+
 
 
 libview.a: main_view.o
