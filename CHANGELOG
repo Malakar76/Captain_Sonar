@@ -3,3 +3,7 @@ une descritpion plus complète des problèmes   rencontrés et des modifications
     -Concernant les Makefile, il faut juste modifier le Makefile principale afin qu'il exécute correctement
     les règles qui génèrent les bibliothèques. Sinon le projet compile et s'exécute correctement.
 EDIT : Plus de soucis avec les makefiles ! Tout est clean pour commencer !
+
+11/02 Robin -Rajout de 2 ressources pour les cartes
+    -Implémentation de la Doxygen dans les fichiers de la vue et du controller pour avoir un modèle de base. 
+    -Rajout des dépendances nécessaires dans le README. 
