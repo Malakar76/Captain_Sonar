@@ -36,6 +36,10 @@ clean:
 	
 distclean:
 	rm ./lib/*.a
+	
+clall :
+	$(MAKE) -C ./ clean
+	$(MAKE) -C ./ distclean	
 
 include $(wildcart .d)
 

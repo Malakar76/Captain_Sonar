@@ -2,6 +2,13 @@
 // Created by robin on 07/02/2022.
 //
 
+/**
+ * \file main_view.c
+ * \brief Fonction principale de la vue.
+ *
+ * Fonction principale pour la gestion de la vue du projet
+ */
+
 #include "main_view.h"
 
 int init_view(View_elements * app) {
