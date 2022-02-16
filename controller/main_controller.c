@@ -9,7 +9,7 @@
  */
 #include "main_controller.h"
 
-void controller(View_elements *app){
+void controller(View_elements *app,Playground * pg){
     SDL_Event event;
     int run =1;
 

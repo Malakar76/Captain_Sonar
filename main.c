@@ -6,12 +6,15 @@
 
 int main (int argc, char *argv[]){
     View_elements app;
-    if(init_view(&app) !=EXIT_SUCCESS){
+    Playground pg;
+    if((init_view(&app)&& init_model(&pg)) !=EXIT_SUCCESS){
         free_view(&app);
+        free_model(&pg);
         return EXIT_FAILURE;
     }
-    controller(&app);
+    controller(&app,&pg);
     free_view(&app);
+    free_model(&pg);
     return EXIT_SUCCESS;
 }
 

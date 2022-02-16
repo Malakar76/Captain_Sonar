@@ -26,7 +26,7 @@ int init_view(View_elements * app) {
 
 }
 
-int free_view(View_elements *app){
+void free_view(View_elements *app){
     SDL_DestroyRenderer(app->pRenderer);
     SDL_DestroyWindow(app->pwindow);
 }

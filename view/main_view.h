@@ -32,12 +32,11 @@ typedef struct {
  */
 int init_view(View_elements * app);
 /**
- * \fn int free_view(View_elements * app)
+ * \fn void free_view(View_elements * app)
  * \brief libère la vue et le renderer de la structure passée.
  * @param app Structure qui gère la vue
- * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
  */
-int free_view(View_elements * app);
+void free_view(View_elements * app);
 
 
 
