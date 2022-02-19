@@ -7,3 +7,9 @@ EDIT : Plus de soucis avec les makefiles ! Tout est clean pour commencer !
 11/02 Robin -Rajout de 2 ressources pour les cartes
     -Implémentation de la Doxygen dans les fichiers de la vue et du controller pour avoir un modèle de base. 
     -Rajout des dépendances nécessaires dans le README. 
+    
+16/02 Robin -Création de la structure globale du modèle. 
+	
+19/02 Robin -Mise en forme du menu avec les différents choix entre règles,crédits,jouer et 		quitter. Chargement de la carte ok ! 
+	-Reste à finaliser la création du choix de la carte ainsi que les boutons pour le champ 	de bataille.
+	-voir comment redimensionner la fenêtre sans problème ??	

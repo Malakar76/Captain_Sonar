@@ -12,6 +12,11 @@ int main (int argc, char *argv[]){
         free_model(&pg);
         return EXIT_FAILURE;
     }
+    if(init_all_view(&app) !=EXIT_SUCCESS){
+        free_view(&app);
+        free_model(&pg);
+        return EXIT_FAILURE;
+    }
     controller(&app,&pg);
     free_view(&app);
     free_model(&pg);

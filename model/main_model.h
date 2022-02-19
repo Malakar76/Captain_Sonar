@@ -19,9 +19,10 @@
  * Structure qui regroupe tout les éléments nécessaires pour gérer le modèle du projet
  */
 typedef struct {
-     Carte * map;/**< Carte de jeu */
-     Joueur * J1;/**<Structure du joueur 1  */
-     Joueur * J2; /**<Structure du joueur 2 */
+  //   Carte * map;/**< Carte de jeu */
+    // Joueur * J1;/**<Structure du joueur 1  */
+    // Joueur * J2; /**<Structure du joueur 2 */
+    int test;
 }Playground;
 
 /**

@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g -I./view -I./model -I./controller
-LDFLAGS=  -L./lib -lview -lmodel -lcontroller  -lSDL2
+LDFLAGS=  -L./lib -lview -lmodel -lcontroller  -lSDL2 -lSDL2_image
 MAKE=/usr/bin/make
 
 
