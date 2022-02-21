@@ -8,7 +8,7 @@ int init_model(Playground * pg)
 {
     int statut = EXIT_FAILURE;
     /* à compléter */
-    int monTableau[100] = { 0 } //Les 100 éléments du tableau sont initialisés avec la valeur 0
+    
     
     statut=EXIT_SUCCESS;
     return statut;
