@@ -4,9 +4,10 @@
 
 #ifndef PROJET_CARTE_H
 #define PROJET_CARTE_H
+#define length 10
 typedef struct
 {
- montableau[10][10]; 
+ montableau[length][length]; 
 } Carte;
 
 Carte init_carte();
