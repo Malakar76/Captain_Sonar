@@ -6,5 +6,5 @@
 
 Carte init_carte()
 {
-    int monTableau[100] = { 0 } //Les 100 éléments du tableau sont initialisés avec la valeur 0
+    int monTableau[10][10] = { 0 } //Les 100 éléments du tableau sont initialisés avec la valeur 0
 }
