@@ -12,32 +12,36 @@
 #include "main_view.h"
 
 int init_view(View_elements * app) {
+    int Resolution_x =1600;
+    int Resolution_y=900;
     int statut = EXIT_FAILURE;
     IMG_Init(IMG_INIT_JPG);
+
+
     if (0 != SDL_Init(SDL_INIT_VIDEO)) {
         fprintf(stderr, "Erreur SDL_Init : %s", SDL_GetError());
         return statut;
     }
-    if (0 != SDL_CreateWindowAndRenderer(600, 600, SDL_WINDOW_SHOWN, &app->wwindow, &app->rRenderer)) {
+    if (0 != SDL_CreateWindowAndRenderer(Resolution_x, Resolution_y, SDL_WINDOW_SHOWN, &app->wwindow, &app->rRenderer)) {
         fprintf(stderr, "Erreur SDL_CreateWindowAndRenderer : %s", SDL_GetError());
         return statut;
     }
-    app->tBattlefield= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,600,600);
+    app->tBattlefield= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,Resolution_x,Resolution_y);
     if(NULL == app->tBattlefield) {
         fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
         return statut;
     }
-    app->mMenu= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,600,600);
+    app->mMenu= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,Resolution_x,Resolution_y);
     if(NULL == app->mMenu) {
         fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
         return statut;
     }
-    app->rRegles= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,600,600);
+    app->rRegles= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,Resolution_x,Resolution_y);
     if(NULL == app->rRegles) {
         fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
         return statut;
     }
-    app->cCredit= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,600,600);
+    app->cCredit= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,Resolution_x,Resolution_y);
     if(NULL == app->cCredit) {
         fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
         return statut;
@@ -55,6 +59,9 @@ void free_view(View_elements *app){
     SDL_DestroyTexture(app->rRegles);
     SDL_DestroyTexture(app->cCredit);
     IMG_Quit();
+    while (Mix_Init(0)){
+        Mix_Quit();
+    }
 }
 
 
@@ -69,3 +76,5 @@ int init_all_view(View_elements *app){
     init_rules(app);
     return EXIT_SUCCESS;
 }
+
+

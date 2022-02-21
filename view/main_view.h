@@ -13,6 +13,7 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+#include "SDL2/SDL_mixer.h"
 
 enum Window {
     Menu,Battlefield,Choix_Carte,Rules,Credits
@@ -77,5 +78,8 @@ void init_credit(View_elements *app);
 void show_credit(View_elements *app);
 
 void init_rbutton(View_elements *app,SDL_Rect rect);
+
+//Fonction pour le son
+void start_music();
 
 #endif //PROJET_C_MAIN_VIEW_H

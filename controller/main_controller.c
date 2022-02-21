@@ -27,7 +27,7 @@ void controller(View_elements *app,Playground * pg){
                     switch (app->window) {
                         case Menu:
                             if (SDL_PointInRect(&point,&app->Mbutton[0])){
-                                show_choix_carte(app);
+                                show_battlefield(app);
                             }
                             else if (SDL_PointInRect(&point,&app->Mbutton[1])){
                                 show_rules(app);

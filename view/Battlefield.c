@@ -21,15 +21,9 @@ int init_battlefield(View_elements * app){
         SDL_DestroyTexture(tmp);
         return EXIT_FAILURE;
     }
-    app->tBattlefield= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,600,600);
-    if (app->tBattlefield==NULL){
-        fprintf(stderr, "Erreur SDL_CreateTexture: %s", SDL_GetError());
-        SDL_FreeSurface(surface);
-        SDL_DestroyTexture(tmp);
-        return EXIT_FAILURE;
-    }
     SDL_SetRenderTarget(app->rRenderer, app->tBattlefield);
-    SDL_RenderCopy(app->rRenderer, tmp, NULL, NULL);
+    SDL_Rect rect ={0,0,1000,750};
+    SDL_RenderCopy(app->rRenderer, tmp, NULL, &rect);
     SDL_DestroyTexture(tmp);
     SDL_FreeSurface(surface);
     SDL_SetRenderTarget(app->rRenderer, NULL);
