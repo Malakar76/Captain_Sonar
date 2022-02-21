@@ -6,7 +6,7 @@
 #define PROJET_CARTE_H
 typedef struct
 {
-
+ montableau[10][10]; 
 } Carte;
 
 Carte init_carte();
