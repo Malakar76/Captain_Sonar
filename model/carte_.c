@@ -6,5 +6,14 @@
 
 Carte init_carte()
 {
-    int monTableau[10][10] = { 0 } //Les 100 éléments du tableau sont initialisés avec la valeur 0
+    int i=0;
+    int j=0;
+
+    for (int i=0; i< length; i++)
+	{
+		for (int j=0; j< length; j++)
+		{
+			
+		}
+	}
 }
