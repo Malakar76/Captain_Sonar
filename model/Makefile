@@ -9,7 +9,7 @@ all: libmodel.a
 
 
 
-libmodel.a: main_model.o
+libmodel.a: main_model.o point.o carte.o
 	ar -rv $(DIRLIB)/$@ $^
 
 %.o: %.c
