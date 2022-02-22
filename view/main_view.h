@@ -19,6 +19,10 @@ enum Window {
     Menu,Battlefield,Choix_Carte,Rules,Credits
 };
 
+enum Carte {
+    Archipelago,Antartica
+};
+
 /**
  * \struct View_elements
  * \brief Elements de la vue
@@ -65,19 +69,19 @@ int init_choix_carte(View_elements * app);
 void show_choix_carte(View_elements *app);
 
 // Fonctions pour le Menu
-void init_menu(View_elements *app);
+int init_menu(View_elements *app);
 void show_menu(View_elements *app);
 
 
 //Fonctions pour les Règles
-void init_rules(View_elements *app);
+int init_rules(View_elements *app);
 void show_rules(View_elements *app);
 
 //Fonctions pour les Crédits
-void init_credit(View_elements *app);
+int init_credit(View_elements *app);
 void show_credit(View_elements *app);
 
-void init_rbutton(View_elements *app,SDL_Rect rect);
+void init_rbutton(View_elements *app);
 
 //Fonction pour le son
 void start_music();

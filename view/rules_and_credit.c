@@ -4,18 +4,36 @@
 
 #include "main_view.h"
 
-void init_rbutton(View_elements *app,SDL_Rect rect){
+void init_rbutton(View_elements *app){
+    SDL_Rect rect = {1470,0,130,120} ;
     app->Rbutton=rect;
 }
 
 //Fonctions pour les Règles
-void init_rules(View_elements *app){
-    SDL_SetRenderDrawColor(app->rRenderer,255,255,255,255);
-    SDL_SetRenderTarget(app->rRenderer,app->rRegles);
-    SDL_Rect rect = {400,0,200,50} ;
-    SDL_RenderFillRect(app->rRenderer,&rect);
-    SDL_SetRenderTarget(app->rRenderer,NULL);
-    init_rbutton(app,rect);
+int init_rules(View_elements *app){
+    SDL_Texture * tmp=NULL;
+    SDL_Surface * surface=NULL;
+    surface=IMG_Load("/home/robin/Projet_C/Ressources/Rules.jpg");
+    if (surface==NULL){
+        fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(tmp);
+        return EXIT_FAILURE;
+    }
+    tmp=SDL_CreateTextureFromSurface(app->rRenderer,surface);
+    if (tmp==NULL){
+        fprintf(stderr, "Erreur SDL_CreateTexture: %s", SDL_GetError());
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(tmp);
+        return EXIT_FAILURE;
+    }
+    SDL_SetRenderTarget(app->rRenderer, app->rRegles);
+    SDL_Rect rect ={0,0,1600,900};
+    SDL_RenderCopy(app->rRenderer, tmp, &rect, &rect);
+    SDL_DestroyTexture(tmp);
+    SDL_FreeSurface(surface);
+    SDL_SetRenderTarget(app->rRenderer, NULL);
+    return EXIT_SUCCESS;
 }
 
 void show_rules(View_elements *app){
@@ -25,12 +43,30 @@ void show_rules(View_elements *app){
 }
 
 //Fonctions pour les Crédits
-void init_credit(View_elements *app){
-    SDL_SetRenderDrawColor(app->rRenderer,255,255,255,255);
-    SDL_SetRenderTarget(app->rRenderer,app->cCredit);
-    SDL_Rect rect = {400,0,200,50} ;
-    SDL_RenderFillRect(app->rRenderer,&rect);
-    SDL_SetRenderTarget(app->rRenderer,NULL);
+int init_credit(View_elements *app){
+    SDL_Texture * tmp=NULL;
+    SDL_Surface * surface=NULL;
+    surface=IMG_Load("/home/robin/Projet_C/Ressources/Credits.jpg");
+    if (surface==NULL){
+        fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(tmp);
+        return EXIT_FAILURE;
+    }
+    tmp=SDL_CreateTextureFromSurface(app->rRenderer,surface);
+    if (tmp==NULL){
+        fprintf(stderr, "Erreur SDL_CreateTexture: %s", SDL_GetError());
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(tmp);
+        return EXIT_FAILURE;
+    }
+    SDL_SetRenderTarget(app->rRenderer, app->cCredit);
+    SDL_Rect rect ={0,0,1600,900};
+    SDL_RenderCopy(app->rRenderer, tmp, &rect, &rect);
+    SDL_DestroyTexture(tmp);
+    SDL_FreeSurface(surface);
+    SDL_SetRenderTarget(app->rRenderer, NULL);
+    return EXIT_SUCCESS;
 }
 
 void show_credit(View_elements *app){

@@ -46,6 +46,11 @@ int init_view(View_elements * app) {
         fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
         return statut;
     }
+    app->cCarte= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,Resolution_x,Resolution_y);
+    if(NULL == app->cCarte) {
+        fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
+        return statut;
+    }
     statut=EXIT_SUCCESS;
     return statut;
 
@@ -58,6 +63,7 @@ void free_view(View_elements *app){
     SDL_DestroyTexture(app->tBattlefield);
     SDL_DestroyTexture(app->rRegles);
     SDL_DestroyTexture(app->cCredit);
+    SDL_DestroyTexture(app->cCarte);
     IMG_Quit();
     while (Mix_Init(0)){
         Mix_Quit();
@@ -67,13 +73,22 @@ void free_view(View_elements *app){
 
 
 int init_all_view(View_elements *app){
-    init_menu(app);
+    if(init_menu(app)!=EXIT_SUCCESS){
+        return EXIT_SUCCESS;
+    }
     if(init_battlefield(app) !=EXIT_SUCCESS){
         return EXIT_FAILURE;
     }
-    init_credit(app);
-    init_choix_carte(app);
-    init_rules(app);
+    if(init_choix_carte(app) !=EXIT_SUCCESS){
+        return EXIT_FAILURE;
+    }
+    if(init_rules(app) !=EXIT_SUCCESS){
+        return EXIT_FAILURE;
+    }
+    if(init_credit(app) !=EXIT_SUCCESS){
+        return EXIT_FAILURE;
+    }
+    init_rbutton(app);
     return EXIT_SUCCESS;
 }
 

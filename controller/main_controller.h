@@ -23,5 +23,6 @@
  * @param pg Strucutre qui gère le model
  */
 void controller(View_elements * app,Playground * pg);
+void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix);
 
 #endif //PROJET_C_MAIN_CONTROLLER_H

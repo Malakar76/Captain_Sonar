@@ -27,7 +27,7 @@ void controller(View_elements *app,Playground * pg){
                     switch (app->window) {
                         case Menu:
                             if (SDL_PointInRect(&point,&app->Mbutton[0])){
-                                show_battlefield(app);
+                                show_choix_carte(app);
                             }
                             else if (SDL_PointInRect(&point,&app->Mbutton[1])){
                                 show_rules(app);
@@ -39,14 +39,16 @@ void controller(View_elements *app,Playground * pg){
                                 run =0;
                             }
                             break;
-                        case Battlefield:
-
-                            break;
                         case Choix_Carte:
                             if (SDL_PointInRect(&point,&app->Rbutton)){
                                 show_menu(app);
                             }
-
+                            else if (SDL_PointInRect(&point,&app->CCarte[0])){
+                                controller_battlefield(app,pg,Archipelago);
+                            }
+                            else if (SDL_PointInRect(&point,&app->CCarte[1])){
+                                controller_battlefield(app,pg,Antartica);
+                            }
                             break;
                         case Rules:
                             if (SDL_PointInRect(&point,&app->Rbutton)){
@@ -67,4 +69,8 @@ void controller(View_elements *app,Playground * pg){
 
         }
     }
+}
+
+void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix){
+    show_battlefield(app);
 }
