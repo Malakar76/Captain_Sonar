@@ -1,6 +1,12 @@
 //
 // Created by robin on 19/02/2022.
 //
+/**
+ * \file rules_and_credit.c
+ * \brief Fichier Règles et Crédits.
+ *
+ * Fichier qui gère la création et l'affichage des règles et des crédits
+ */
 
 #include "main_view.h"
 

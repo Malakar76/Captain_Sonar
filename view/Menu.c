@@ -2,6 +2,12 @@
 // Created by robin on 17/02/2022.
 //
 
+/**
+ * \file Menu.c
+ * \brief Fichier Menu.
+ *
+ * Fichier qui gère la création et l'affichage du Menu
+ */
 #include "main_view.h"
 
 int init_menu(View_elements *app) {
