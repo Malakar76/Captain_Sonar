@@ -32,10 +32,10 @@ int init_battlefield(View_elements * app,enum Carte c){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
     if (c==Antartica){
-        surface=IMG_Load("/home/robin/Projet_C/Ressources/Mission_Antartica.jpg");
+        surface=IMG_Load("Ressources/Mission_Antartica.jpg");
     }
     else if (c==Archipelago){
-        surface=IMG_Load("/home/robin/Projet_C/Ressources/Mission_Archipelago.jpg");
+        surface=IMG_Load("Ressources/Mission_Archipelagotest.jpg");
     }
     else {
         return EXIT_FAILURE;
@@ -54,7 +54,7 @@ int init_battlefield(View_elements * app,enum Carte c){
         return EXIT_FAILURE;
     }
     SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Battlefield_blank);
-    SDL_Rect rect ={0,0,1600,900};
+    SDL_Rect rect ={0,0,1200,900};
     SDL_RenderCopy(app->rRenderer, tmp, NULL, &rect);
     SDL_DestroyTexture(tmp);
     SDL_FreeSurface(surface);
@@ -66,7 +66,7 @@ int init_battlefield(View_elements * app,enum Carte c){
 int init_sousmarin(View_elements * app){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
-    surface=IMG_Load("/home/robin/Projet_C/Ressources/Mission_Antartica.jpg"); //mettre sous marin
+    surface=IMG_Load("Ressources/Mission_Antartica.jpg"); //mettre sous marin
     if (surface==NULL){
         fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
         SDL_FreeSurface(surface);
@@ -98,7 +98,7 @@ void show_battlefield(View_elements *app){
 int init_choix_carte(View_elements * app){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
-    surface=IMG_Load("/home/robin/Projet_C/Ressources/Choix_carte.jpg");
+    surface=IMG_Load("Ressources/Choix_carte.jpg");
     if (surface==NULL){
         fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
         SDL_FreeSurface(surface);

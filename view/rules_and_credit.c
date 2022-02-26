@@ -19,7 +19,7 @@ void init_rbutton(View_elements *app){
 int init_rules(View_elements *app){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
-    surface=IMG_Load("/home/robin/Projet_C/Ressources/Rules.jpg");
+    surface=IMG_Load("Ressources/Rules.jpg");
     if (surface==NULL){
         fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
         SDL_FreeSurface(surface);
@@ -52,7 +52,7 @@ void show_rules(View_elements *app){
 int init_credit(View_elements *app){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
-    surface=IMG_Load("/home/robin/Projet_C/Ressources/Credits.jpg");
+    surface=IMG_Load("Ressources/Credits.jpg");
     if (surface==NULL){
         fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
         SDL_FreeSurface(surface);
