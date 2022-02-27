@@ -9,10 +9,10 @@ all: libmodel.a main_model
 
 
 
-libmodel.a: main_model.o carte.o sous_marin.o joueur.o
+libmodel.a: main_model.o carte.o joueur.o
 	ar -rv $(DIRLIB)/$@ $^
 
-main_model:main_model.o carte.o sous_marin.o joueur.o test.o
+main_model:main_model.o carte.o joueur.o test.o
 	$(CC) $(CFLAGS) -c $<  -o $@
 
 %.o: %.c
