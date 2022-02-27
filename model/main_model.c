@@ -10,7 +10,8 @@
 
 #include "main_model.h"
 
-int init_model(Playground * pg){
+int init_model(Playground * pg)
+{
     int statut = EXIT_FAILURE;
     pg->map= malloc(sizeof(CARTE));
     if(pg->map==NULL){

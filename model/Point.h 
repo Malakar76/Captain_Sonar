@@ -1,0 +1,9 @@
+typedef struct
+{
+    int x; 
+    int y;
+    int accessible; 
+    int occupe; 
+    int couleur; 
+    int couleur precedent; 
+}Point 
