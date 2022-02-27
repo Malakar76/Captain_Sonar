@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g 
-LDFLAGS= -lSDL2 
+LDFLAGS= -lSDL2 -lSDL2_image -lSDL2_mixer
 DIRLIB=../lib
 
 
@@ -9,7 +9,7 @@ all: libview.a
 
 
 
-libview.a: main_view.o
+libview.a: main_view.o Battlefield.o Menu.o rules_and_credit.o music.o
 	ar -rv $(DIRLIB)/$@ $^
 
 %.o: %.c

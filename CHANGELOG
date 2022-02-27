@@ -7,3 +7,19 @@ EDIT : Plus de soucis avec les makefiles ! Tout est clean pour commencer !
 11/02 Robin -Rajout de 2 ressources pour les cartes
     -Implémentation de la Doxygen dans les fichiers de la vue et du controller pour avoir un modèle de base. 
     -Rajout des dépendances nécessaires dans le README. 
+    
+16/02 Robin -Création de la structure globale du modèle. 
+	
+19/02 Robin -Mise en forme du menu avec les différents choix entre règles,crédits,jouer et 		quitter. Chargement de la carte ok ! 
+	-Reste à finaliser la création du choix de la carte ainsi que les boutons pour le champ 	de bataille.
+	-voir comment redimensionner la fenêtre sans problème ??	
+	
+25/02 Robni -Tout est prêt pour la fusion des parties 
+	Choses à faire :
+		-implémenter le modèle et vérifier que tout marche 
+		-rajouter le fichier du sous marin 
+		-faire le montage de la carte
+		-son
+		-animations
+		-rajouter les boutons du champs de bataille 
+		-faire le lien entre les boutons et les effets
