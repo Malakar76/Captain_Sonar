@@ -44,13 +44,13 @@ enum Carte {
  * \struct View_Battlefield
  * \brief Elements de la vue du Battlefield
  *
- * Structure qui regroupe tout les éléments nécessaires pour gérer la vue du champ de bataille
+ * Structure qui regroupe tous les éléments nécessaires pour gérer la vue du champ de bataille
  */
 typedef struct {
     SDL_Texture *Battlefield_current;/**< Texture qui garde l'aperçu de la fenêtre de jeu affiché */
     SDL_Texture *Battlefield_blank;/**< Texture qui garde l'aperçu de la fenêtre de jeu clean*/
     SDL_Texture *Sous_marin;/**< Texture qui garde l'aperçu du sous_marin */
-    SDL_Rect  Bbutton[7] ;/** < Tableau qui stocke l'emplacement des boutons du champ de bataille*/
+    SDL_Rect  Bbutton[8] ;/** < Tableau qui stocke l'emplacement des boutons du champ de bataille*/
     SDL_Rect Carte[10][10];/**< Tableau qui stocke l'emplacement des cases du champ de bataille */
 }View_Battlefield;
 
@@ -58,7 +58,7 @@ typedef struct {
  * \struct View_elements
  * \brief Elements de la vue
  *
- * Structure qui regroupe tout les éléments nécessaires pour gérer la vue du projet
+ * Structure qui regroupe tous les éléments nécessaires pour gérer la vue du projet
  */
 typedef struct {
     SDL_Window *wwindow; /**< Fenêtre principale SDl */

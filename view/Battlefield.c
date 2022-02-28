@@ -11,6 +11,45 @@
 
 #include "main_view.h"
 
+int init_battlefield2(View_Battlefield *vb){
+    int i, j;
+    SDL_Rect rect;
+
+    for (i = 0; i < 10; i++) {
+
+        rect.x = 60;
+        rect.y=55+i*66;
+        rect.w = 52;
+        rect.h = 52;
+
+        for (j = 0;  j< 10; j++) {
+            vb->Carte[i][j]= rect;
+            rect.x= rect.x+66;
+        }
+    }
+
+    SDL_Rect button={735,153,53,53};
+    vb->Bbutton[0]=button; //fleche haut
+    button.x=802;
+    vb->Bbutton[1]=button; //fleche bas
+    button.x=869;
+    vb->Bbutton[2]=button; //fleche gauche
+    button.x=932;
+    button.y=156;
+    vb->Bbutton[3]=button; //fleche droite
+
+    button.x=745; button.y=221; button.w=217; button.h=43;
+    vb->Bbutton[4]=button; //surface
+    button.y=282;
+    vb->Bbutton[5]=button; //sonar
+    button.y=345;
+    vb->Bbutton[6]=button; //silene
+    button.y=406;
+    vb->Bbutton[7]=button; //missile
+
+    return EXIT_SUCCESS;
+}
+
 int init_view_battlefield(View_elements * app,enum Carte c){
     if(init_battlefield(app,c)!=EXIT_SUCCESS){
         return EXIT_FAILURE;
@@ -32,10 +71,10 @@ int init_battlefield(View_elements * app,enum Carte c){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
     if (c==Antartica){
-        surface=IMG_Load("/home/robin/Projet_C/Ressources/Mission_Antartica.jpg");
+        surface=IMG_Load("Ressources/Mission_Antartica.jpg");
     }
     else if (c==Archipelago){
-        surface=IMG_Load("/home/robin/Projet_C/Ressources/Mission_Archipelago.jpg");
+        surface=IMG_Load("Ressources/Mission_Archipelagotest.jpg");
     }
     else {
         return EXIT_FAILURE;
@@ -66,7 +105,7 @@ int init_battlefield(View_elements * app,enum Carte c){
 int init_sousmarin(View_elements * app){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
-    surface=IMG_Load("/home/robin/Projet_C/Ressources/Mission_Antartica.jpg"); //mettre sous marin
+    surface=IMG_Load("Ressources/Mission_Antartica.jpg"); //mettre sous marin
     if (surface==NULL){
         fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
         SDL_FreeSurface(surface);
@@ -98,7 +137,7 @@ void show_battlefield(View_elements *app){
 int init_choix_carte(View_elements * app){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
-    surface=IMG_Load("/home/robin/Projet_C/Ressources/Choix_carte.jpg");
+    surface=IMG_Load("Ressources/Choix_carte.jpg");
     if (surface==NULL){
         fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
         SDL_FreeSurface(surface);

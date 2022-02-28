@@ -13,7 +13,7 @@
 int init_menu(View_elements *app) {
     SDL_Texture *tmp = NULL;
     SDL_Surface *surface = NULL;
-    surface = IMG_Load("/home/robin/Projet_C/Ressources/Menu.jpg");
+    surface = IMG_Load("Ressources/Menu.jpg");
     if (surface == NULL) {
         fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
         SDL_FreeSurface(surface);
