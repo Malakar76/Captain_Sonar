@@ -15,7 +15,15 @@ int init_view(View_elements * app) {
     int Resolution_x =1600;
     int Resolution_y=900;
     int statut = EXIT_FAILURE;
-    IMG_Init(IMG_INIT_JPG);
+    if (IMG_Init(IMG_INIT_JPG)==0){
+        fprintf(stderr, "Erreur IMG_Init : %s", SDL_GetError());
+        return statut;
+    }
+    if (TTF_Init()!=0){
+        fprintf(stderr, "Erreur TTF_Init : %s", SDL_GetError());
+        return statut;
+    }
+    init_font(app);
     app->VBattlefield=(malloc(sizeof(View_Battlefield)));
 
     if (0 != SDL_Init(SDL_INIT_VIDEO)) {
@@ -77,6 +85,7 @@ void free_view(View_elements *app){
     SDL_DestroyTexture(app->VBattlefield->Battlefield_current);
     SDL_DestroyTexture(app->VBattlefield->Battlefield_blank);
     IMG_Quit();
+    TTF_Quit();
     while (Mix_Init(0)){
         Mix_Quit();
     }
@@ -99,6 +108,10 @@ int init_all_view(View_elements *app){
     }
     init_rbutton(app);
     return EXIT_SUCCESS;
+}
+
+void init_font(View_elements * app){
+    app->ttf=TTF_OpenFont("Ressources/PermanentMarker-Regular.ttf",200);
 }
 
 

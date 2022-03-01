@@ -11,7 +11,17 @@
 #define PROJET_C_MAIN_MODEL_H
 
 #include "stdlib.h"
+#include "string.h"
 #define NMAX 10
+
+/**
+ * \enum Actif
+ * Permet de savoir qui est le joueur actif du tour
+ */
+ enum Actif{
+    J1, /**< Le joueur actif est le J1 */
+    J2  /**< Le joueur actif est le J2 */
+};
 
 /**
  * \struct Case
@@ -47,11 +57,11 @@ enum DIRECTION{
  * Permet de savoir quelle action le joueur fait
  */
 enum OPTION{
-    missile, /**< MISSILE*/
-    surface, /**< SURFACE*/
-    sonar, /**< SONAR*/
-    silence, /**< SILENCE*/
-    deplacemnt /**< DEPLACEMENT*/
+    MIS, /**< MISSILE*/
+    SURF, /**< SURFACE*/
+    SON, /**< SONAR*/
+    SIL, /**< SILENCE*/
+    DEPLCMNT /**< DEPLACEMENT*/
 };
 
 /**
@@ -82,6 +92,7 @@ typedef struct {
     CARTE * map;/**< Carte de jeu */
     JOUEUR * J1;/**<Structure du joueur 1  */
     JOUEUR * J2; /**<Structure du joueur 2 */
+    enum Actif actif;/**< Joueur actif du tour */
 }Playground;
 
 /**
@@ -179,6 +190,16 @@ void energie_up(JOUEUR *j);
 int deplacement(JOUEUR *j,CARTE * c,enum DIRECTION d);
 
 /**
+ * \fn char * result_deplacement(Playground *pg,enum Actif actif,int result)
+ * Fonction qui renvoie une chaîne de caractère contenant un message indiquant si le dpla
+ * @param pg Structure du modèle
+ * @param actif permet de savoir le joueur qui est en train de jouer
+ * @param result 0 ou 1 , en fonction du résultat de la fonction déplacement
+ * @return renvoie un pointeur vers une chaîne de caractère
+ */
+char * result_deplacement(Playground *pg,enum Actif actif,int result);
+
+/**
  * \fn void start_Sous_Marin(JOUEUR *j,int ligne,int colonne)
  * Positionne le sous-marin du joueur j à la position indiqué par la ligne et la colonne
  * et met à jour la carte
@@ -189,6 +210,71 @@ int deplacement(JOUEUR *j,CARTE * c,enum DIRECTION d);
  */
 void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c);
 
+/**
+ * \fn char * sonar(Playground * pg,enum Actif actif)
+ * La fonction prend en paramètre le joueur actif et renvoie la position (soit ligne ou colonne de son adversaire)
+ * ex : L'ennemi se trouve dans la colonne B
+ * ex : L'ennemi se trouve dans la ligne 3
+ * @param pg Structure du modèle
+ * @param actif permet de savoir le joueur qui est en train de jouer
+ * @return renvoie un pointeur vers une chaîne de caractère
+ */
+char * sonar(Playground * pg,enum Actif actif);
+
+/**
+ * \fn int missile(Playground *pg,enum Actif actif)
+ * La fonction permet au joueur de tirer un missile sur une case choisie à l'avance.
+ * Si le tir ne touche rien, la fonction renvoie 0;
+ * Si le joueur actif se touche lui-même la fonction renvoie -1;
+ * Si le joueur touche l'adversaire la fonction renvoie 1;
+ *
+ * Si un tir touche l'un des deux joueurs ou les deux, chaque joueur perd 1 point de vie
+ * @param pg Structure du modèle
+ * @param actif permet de savoir le joueur qui est en train de jouer
+ * @param ligne Ligne choisie par le joueur
+ * @param colonne Colonne choisie par le joueur
+ * @return -1,0 ou 1
+ */
+int missile(Playground *pg,enum Actif actif,int ligne,int colonne);
+
+/**
+ * \fn char * result_missile(Playground *pg,enum Actif actif,int ligne,int colonne)
+ * La fonction renvoie un message qui indique si le joueur actif a réussi à toucher son adversaire.
+ * La fonction est basée sur le résultat de la fonction missile.
+ * Résultat possible :
+ * "Zut, vous n'avez rien touché"
+ * "Mince alors, vous vous êtes touché vous même!"
+ * "Bravo vous avez touché l'adversaire"
+ * @param pg Structure du modèle
+ * @param actif permet de savoir le joueur qui est en train de jouer
+ * @param ligne Ligne choisie par le joueur
+ * @param colonne Colonne choisie par le joueur
+ * @return renvoie un pointeur vers une chaîne de caractère
+ */
+char * result_missile(Playground *pg,enum Actif actif,int ligne,int colonne);
+
+/**
+ * \fn int enough_energie(Playground *pg,enum Actif actif,enum OPTION option)
+ * Fonction qui permet de savoir si le joueur actif a assez d'énergie pour effectuer l'action
+ * passée en paramètre.
+ * @param pg Structure du modèle
+ * @param actif permet de savoir le joueur qui est en train de jouer
+ * @param option Permet de savoir l'action que le jouer veut faire
+ * @return 1 si l'action peut être faite 0 sinon
+ */
+int enough_energie(Playground *pg,enum Actif actif,enum OPTION option);
+
+/**
+ * \fn void action(Playground *pg,enum Actif actif,enum OPTION option)
+ * Réalise l'option passé en paramètre en appelant les fonction précédentes
+ * ex : result missile
+ * Et retourne une chaîne de caractère qui correspond à l'action éffectuée
+ * @param pg
+ * @param actif
+ * @param option
+ * @return renvoie un pointeur vers une chaîne de caractère
+ */
+char * action(Playground *pg,enum Actif actif,enum OPTION option);
 
 //Création Carte
 

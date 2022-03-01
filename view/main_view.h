@@ -14,6 +14,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_mixer.h"
+#include "SDL2/SDL_ttf.h"
 
 /**
  * \enum Window
@@ -71,7 +72,8 @@ typedef struct {
     SDL_Texture *cCredit;/** <Texture qui garde l'aperçu des crédits */
     SDL_Texture *cCarte; /** <Texture qui garde l'aperçu du choix des cartes */
     SDL_Rect  CCarte[4] ;/** < Tableau qui stocke l'emplacement des boutons du choix des cartes */
-    enum Window window;/** <Permet de savoir qu'elle est la fenêtre actuellement utilisée */
+    enum Window window;/** < Permet de savoir qu'elle est la fenêtre actuellement utilisée */
+    TTF_Font * ttf;/** < Structure qui permet de régler la police d'écriture des messages */
 
 }View_elements;
 
@@ -102,6 +104,13 @@ void free_view(View_elements * app);
  * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
  */
 int init_all_view(View_elements *app);
+
+/**
+ * \fn void init_font(View_elements *app)
+ * Initialise la police d'écriture et sa taille
+ * @param app Structure qui gère la vue
+ */
+void init_font(View_elements *app);
 
 
 // Fonctions pour le champ de bataille
@@ -156,6 +165,14 @@ int init_choix_carte(View_elements * app);
  * @param app Structure qui gère la vue
  */
 void show_choix_carte(View_elements *app);
+
+/**
+ * \fn void print_message(View_elements *app,char * message)
+ * Affiche le message passé en parmètre avec la typo initialisé dans la structure app. Le message est affiché dans l'interface utilisateur
+ * @param app Structure qui gère la vue
+ * @param message message à afficher
+ */
+void print_message(View_elements *app,char * message);
 
 
 // Fonctions pour le Menu

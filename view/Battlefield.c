@@ -54,7 +54,7 @@ int init_battlefield(View_elements * app,enum Carte c){
         return EXIT_FAILURE;
     }
     SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Battlefield_blank);
-    SDL_Rect rect ={0,0,1200,900};
+    SDL_Rect rect ={0,0,1600,900};
     SDL_RenderCopy(app->rRenderer, tmp, NULL, &rect);
     SDL_DestroyTexture(tmp);
     SDL_FreeSurface(surface);
@@ -130,4 +130,18 @@ void show_choix_carte(View_elements *app){
     SDL_RenderCopy(app->rRenderer,app->cCarte,NULL,NULL);
     SDL_RenderPresent(app->rRenderer);
     app->window=Choix_Carte;
+}
+
+void print_message(View_elements *app,char * message){
+    SDL_Texture * tmp=NULL;
+    SDL_Surface * surface=NULL;
+    SDL_Color color={0,0,0,255};
+    surface=TTF_RenderText_Solid(app->ttf,message,color);
+    tmp=SDL_CreateTextureFromSurface(app->rRenderer,surface);
+    SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Battlefield_current);
+    SDL_Rect rect ={800,800,100,100}; // zone où afficher le message
+    SDL_RenderCopy(app->rRenderer, tmp, NULL, &rect);
+    SDL_DestroyTexture(tmp);
+    SDL_FreeSurface(surface);
+    SDL_SetRenderTarget(app->rRenderer, NULL);
 }
