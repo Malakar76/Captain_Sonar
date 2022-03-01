@@ -74,6 +74,7 @@ void controller(View_elements *app,Playground * pg){
 }
 
 void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix){
+    int start=0;
     SDL_Event event;
     SDL_Point point= {-1,-1};
     init_view_battlefield(app,choix);
@@ -86,10 +87,75 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
                 run =0;
                 break;
             case SDL_MOUSEBUTTONDOWN:
+                point.x=event.button.x;
+                point.y=event.button.y;
                 if ((event.button.button==SDL_BUTTON_LEFT) && (event.button.windowID== SDL_GetWindowID(app->wwindow))) {
-                    point.x = event.button.x;
-                    point.y = event.button.y;
-                    run=0;
+                    if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[10])){
+                      run=0;
+                    }
+                    else if ((start==0) && (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[11]))){
+                        int * tab= case_choisie(app,point); //il aime pas le pointeur #sigsev
+                        fprintf(stderr,"%d %d",tab[0],tab[1]);
+                        //afficher le sous marin à faire
+                        start=1;
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[9])){
+                        //couper ou remettre le son
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[8])){
+                        //clean map
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[7])){
+                        //missile
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[6])){
+                        //silence
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[5])){
+                        //sonar
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[4])){
+                        //surface
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[3])){
+                        //droite
+                        if(deplacement_possible(pg,pg->actif,droite)){
+                        }else{
+                            //déplacement impossible
+                            print_message(app,"Déplacement à droite impossible");
+                        }
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[2])){
+                        //gauche
+                        if(deplacement_possible(pg,pg->actif,gauche)){
+
+                        }else{
+                            //déplacement impossible
+                            print_message(app,"Déplacement à gauche impossible");
+                        }
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[1])){
+                        //bas
+                        if(deplacement_possible(pg,pg->actif,bas)){
+
+                        }else{
+                            //déplacement impossible
+                            print_message(app,"Déplacement en bas impossible");
+                        }
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[0])){
+                        //haut
+                        if(deplacement_possible(pg,pg->actif,haut)){
+
+                        }else{
+                            //déplacement impossible
+                            print_message(app,"Déplacement en haut impossible");
+                        }
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[11])){
+                        //sur la carte affichage calque
+                    }
+
                 }
         }
     }
