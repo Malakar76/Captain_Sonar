@@ -12,18 +12,68 @@ void energie_up(JOUEUR *j){
         }
     }
 
-int deplacement(JOUEUR * j,CARTE * c,enum DIRECTION d){
-    switch(d)
-    {
+void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
+    JOUEUR * j;
+    if (actif==J1) {
+       j =pg->J1;
+    }
+    else {
+        j =pg->J2;
+    }
+    switch(d){
+
         case haut:
         {
-            if (j->S_M->ligne>0){
-                if (est_occupe(&c->carte[j->S_M->ligne-1][j->S_M->colonne])==0){
-                    c->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=0;
-                    j->S_M->ligne--;
-                    energie_up(j);
-                    c->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
-                    return EXIT_SUCCESS;
+            pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=0;
+            j->S_M->ligne--;
+            energie_up(j);
+            pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
+            break;
+        }
+
+        case bas:
+        {
+            pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=0;
+            j->S_M->ligne++;
+            energie_up(j);
+            pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
+            break;
+        }
+
+        case droite:
+        {
+            pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=0;
+            j->S_M->colonne++;
+            energie_up(j);
+            pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
+            break;
+        }
+
+        case gauche:
+        {
+            pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=0;
+            j->S_M->colonne--;
+            energie_up(j);
+            pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
+            break;
+        }
+    }
+}
+
+int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d){
+    JOUEUR * j;
+    if (actif==J1) {
+        j =pg->J1;
+    }
+    else {
+        j =pg->J2;
+    }
+    switch(d){
+        case haut:
+        {
+                if (j->S_M->ligne>0){
+                if (est_occupe(&pg->map->carte[j->S_M->ligne-1][j->S_M->colonne])==0){
+                    return 1;
                 }
             }
             break;
@@ -31,27 +81,18 @@ int deplacement(JOUEUR * j,CARTE * c,enum DIRECTION d){
         case bas:
         {
             if (j->S_M->ligne<9){
-                if (est_occupe(&c->carte[j->S_M->ligne+1][j->S_M->colonne])==0){
-                    c->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=0;
-                    j->S_M->ligne++;
-                    energie_up(j);
-                    c->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
-                    return EXIT_SUCCESS;
+                if (est_occupe(&pg->map->carte[j->S_M->ligne+1][j->S_M->colonne])==0){
+                return 1;
                 }
             }
             break;
-
         }
 
         case droite:
         {
             if (j->S_M->colonne<9){
-                if (est_occupe(&c->carte[j->S_M->ligne][j->S_M->colonne+1])==0){
-                    c->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=0;
-                    j->S_M->colonne++;
-                    energie_up(j);
-                    c->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
-                    return EXIT_SUCCESS;
+                if (est_occupe(&pg->map->carte[j->S_M->ligne][j->S_M->colonne+1])==0){
+                    return 1;
                 }
             }
             break;
@@ -60,18 +101,14 @@ int deplacement(JOUEUR * j,CARTE * c,enum DIRECTION d){
         case gauche:
         {
             if (j->S_M->colonne>0){
-                if (est_occupe(&c->carte[j->S_M->ligne][j->S_M->colonne-1])==0){
-                    c->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=0;
-                    j->S_M->colonne--;
-                    energie_up(j);
-                    c->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
-                    return EXIT_SUCCESS;
+                if (est_occupe(&pg->map->carte[j->S_M->ligne][j->S_M->colonne-1])==0){
+                    return 1;
                 }
             }
             break;
         }
     }
-    return EXIT_FAILURE;
+    return 0;
 }
 
 int init_joueur(JOUEUR *j){

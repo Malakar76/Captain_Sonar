@@ -179,25 +179,35 @@ void free_joueur(JOUEUR *j);
 void energie_up(JOUEUR *j);
 
 /**
- * \fn deplacement(JOUEUR *j,CARTE * c,enum DIRECTION d)
+ * \fn void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d)
  * \brief déplace un sous-marin
- * Déplace un sous-marin dans la direction indiquée et augmente son énergie
- * @param j joueur qui se déplace
- * @param c carte du jeu
+ * Déplace le sous-marin du joueur actif dans la direction indiquée et augmente son énergie
+ * @param j Structure du modèle
+ * @param c permet de savoir le joueur qui est en train de jouer
  * @param d direction de déplacement
- * @return 0 si déplacement impossible 1 sinon
  */
-int deplacement(JOUEUR *j,CARTE * c,enum DIRECTION d);
+void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d);
+
+/**
+ * \fn int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d)
+ * Permet de savoir si le joueur actif peut déplacer son sous-marin dans la direction indiquée
+ * @param pg Structure du modèle
+ * @param actif permet de savoir le joueur qui est en train de jouer
+ * @param d Direction dans laquelle se déplacer
+ * @return 1 si déplacement dans la direction possible 0 sinon
+ */
+int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d);
 
 /**
  * \fn char * result_deplacement(Playground *pg,enum Actif actif,int result)
- * Fonction qui renvoie une chaîne de caractère contenant un message indiquant si le dpla
+ * Fonction qui renvoie une chaîne de caractère contenant un message indiquant le déplacement effectué
+ * et utilisant la fonction deplacement
  * @param pg Structure du modèle
  * @param actif permet de savoir le joueur qui est en train de jouer
- * @param result 0 ou 1 , en fonction du résultat de la fonction déplacement
+ * @param d Direction dans laquelle se déplacer
  * @return renvoie un pointeur vers une chaîne de caractère
  */
-char * result_deplacement(Playground *pg,enum Actif actif,int result);
+char * result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d);
 
 /**
  * \fn void start_Sous_Marin(JOUEUR *j,int ligne,int colonne)
@@ -274,7 +284,7 @@ int enough_energie(Playground *pg,enum Actif actif,enum OPTION option);
  * @param option
  * @return renvoie un pointeur vers une chaîne de caractère
  */
-char * action(Playground *pg,enum Actif actif,enum OPTION option);
+char * action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d);
 
 //Création Carte
 
