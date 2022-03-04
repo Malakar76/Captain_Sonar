@@ -12,6 +12,7 @@
 #include "main_view.h"
 
 int init_view(View_elements * app) {
+    SDL_Surface * icone =NULL;
     int Resolution_x =1600;
     int Resolution_y=900;
     int statut = EXIT_FAILURE;
@@ -34,6 +35,15 @@ int init_view(View_elements * app) {
         fprintf(stderr, "Erreur SDL_CreateWindowAndRenderer : %s", SDL_GetError());
         return statut;
     }
+    icone=IMG_Load("Ressources/sonar_family.jpg");
+    if (icone==NULL) {
+        fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
+        SDL_FreeSurface(icone);
+        return EXIT_FAILURE;
+    }
+    SDL_SetWindowTitle(app->wwindow,"Sonar family");
+    SDL_SetWindowIcon(app->wwindow,icone);
+    SDL_FreeSurface(icone);
     app->mMenu= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,Resolution_x,Resolution_y);
     if(NULL == app->mMenu) {
         fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());

@@ -23,13 +23,13 @@ int init_view_battlefield(View_elements * app,enum Carte c){
     SDL_SetRenderTarget(app->rRenderer, NULL);
     //initialiser les boutons
     int i, j;
-    SDL_Rect rect={60,0,52,52};
+    SDL_Rect rect={0,0,52,52};
 
     for (i = 0; i < 10; i++) {
         rect.y=55+i*66;
         for (j = 0;  j< 10; j++) {
             app->VBattlefield->Carte[i][j]= rect;
-            rect.x= rect.x+66;
+            rect.x=60+j*66;
         }
     }
 
@@ -181,14 +181,12 @@ void print_message(View_elements *app,char * message){
     SDL_SetRenderTarget(app->rRenderer, NULL);
 }
 
-int *  case_choisie(View_elements * app, SDL_Point point){
-    int tab [2];
+void  case_choisie(View_elements * app, SDL_Point point,int tab[]){
     for (int i=0;i<10;i++){
         for (int j=0;j<10;j++){
             if (SDL_PointInRect(&point,&app->VBattlefield->Carte[i][j])){
                 tab[0]=i;
                 tab[1]=j;
-                return tab;
             }
         }
     }

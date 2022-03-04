@@ -181,7 +181,7 @@ void print_message(View_elements *app,char * message);
  * @param point Point où l'utilisateur vient de cliquer
  * @return Un tableau de 2 entiers
  */
-int * case_choisie(View_elements * app, SDL_Point point); //a modifier prbl avec le pointeur
+void case_choisie(View_elements * app, SDL_Point point,int tab[]);
 
 
 
