@@ -175,13 +175,21 @@ void show_choix_carte(View_elements *app);
 void print_message(View_elements *app,char * message);
 
 /**
- * \fn int * case_choisie(View_elements * app, SDL_Point point)
- * Fonction qui renvoie la ligne et la colonne où l'utilisateur vient de cliquer
+ * \fn void case_choisie(View_elements * app, SDL_Point point,int tab[])
+ * Fonction qui stocke la ligne et la colonne où l'utilisateur vient de cliquer dans un tableau
  * @param app Structure qui gère la vue
  * @param point Point où l'utilisateur vient de cliquer
- * @return Un tableau de 2 entiers
+ * @param tab tableau où stocker la position x et y de la case
  */
 void case_choisie(View_elements * app, SDL_Point point,int tab[]);
+
+/**
+ * \fn void show_SM(View_elements * app,int ligne,int colonne)
+ * @param app Structure qui gère la vue
+ * @param ligne Position actuelle du sous-marin
+ * @param colonne Position actuelle du sous-marin
+ */
+void show_SM(View_elements * app,int ligne,int colonne);
 
 
 

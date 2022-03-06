@@ -39,3 +39,5 @@ void free_model(Playground * pg){
     free_joueur(pg->J1);
     free_joueur(pg->J2);
 }
+
+

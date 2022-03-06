@@ -33,6 +33,7 @@ typedef struct {
     int sous_marin;/**< Permet de savoir si il y a un sous-marin sur la case 0 non et 1 oui*/
 }Case;
 
+
 /**
  * \struct CARTE
  * Carte de jeu
@@ -154,6 +155,14 @@ void free_Carte(CARTE * carte);
  */
 void init_map (CARTE * carte);
 
+/**
+ * \fn void choix_carte(Playground * pg,enum Carte carte)
+ * Initialise la carte de jeu correctement en fonction de la carte choisie
+ * @param pg Structure du modèle
+ * @param carte Carte de jeu
+ */
+void choix_carte(Playground * pg,int a);
+
 
 //Gestion joueur
 
@@ -183,8 +192,8 @@ void energie_up(JOUEUR *j);
  * \fn void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d)
  * \brief déplace un sous-marin
  * Déplace le sous-marin du joueur actif dans la direction indiquée et augmente son énergie
- * @param j Structure du modèle
- * @param c permet de savoir le joueur qui est en train de jouer
+ * @param pg Structure du modèle
+ * @param actif permet de savoir le joueur qui est en train de jouer
  * @param d direction de déplacement
  */
 void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d);
@@ -211,7 +220,7 @@ int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d);
 void result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d,char message []);
 
 /**
- * \fn void start_Sous_Marin(JOUEUR *j,int ligne,int colonne)
+ * \fn void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,Carte * c)
  * Positionne le sous-marin du joueur j à la position indiqué par la ligne et la colonne
  * et met à jour la carte
  * @param j Joueur sélectionné
@@ -222,18 +231,18 @@ void result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d,char me
 void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c);
 
 /**
- * \fn char * sonar(Playground * pg,enum Actif actif)
- * La fonction prend en paramètre le joueur actif et renvoie la position (soit ligne ou colonne de son adversaire)
+ * \fn void sonar(Playground * pg,enum Actif actif,char message [])
+ * La fonction prend en paramètre le joueur actif et stocke la position (soit ligne ou colonne de son adversaire) dans message
  * ex : L'ennemi se trouve dans la colonne B
  * ex : L'ennemi se trouve dans la ligne 3
  * @param pg Structure du modèle
  * @param actif permet de savoir le joueur qui est en train de jouer
- * @return renvoie un pointeur vers une chaîne de caractère
+ * @param message Stocke le message de retour
  */
 void sonar(Playground * pg,enum Actif actif,char message[]);
 
 /**
- * \fn int missile(Playground *pg,enum Actif actif)
+ * \fn int missile(Playground *pg,enum Actif actif,int ligne,int colonne)
  * La fonction permet au joueur de tirer un missile sur une case choisie à l'avance.
  * Si le tir ne touche rien, la fonction renvoie 0;
  * Si le joueur actif se touche lui-même la fonction renvoie -1;
@@ -249,8 +258,8 @@ void sonar(Playground * pg,enum Actif actif,char message[]);
 int missile(Playground *pg,enum Actif actif,int ligne,int colonne);
 
 /**
- * \fn char * result_missile(Playground *pg,enum Actif actif,int ligne,int colonne)
- * La fonction renvoie un message qui indique si le joueur actif a réussi à toucher son adversaire.
+ * \fn void result_missile(Playground *pg,enum Actif actif,int ligne,int colonne,char message [])
+ * La fonction stocke un message qui indique si le joueur actif a réussi à toucher son adversaire dans le tableau message.
  * La fonction est basée sur le résultat de la fonction missile.
  * Résultat possible :
  * "Zut, vous n'avez rien touché"
@@ -260,7 +269,7 @@ int missile(Playground *pg,enum Actif actif,int ligne,int colonne);
  * @param actif permet de savoir le joueur qui est en train de jouer
  * @param ligne Ligne choisie par le joueur
  * @param colonne Colonne choisie par le joueur
- * @return renvoie un pointeur vers une chaîne de caractère
+ * @param message Stocke le message de retour
  */
 void result_missile(Playground *pg,enum Actif actif,int ligne,int colonne,char message[]);
 

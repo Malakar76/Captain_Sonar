@@ -28,8 +28,9 @@ int init_view_battlefield(View_elements * app,enum Carte c){
     for (i = 0; i < 10; i++) {
         rect.y=55+i*66;
         for (j = 0;  j< 10; j++) {
-            app->VBattlefield->Carte[i][j]= rect;
             rect.x=60+j*66;
+            app->VBattlefield->Carte[i][j]= rect;
+
         }
     }
 
@@ -167,17 +168,18 @@ void show_choix_carte(View_elements *app){
 }
 
 void print_message(View_elements *app,char * message){
+    SDL_SetRenderDrawColor(app->rRenderer,57,143,70,255);
+    SDL_Rect rect ={100,800,600,100}; // zone où afficher le message
+    SDL_RenderFillRect(app->rRenderer,&rect);
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
     SDL_Color color={0,0,0,255};
     surface=TTF_RenderText_Solid(app->ttf,message,color);
     tmp=SDL_CreateTextureFromSurface(app->rRenderer,surface);
-    SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Battlefield_current);
-    SDL_Rect rect ={800,800,200,100}; // zone où afficher le message
     SDL_RenderCopy(app->rRenderer, tmp, NULL, &rect);
     SDL_DestroyTexture(tmp);
     SDL_FreeSurface(surface);
-    SDL_SetRenderTarget(app->rRenderer, NULL);
+    SDL_RenderPresent(app->rRenderer);
 }
 
 void  case_choisie(View_elements * app, SDL_Point point,int tab[]){
@@ -191,3 +193,10 @@ void  case_choisie(View_elements * app, SDL_Point point,int tab[]){
     }
 }
 
+void show_SM(View_elements * app,int ligne,int colonne){
+    SDL_RenderClear(app->rRenderer);
+    SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_current,NULL,NULL);
+    SDL_Rect rect=app->VBattlefield->Carte[ligne][colonne];
+    SDL_RenderCopy(app->rRenderer,app->VBattlefield->Sous_marin,NULL,&rect);
+    SDL_RenderPresent(app->rRenderer);
+}

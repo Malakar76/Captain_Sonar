@@ -80,6 +80,7 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
     SDL_Point point= {-1,-1};
     init_view_battlefield(app,choix);
     show_battlefield(app);
+    choix_carte(pg,choix);
     int run=1;
     while (run==1){
         SDL_WaitEvent(&event);
@@ -97,13 +98,19 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
                     else if ((start==0) && (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[11]))){
                         int tab[2];
                         case_choisie(app,point,tab);
-                        pg->J1->S_M->ligne= tab[0];
-                        pg->J1->S_M->colonne=tab[1];
-                        //afficher le sous marin
-                        if (tab[0]!=-1){
-                            fprintf(stderr,"Vous avez choisie votre case \n");
-                            start=1;
+                        if (est_occupe(&pg->map->carte[tab[0]][tab[1]])!=1){
+                            fprintf(stderr,"%d %d",tab[0],tab[1]);
+                            start_Sous_Marin(pg->J1,tab[0],tab[1],pg->map);
+                            show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            if (tab[0]!=-1){
+                                fprintf(stderr,"Vous avez choisie votre case \n");
+                                start=1;
+                                print_message(app,"Vous avez choisi votre case");
+                            }
+                        }else{
+                            fprintf(stderr,"case inaccessible\n");
                         }
+
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[9])){
                         //couper ou remettre le son
@@ -127,10 +134,12 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
                         //droite
                         if(deplacement_possible(pg,pg->actif,droite)){
                             result_deplacement(pg,pg->actif,droite,message);
+                            show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
 
                         }else{
                             //déplacement impossible
-                            print_message(app,"Déplacement à droite impossible");
+                            print_message(app,"Deplacement a droite impossible");
+
                         }
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[2]) && start==1){
@@ -139,7 +148,7 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
 
                         }else{
                             //déplacement impossible
-                            print_message(app,"Déplacement à gauche impossible");
+                            print_message(app,"Deplacement a gauche impossible");
                         }
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[1]) && start==1){
@@ -148,7 +157,7 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
 
                         }else{
                             //déplacement impossible
-                            print_message(app,"Déplacement en bas impossible");
+                            print_message(app,"Deplacement en bas impossible");
                         }
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[0]) && start==1){
@@ -157,7 +166,7 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
 
                         }else{
                             //déplacement impossible
-                            print_message(app,"Déplacement en haut impossible");
+                            print_message(app,"Deplacement en haut impossible");
                         }
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[11]) && start==1){

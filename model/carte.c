@@ -40,7 +40,8 @@ void Crea_Archipelago(CARTE * c){
     set_Rocher(c,4,3);
     set_Rocher(c,6,8);
     set_Rocher(c,7,1);
-    set_Rocher(c,7,4);
+    set_Rocher(c,7,2);
+    set_Rocher(c,7,5);
 }
 void Crea_Antartica(CARTE * c){
     set_Rocher(c,2,3);
@@ -50,6 +51,15 @@ void Crea_Antartica(CARTE * c){
     set_Rocher(c,7,2);
     set_Rocher(c,7,4);
     set_Rocher(c,8,3);
+}
+
+void choix_carte(Playground * pg,int a){
+    if (a==0) {
+        Crea_Archipelago(pg->map);
+    }
+    else if (a==1){
+        Crea_Antartica(pg->map);
+    }
 }
 
 

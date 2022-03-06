@@ -121,7 +121,7 @@ int init_all_view(View_elements *app){
 }
 
 void init_font(View_elements * app){
-    app->ttf=TTF_OpenFont("Ressources/SmoochSans-Medium.ttf",200);
+    app->ttf=TTF_OpenFont("Ressources/SmoochSans-Medium.ttf",400);
 }
 
 
