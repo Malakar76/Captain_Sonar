@@ -101,7 +101,7 @@ int init_battlefield(View_elements * app,enum Carte c){
 int init_sousmarin(View_elements * app){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
-    surface=IMG_Load("Ressources/Mission_Antartica_origine.jpg"); //mettre sous marin
+    surface=IMG_Load("Ressources/sous_marin.png"); //mettre sous marin
     if (surface==NULL){
         fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
         SDL_FreeSurface(surface);
@@ -116,8 +116,7 @@ int init_sousmarin(View_elements * app){
         return EXIT_FAILURE;
     }
     SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Sous_marin);
-    SDL_Rect rect ={0,0,1600,900};
-    SDL_RenderCopy(app->rRenderer, tmp, NULL, &rect);
+    SDL_RenderCopy(app->rRenderer, tmp, NULL, NULL);
     SDL_DestroyTexture(tmp);
     SDL_FreeSurface(surface);
     SDL_SetRenderTarget(app->rRenderer, NULL);

@@ -15,7 +15,7 @@ int init_view(View_elements * app) {
     int Resolution_x =1600;
     int Resolution_y=900;
     int statut = EXIT_FAILURE;
-    if (IMG_Init(IMG_INIT_JPG)==0){
+    if (IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG)==0){
         fprintf(stderr, "Erreur IMG_Init : %s", SDL_GetError());
         return statut;
     }
