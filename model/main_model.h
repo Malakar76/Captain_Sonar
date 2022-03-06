@@ -12,6 +12,7 @@
 
 #include "stdlib.h"
 #include "string.h"
+#include "stdio.h"
 #define NMAX 10
 
 /**
@@ -199,15 +200,15 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d);
 int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d);
 
 /**
- * \fn char * result_deplacement(Playground *pg,enum Actif actif,int result)
+ * \fn void result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d,char message [])
  * Fonction qui renvoie une chaîne de caractère contenant un message indiquant le déplacement effectué
  * et utilisant la fonction deplacement
  * @param pg Structure du modèle
  * @param actif permet de savoir le joueur qui est en train de jouer
  * @param d Direction dans laquelle se déplacer
- * @return renvoie un pointeur vers une chaîne de caractère
+ * @param message Chaîne de caractère qui contient le message retour
  */
-char * result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d);
+void result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d,char message []);
 
 /**
  * \fn void start_Sous_Marin(JOUEUR *j,int ligne,int colonne)
@@ -229,7 +230,7 @@ void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c);
  * @param actif permet de savoir le joueur qui est en train de jouer
  * @return renvoie un pointeur vers une chaîne de caractère
  */
-char * sonar(Playground * pg,enum Actif actif);
+void sonar(Playground * pg,enum Actif actif,char message[]);
 
 /**
  * \fn int missile(Playground *pg,enum Actif actif)
@@ -261,7 +262,7 @@ int missile(Playground *pg,enum Actif actif,int ligne,int colonne);
  * @param colonne Colonne choisie par le joueur
  * @return renvoie un pointeur vers une chaîne de caractère
  */
-char * result_missile(Playground *pg,enum Actif actif,int ligne,int colonne);
+void result_missile(Playground *pg,enum Actif actif,int ligne,int colonne,char message[]);
 
 /**
  * \fn int enough_energie(Playground *pg,enum Actif actif,enum OPTION option)
@@ -284,7 +285,7 @@ int enough_energie(Playground *pg,enum Actif actif,enum OPTION option);
  * @param option
  * @return renvoie un pointeur vers une chaîne de caractère
  */
-char * action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d);
+void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,char message []);
 
 //Création Carte
 

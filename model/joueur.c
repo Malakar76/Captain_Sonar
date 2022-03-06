@@ -112,9 +112,8 @@ int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d){
 }
 
 int init_joueur(JOUEUR *j){
-    j=malloc(sizeof (JOUEUR));
     j->S_M= malloc(sizeof (SOUS_MARIN));
-    if((j==NULL) || (j->S_M==NULL)){
+    if(j->S_M==NULL){
         return EXIT_FAILURE;
     }
     j->energie=0;
@@ -133,4 +132,8 @@ void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c){
     j->S_M->ligne=ligne;
     j->S_M->colonne=colonne;
     c->carte[ligne][colonne].sous_marin=1;
+}
+
+void result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d,char message []){
+
 }

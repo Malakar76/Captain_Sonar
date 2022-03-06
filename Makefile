@@ -7,7 +7,7 @@ MAKE=/usr/bin/make
 
 
 
-all:  view_Make model_Make controller_Make main
+all:  view_Make model_Make controller_Make Launcher
 
 
 view_Make :
@@ -22,7 +22,7 @@ controller_Make :
 	$(MAKE) -C ./controller
 	$(MAKE) -C ./controller clean
 
-main: main.o
+Launcher: main.o
 	$(CC) $^ $(LDFLAGS) -o $@
 	rm -f *~ *.d *.o
 
@@ -32,7 +32,7 @@ main: main.o
 
 clean:
 	rm -f *~ *.d *.o
-	rm -f  main
+	rm -f  Launcher
 	
 distclean:
 	rm ./lib/*.a

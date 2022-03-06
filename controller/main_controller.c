@@ -75,6 +75,7 @@ void controller(View_elements *app,Playground * pg){
 
 void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix){
     int start=0;
+    char message [100];
     SDL_Event event;
     SDL_Point point= {-1,-1};
     init_view_battlefield(app,choix);
@@ -94,10 +95,15 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
                       run=0;
                     }
                     else if ((start==0) && (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[11]))){
-                        int * tab= case_choisie(app,point); //il aime pas le pointeur #sigsev
-                        fprintf(stderr,"%d %d",tab[0],tab[1]);
-                        //afficher le sous marin à faire
-                        start=1;
+                        int tab[2];
+                        case_choisie(app,point,tab);
+                        pg->J1->S_M->ligne= tab[0];
+                        pg->J1->S_M->colonne=tab[1];
+                        //afficher le sous marin
+                        if (tab[0]!=-1){
+                            fprintf(stderr,"Vous avez choisie votre case \n");
+                            start=1;
+                        }
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[9])){
                         //couper ou remettre le son
@@ -105,27 +111,29 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[8])){
                         //clean map
                     }
-                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[7])){
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[7]) && start==1){
                         //missile
                     }
-                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[6])){
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[6]) && start==1){
                         //silence
                     }
-                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[5])){
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[5]) && start==1){
                         //sonar
                     }
-                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[4])){
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[4]) && start==1){
                         //surface
                     }
-                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[3])){
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[3]) && start==1){
                         //droite
                         if(deplacement_possible(pg,pg->actif,droite)){
+                            result_deplacement(pg,pg->actif,droite,message);
+
                         }else{
                             //déplacement impossible
                             print_message(app,"Déplacement à droite impossible");
                         }
                     }
-                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[2])){
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[2]) && start==1){
                         //gauche
                         if(deplacement_possible(pg,pg->actif,gauche)){
 
@@ -134,7 +142,7 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
                             print_message(app,"Déplacement à gauche impossible");
                         }
                     }
-                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[1])){
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[1]) && start==1){
                         //bas
                         if(deplacement_possible(pg,pg->actif,bas)){
 
@@ -143,7 +151,7 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
                             print_message(app,"Déplacement en bas impossible");
                         }
                     }
-                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[0])){
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[0]) && start==1){
                         //haut
                         if(deplacement_possible(pg,pg->actif,haut)){
 
@@ -152,7 +160,7 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
                             print_message(app,"Déplacement en haut impossible");
                         }
                     }
-                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[11])){
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[11]) && start==1){
                         //sur la carte affichage calque
                     }
 
