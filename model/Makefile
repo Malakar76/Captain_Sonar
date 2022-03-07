@@ -5,19 +5,15 @@ DIRLIB=../lib
 
 
 
-all: libmodel.a main_model
+all: libmodel.a
 
 
 
 libmodel.a: main_model.o carte.o joueur.o
 	ar -rv $(DIRLIB)/$@ $^
 
-main_model:main_model.o carte.o joueur.o test.o
-	$(CC) $(CFLAGS) -c $<  -o $@
-
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<  -o $@
-
 
 
 

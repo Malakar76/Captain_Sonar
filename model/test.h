@@ -6,7 +6,7 @@
 
 #ifndef TEST_H_INC
 #define TEST_H_INC
-
+#include "main_model.h"
 
 void display_test_check_by_user(char * message);
 
@@ -19,4 +19,4 @@ void display_test_string(char * message, char * expected_value, char * obtained_
 void display_test_float(char * message, float expected_value, float obtained_value);
 
 
-#endifvvvvvv
+#endif //TEST_H_INC

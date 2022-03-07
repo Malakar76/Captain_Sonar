@@ -1,36 +1,56 @@
-#include "carte.h"
-include <string.h>
-#include <stdlib.h>
-#include <time.h>
+/**
+ * \file carte.c
+ * \brief Fichier pour la gestion de la carte.
+ *
+ * Fichier pour la gestion de la carte
+ */
+#include "main_model.h"
 
-void init_map(int colonne, int ligne,){
-    int i, int j;
-    TABLEAU* c[]={(TABLEAU*)malloc(sizeof(TABLEAU)*colonne),(TABLEAU*)malloc(sizeof(TABLEAU)*colonne)};
-    for (i=0;i<colonne;i++) {
-        for (j = 0; j < ligne; j++) {
-            c[i][j]=".";
+void init_Case(Case * c){
+    c->accessible=0;
+    c->sous_marin=0;
+}
+
+void set_Rocher(CARTE * carte,int ligne,int colonne){
+    carte->carte[ligne][colonne].accessible=1;
+}
+
+int est_occupe(Case * c){
+    return c->accessible;
+}
+
+void free_Carte(CARTE * carte){
+    free(carte);
+}
+
+void init_map(CARTE * c){
+    int i,j;
+    for (i=0;i<NMAX;i++) {
+        for (j = 0; j <NMAX; j++) {
+            init_Case(&c->carte[i][j]);
         }
-        printf("\n");
-    }
-    if (i==5 && j==5 || i==6 && j==5 || i==5 && j==6 || i==6 && j==6) {
-        c[i][j]='X';
     }
 }
 
-char acces (CARTE *c){
-    switch (c->note) {
-        case '.':
-            return "ACCES AUTORISE";
-        case 'X':
-            return "ACCES INTERDIT, ROCHERS";
-        case 's':
-            return "PRESENCE DU SOUS_MARIN";
-        case '*':
-            return "le missile à touché le sous marin"
-        case 'o':
-            return "le missile à rien touché"
-        case 'a':
-            return "le sous-marin est à la surface"
-    }
+void Crea_Archipelago(CARTE * c){
+    set_Rocher(c,1,6);
+    set_Rocher(c,2,2);
+    set_Rocher(c,2,7);
+    set_Rocher(c,3,8);
+    set_Rocher(c,4,3);
+    set_Rocher(c,6,8);
+    set_Rocher(c,7,1);
+    set_Rocher(c,7,4);
 }
+void Crea_Antartica(CARTE * c){
+    set_Rocher(c,2,3);
+    set_Rocher(c,2,7);
+    set_Rocher(c,4,8);
+    set_Rocher(c,6,8);
+    set_Rocher(c,7,2);
+    set_Rocher(c,7,4);
+    set_Rocher(c,8,3);
+}
+
+
 
