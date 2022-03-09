@@ -11,6 +11,90 @@
 
 #include "main_view.h"
 
+int trace_deplacement(View_Battlefield *vb, View_elements *ve){
+
+    int i, j; // on cree des mini rect sur la carte pour placer haut du rect pour le trait
+    SDL_Rect recti={0,0,4,4};
+    SDL_Rect tab [10][10];
+    for (i = 0; i < 10; i++) {
+        recti.y=78+i*66;
+        for (j = 0;  j< 10; j++) {
+            tab[i][j]= recti; //i ligne j colonne
+            recti.x= 84+j*66;
+        }
+    }
+
+
+
+    SDL_Rect rect;
+    //on vient recuperer position joueur lettre et num a et b
+    rect.x = tab[a][b].x;
+    rect.y = tab[a][b].y;
+
+
+    for (int i = 0; i < dernier_elt ; ++i) { //parcour tableau ou liste des historiques de deplacement et on vient chzrcher le dernier element
+        //on recupere res qui dit dir (enum)
+    }
+
+    if (SDL_SetRenderTarget(ve->rRenderer, vb->Battlefield_current) != 0){
+        SDL_Log("Erreur ciblage %s", SDL_GetError());
+        SDL_Quit();
+        return EXIT_FAILURE;
+    }
+
+    SDL_SetRenderDrawColor(ve->rRenderer, 255, 0, 0, SDL_ALPHA_OPAQUE); //modifie couleur trait
+
+    switch (res) {
+
+        case HAUT:
+            rect.y=rect.y+66;
+            rect.w=4;
+            rect.h=66;
+            if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
+                SDL_Log("Erreur tracage deplacement %s", SDL_GetError());
+                SDL_Quit();
+                return EXIT_FAILURE;
+            }
+            break;
+
+        case BAS:
+            rect.w=4;
+            rect.h=66;
+            if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
+                SDL_Log("Erreur tracage deplacement %s", SDL_GetError());
+                SDL_Quit();
+                return EXIT_FAILURE;
+            }
+            break;
+
+        case DROITE:
+            rect.w=66;
+            rect.h=4;
+            if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
+                SDL_Log("Erreur tracage deplacement %s", SDL_GetError());
+                SDL_Quit();
+                return EXIT_FAILURE;
+            }
+            break;
+
+        case GAUCHE:
+            rect.x=rect.x+66;
+            rect.w=66;
+            rect.h=4;
+            if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
+                SDL_Log("Erreur tracage deplacement %s", SDL_GetError());
+                SDL_Quit();
+                return EXIT_FAILURE;
+            }
+            break;
+
+        default:
+            break;
+
+    }
+    return EXIT_SUCCESS;
+}
+
 int init_battlefield2(View_Battlefield *vb){
     int i, j;
     SDL_Rect rect;
@@ -71,7 +155,7 @@ int init_battlefield(View_elements * app,enum Carte c){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
     if (c==Antartica){
-        surface=IMG_Load("Ressources/Mission_Antartica.jpg");
+        surface=IMG_Load("Ressources/Mission_AntarticaMod.jpg");
     }
     else if (c==Archipelago){
         surface=IMG_Load("Ressources/Mission_Archipelagotest.jpg");
@@ -105,7 +189,7 @@ int init_battlefield(View_elements * app,enum Carte c){
 int init_sousmarin(View_elements * app){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
-    surface=IMG_Load("Ressources/Mission_Antartica.jpg"); //mettre sous marin
+    surface=IMG_Load("Ressources/Mission_AntarticaMod.jpg"); //mettre sous marin
     if (surface==NULL){
         fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
         SDL_FreeSurface(surface);
