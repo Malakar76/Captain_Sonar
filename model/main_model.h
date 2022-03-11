@@ -13,6 +13,7 @@
 #include "stdlib.h"
 #include "string.h"
 #include "stdio.h"
+#include "math.h"
 #define NMAX 10
 
 /**
@@ -270,8 +271,9 @@ int missile(Playground *pg,enum Actif actif,int ligne,int colonne);
  * @param ligne Ligne choisie par le joueur
  * @param colonne Colonne choisie par le joueur
  * @param message Stocke le message de retour
+ * @return Renvoie la valeur de la fonction missile (-1,1,0)
  */
-void result_missile(Playground *pg,enum Actif actif,int ligne,int colonne,char message[]);
+int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne,char message[]);
 
 /**
  * \fn int enough_energie(Playground *pg,enum Actif actif,enum OPTION option)

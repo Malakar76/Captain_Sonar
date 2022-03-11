@@ -68,7 +68,7 @@ int init_battlefield(View_elements * app,enum Carte c){
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
     if (c==Antartica){
-        surface=IMG_Load("Ressources/Mission_Antartica_origine.jpg");
+        surface=IMG_Load("Ressources/Mission_Antartica.jpg");
     }
     else if (c==Archipelago){
         surface=IMG_Load("Ressources/Mission_Archipelago.jpg");
@@ -109,6 +109,8 @@ int init_sousmarin(View_elements * app){
         SDL_DestroyTexture(tmp);
         return EXIT_FAILURE;
     }
+    Uint32 colorkey = SDL_MapRGB(surface->format,255,255,255);
+    SDL_SetColorKey(surface,SDL_TRUE,colorkey);
     tmp=SDL_CreateTextureFromSurface(app->rRenderer,surface);
     if (tmp==NULL){
         fprintf(stderr, "Erreur SDL_CreateTexture: %s", SDL_GetError());
@@ -120,6 +122,7 @@ int init_sousmarin(View_elements * app){
     SDL_RenderCopy(app->rRenderer, tmp, NULL, NULL);
     SDL_DestroyTexture(tmp);
     SDL_FreeSurface(surface);
+    SDL_SetTextureBlendMode(app->VBattlefield->Sous_marin,SDL_BLENDMODE_BLEND);
     SDL_SetRenderTarget(app->rRenderer, NULL);
     return EXIT_SUCCESS;
 }
@@ -176,7 +179,8 @@ void print_message(View_elements *app,char * message){
     SDL_Color color={0,0,0,255};
     surface=TTF_RenderText_Solid(app->ttf,message,color);
     tmp=SDL_CreateTextureFromSurface(app->rRenderer,surface);
-    SDL_RenderCopy(app->rRenderer, tmp, NULL, &rect);
+    SDL_Rect rect2={100,800,surface->w,surface->h};
+    SDL_RenderCopy(app->rRenderer, tmp, NULL, &rect2);
     SDL_DestroyTexture(tmp);
     SDL_FreeSurface(surface);
     SDL_RenderPresent(app->rRenderer);

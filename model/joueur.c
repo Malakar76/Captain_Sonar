@@ -134,6 +134,129 @@ void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c){
     c->carte[ligne][colonne].sous_marin=1;
 }
 
-void result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d,char message []){
-
+int enough_energie(Playground *pg, enum Actif actif, enum OPTION option) {
+    JOUEUR *j;
+    if (actif == J1) {
+        j = pg->J1;
+    } else {
+        j = pg->J2;
+    }
+    switch (option) {
+        case MIS: {
+            if (j->energie == 4) {
+                return 1;
+            }
+            break;
+        }
+        case SURF: {
+            return 1;
+        }
+        case SON: {
+            if (j->energie >= 2) {
+                return 1;
+            }
+            break;
+        }
+        case SIL: {
+            if (j->energie >= 3) {
+                return 1;
+            }
+            break;
+        }
+        case DEPLCMNT: {
+            return 1;
+        }
+    }
+    return 0;
 }
+
+void result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d,char message []){
+    switch (d) {
+        case haut: {
+            deplacement(pg,actif,d);
+            strcpy(message,"Deplacement en haut");
+            break;
+
+        }
+
+        case bas: {
+            deplacement(pg,actif,d);
+            strcpy(message,"Deplacement en bas");
+            break;
+        }
+
+        case gauche: {
+            deplacement(pg,actif,d);
+            strcpy(message,"Deplacement a gauche");
+            break;
+        }
+
+        case droite: {
+            deplacement(pg,actif,d);
+            strcpy(message,"Deplacement a droite");
+            break;
+        }
+    }
+}
+
+int missile(Playground *pg,enum Actif actif,int ligne,int colonne) {
+    if (actif == J1) {
+        if (pg->J1->S_M->colonne == colonne && pg->J1->S_M->ligne == ligne) {
+            pg->J1->vie--;
+            return -1;
+        }
+        else if (pg->J2->S_M->colonne == colonne && pg->J2->S_M->ligne == ligne) {
+            pg->J2->vie--;
+            return 1;
+        }
+        else{
+          return 0;
+        }
+    } else {
+        if (pg->J1->S_M->colonne == colonne && pg->J1->S_M->ligne == ligne) {
+            pg->J1->vie--;
+            return 1;
+        }
+        else if (pg->J2->S_M->colonne == colonne && pg->J2->S_M->ligne == ligne) {
+            pg->J2->vie--;
+            return -1;
+        }
+        else {
+            return 0;
+        }
+    }
+}
+
+int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne, char  message[]) {
+    switch (missile(pg, actif, ligne, colonne)) {
+        case 0:
+            strcpy(message, "Zut, vous n'avez rien touché");
+            break;
+        case 1:
+            strcpy(message, "Bravo vous avez touché l'adversaire");
+            break;
+        case -1:
+            strcpy(message, "Mince alors, vous vous êtes touché vous même!");
+            break;
+    }
+}
+
+void sonar(Playground * pg, enum Actif actif, char message[]){
+    int val= rand();
+    if (actif==J1) {
+        if (val%2==1){
+            strcpy(message,"L'ennemi se trouve dans la colonne 8");
+        }else{
+            strcpy(message,"L'ennemi se trouve dans la ligne ");
+        }
+    }
+    else if (pg->actif==J2){
+        if (val%2==1){
+            strcpy(message,"L'ennemi se trouve dans la colonne ");
+        }else{
+            strcpy(message,"L'ennemi se trouve dans la ligne ");
+        }
+    }
+}
+
+

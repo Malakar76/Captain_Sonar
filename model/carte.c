@@ -54,6 +54,7 @@ void Crea_Antartica(CARTE * c){
 }
 
 void choix_carte(Playground * pg,int a){
+    init_map(pg->map);
     if (a==0) {
         Crea_Archipelago(pg->map);
     }
