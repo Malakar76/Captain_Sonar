@@ -16,6 +16,7 @@
 #include "SDL2/SDL_mixer.h"
 #include "SDL2/SDL_ttf.h"
 
+
 /**
  * \enum Window
  * \brief Permet de savoir quelle fenêtre est affichée

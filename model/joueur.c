@@ -28,6 +28,7 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             j->S_M->ligne--;
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
+            j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
             break;
         }
 
@@ -37,6 +38,7 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             j->S_M->ligne++;
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
+            j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
             break;
         }
 
@@ -46,6 +48,7 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             j->S_M->colonne++;
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
+            j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
             break;
         }
 
@@ -55,6 +58,7 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             j->S_M->colonne--;
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
+            j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
             break;
         }
     }
@@ -72,7 +76,7 @@ int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d){
         case haut:
         {
                 if (j->S_M->ligne>0){
-                if (est_occupe(&pg->map->carte[j->S_M->ligne-1][j->S_M->colonne])==0){
+                if ((est_occupe(&pg->map->carte[j->S_M->ligne-1][j->S_M->colonne])==0) && (j->calqueJ[j->S_M->ligne-1][j->S_M->colonne]==0)){
                     return 1;
                 }
             }
@@ -81,7 +85,7 @@ int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d){
         case bas:
         {
             if (j->S_M->ligne<9){
-                if (est_occupe(&pg->map->carte[j->S_M->ligne+1][j->S_M->colonne])==0){
+                if ((est_occupe(&pg->map->carte[j->S_M->ligne+1][j->S_M->colonne])==0)&&(j->calqueJ[j->S_M->ligne+1][j->S_M->colonne]==0)){
                 return 1;
                 }
             }
@@ -91,7 +95,7 @@ int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d){
         case droite:
         {
             if (j->S_M->colonne<9){
-                if (est_occupe(&pg->map->carte[j->S_M->ligne][j->S_M->colonne+1])==0){
+                if ((est_occupe(&pg->map->carte[j->S_M->ligne][j->S_M->colonne+1])==0)&&(j->calqueJ[j->S_M->ligne][j->S_M->colonne+1]==0)){
                     return 1;
                 }
             }
@@ -101,7 +105,7 @@ int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d){
         case gauche:
         {
             if (j->S_M->colonne>0){
-                if (est_occupe(&pg->map->carte[j->S_M->ligne][j->S_M->colonne-1])==0){
+                if ((est_occupe(&pg->map->carte[j->S_M->ligne][j->S_M->colonne-1])==0)&&(j->calqueJ[j->S_M->ligne][j->S_M->colonne-1]==0)){
                     return 1;
                 }
             }
@@ -116,11 +120,24 @@ int init_joueur(JOUEUR *j){
     if(j->S_M==NULL){
         return EXIT_FAILURE;
     }
+    init_calque(j);
     j->energie=0;
     j->vie=2;
     j->S_M->ligne=0;
     j->S_M->colonne=0;
+    j->S_M->start[0]=0;
+    j->S_M->start[1]=0;
     return EXIT_SUCCESS;
+}
+
+void init_calque(JOUEUR * joueur){
+    int i,j;
+    for (i=0;i<NMAX;i++) {
+        for (j = 0; j <NMAX; j++) {
+            joueur->calqueJ[i][j]=0;
+
+        }
+    }
 }
 
 void free_joueur(JOUEUR * j){
@@ -132,6 +149,9 @@ void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c){
     j->S_M->ligne=ligne;
     j->S_M->colonne=colonne;
     c->carte[ligne][colonne].sous_marin=1;
+    j->S_M->start[0]=j->S_M->ligne;
+    j->S_M->start[1]=j->S_M->colonne;
+    j->calqueJ[ligne][colonne]=1;
 }
 
 int enough_energie(Playground *pg, enum Actif actif, enum OPTION option) {
@@ -243,18 +263,28 @@ int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne, char  
 
 void sonar(Playground * pg, enum Actif actif, char message[]){
     int val= rand();
+    char valeur;
     if (actif==J1) {
         if (val%2==1){
-            strcpy(message,"L'ennemi se trouve dans la colonne 8");
+
+            valeur=pg->J2->S_M->colonne+'0';
+            strcpy(message,"L'ennemi se trouve dans la colonne ");
+            strcat(message,&valeur);
         }else{
+            valeur=pg->J2->S_M->ligne+'0';
             strcpy(message,"L'ennemi se trouve dans la ligne ");
+            strcat(message,&valeur);
         }
     }
     else if (pg->actif==J2){
         if (val%2==1){
+            valeur=pg->J1->S_M->colonne;
             strcpy(message,"L'ennemi se trouve dans la colonne ");
+            strcat(message,&valeur);
         }else{
+            valeur=pg->J1->S_M->ligne;
             strcpy(message,"L'ennemi se trouve dans la ligne ");
+            strcat(message,&valeur);
         }
     }
 }

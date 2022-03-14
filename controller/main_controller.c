@@ -81,6 +81,8 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
     init_view_battlefield(app,choix);
     show_battlefield(app);
     choix_carte(pg,choix);
+    init_calque(pg->J1);
+    init_calque(pg->J2);
     int run=1;
     while (run==1){
         SDL_WaitEvent(&event);
@@ -100,6 +102,7 @@ void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix
                         case_choisie(app,point,tab);
                         if (est_occupe(&pg->map->carte[tab[0]][tab[1]])!=1){
                             start_Sous_Marin(pg->J1,tab[0],tab[1],pg->map);
+                            start_Sous_Marin(pg->J2,5,5,pg->map);
                             show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
                             if (tab[0]!=-1){
                                 start=1;

@@ -22,5 +22,4 @@ void start_music(){
         printf("Mix_PlayMusic: %s\n", Mix_GetError());
     }
     Mix_VolumeMusic(128);
-
 }

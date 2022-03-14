@@ -28,6 +28,7 @@ void init_map(CARTE * c){
     for (i=0;i<NMAX;i++) {
         for (j = 0; j <NMAX; j++) {
             init_Case(&c->carte[i][j]);
+
         }
     }
 }

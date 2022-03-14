@@ -74,6 +74,7 @@ enum OPTION{
 typedef struct {
     int ligne; /**< Position ligne du sous-marin*/
     int colonne; /**< Position colonne du sous-marin */
+    int start[2]; /**< Position de départ du sous-marin */
 }SOUS_MARIN;
 
 /**
@@ -84,6 +85,8 @@ typedef struct{
     SOUS_MARIN *S_M; /**< Structure sous-marin associée*/
     int energie; /**< Energie du joueur , entre 0 et 4 */
     int vie; /**< Points de vie du joueur 2 au début */
+    int calqueJ[NMAX][NMAX];/**< Carte de 10 par 10 Case qui stocke les informations des cases qui ont été occupée par le joueur vaut 1 si le joueur est passé par là 0 sinon */
+
 }JOUEUR;
 
 /**
@@ -155,6 +158,13 @@ void free_Carte(CARTE * carte);
  * @param carte Carte de jeu
  */
 void init_map (CARTE * carte);
+
+/**
+ * \fn init_calque(JOUEUR * joueur)
+ * @param joueur Joueur dont il faut réinitialiser le calque
+ * Initialise ou remet à 0 le calque du joueur j
+ */
+void init_calque(JOUEUR * joueur);
 
 /**
  * \fn void choix_carte(Playground * pg,enum Carte carte)
@@ -257,6 +267,18 @@ void sonar(Playground * pg,enum Actif actif,char message[]);
  * @return -1,0 ou 1
  */
 int missile(Playground *pg,enum Actif actif,int ligne,int colonne);
+
+/**
+ * \fn void surface(Playground *pg,enum Actif actif,char message[])
+ * @param pg Structure du modèle
+ * @param actif permet de savoir le joueur qui est en train de jouer
+ * @param message Stocke le message de retour
+ * Fonction qui permet au joueur de faire surface, cette action ne coûte pas d'énergie,
+ * La fonction stocke dans la variable message un message type : "Nous avons fait surface"
+ * L'ennemi sait précisément où le joueur est !
+ * Remet à zéro le calque du joueur qui fait surface!
+ */
+void surface(Playground *pg,enum Actif actif,char message[]);
 
 /**
  * \fn void result_missile(Playground *pg,enum Actif actif,int ligne,int colonne,char message [])
