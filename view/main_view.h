@@ -50,9 +50,9 @@ enum Carte {
  */
 typedef struct {
     SDL_Texture *Battlefield_current;/**< Texture qui garde l'aperçu de la fenêtre de jeu affiché */
-    SDL_Texture *Battlefield_blank;/**< Texture qui garde l'aperçu de la fenêtre de jeu clean*/
+    SDL_Texture *Battlefield_blank;/**< Texture qui garde l'aperçu de la fenêtre de jeu clean */
     SDL_Texture *Sous_marin;/**< Texture qui garde l'aperçu du sous_marin */
-    SDL_Rect  Bbutton[12] ;/** < Tableau qui stocke l'emplacement des boutons du champ de bataille*/
+    SDL_Rect  Bbutton[12] ;/**< Tableau qui stocke l'emplacement des boutons du champ de bataille */
     SDL_Rect Carte[10][10];/**< Tableau qui stocke l'emplacement des cases du champ de bataille */
 }View_Battlefield;
 
@@ -64,17 +64,19 @@ typedef struct {
  */
 typedef struct {
     SDL_Window *wwindow; /**< Fenêtre principale SDl */
-    SDL_Renderer *rRenderer; /**<Renderer associé à la fenêtre principale */
+    SDL_Renderer *rRenderer; /**< Renderer associé à la fenêtre principale */
     View_Battlefield * VBattlefield ;/**< Structure qui stocke les inforamtions de la vue du champ de bataille */
-    SDL_Texture *mMenu;/** < Texture qui garde l'aperçu du menu principal */
+    SDL_Texture *mMenu;/**< Texture qui garde l'aperçu du menu principal */
     SDL_Rect  Mbutton[4] ;/** < Tableau qui stocke l'emplacement des boutons du menu */
     SDL_Rect  Rbutton;  /** < Rectangle qui stocke l'emplacement du bouton retour */
-    SDL_Texture *rRegles;/** <Texture qui garde l'aperçu des règles */
-    SDL_Texture *cCredit;/** <Texture qui garde l'aperçu des crédits */
-    SDL_Texture *cCarte; /** <Texture qui garde l'aperçu du choix des cartes */
-    SDL_Rect  CCarte[4] ;/** < Tableau qui stocke l'emplacement des boutons du choix des cartes */
+    SDL_Texture *rRegles;/** < Texture qui garde l'aperçu des règles */
+    SDL_Texture *cCredit;/** < Texture qui garde l'aperçu des crédits */
+    SDL_Texture *cCarte; /** < Texture qui garde l'aperçu du choix des cartes */
+    SDL_Texture *valide; /**< Texture qui garde l'apeçu du bouton validé pour joueur ou IA */
+    SDL_Rect  CCarte[5] ;/** < Tableau qui stocke l'emplacement des boutons du choix des cartes */
     enum Window window;/** < Permet de savoir qu'elle est la fenêtre actuellement utilisée */
     TTF_Font * ttf;/** < Structure qui permet de régler la police d'écriture des messages */
+    int IA ; /** < Permet de savoir si l'on va jouer contre une IA ou un vrai joueur (0=Joueur , 1=IA) */
 
 }View_elements;
 
@@ -186,12 +188,27 @@ void case_choisie(View_elements * app, SDL_Point point,int tab[]);
 
 /**
  * \fn void show_SM(View_elements * app,int ligne,int colonne)
+ * Affiche le sous-marin et actualise sa position sur la vue
  * @param app Structure qui gère la vue
  * @param ligne Position actuelle du sous-marin
  * @param colonne Position actuelle du sous-marin
  */
 void show_SM(View_elements * app,int ligne,int colonne);
 
+/**
+ * \fn int init_coche_case(View_elements * app)
+ * initialise la texture qui stocke la case cochée
+ * @param app Structure qui gère la vue
+ * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
+ */
+int init_coche_case(View_elements * app);
+
+/**
+ * \fn void coche_case(View_elements * app)
+ * met à jour la tecture de la case cochée sur la vue.
+ * @param app Structure qui gère la vue
+ */
+void coche_case(View_elements * app);
 
 
 // Fonctions pour le Menu

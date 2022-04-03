@@ -158,8 +158,10 @@ int init_choix_carte(View_elements * app){
     SDL_SetRenderTarget(app->rRenderer, NULL);
     SDL_Rect rect1={190,430,300,90};
     SDL_Rect rect2={950,430,300,90};
+    SDL_Rect rect5={1295,20,78,78};
     app->CCarte[0]=rect1;
     app->CCarte[1]=rect2;
+    app->CCarte[4]=rect5;
     return EXIT_SUCCESS;
 
 }
@@ -172,7 +174,7 @@ void show_choix_carte(View_elements *app){
 
 void print_message(View_elements *app,char * message){
     SDL_SetRenderDrawColor(app->rRenderer,57,143,70,255);
-    SDL_Rect rect ={100,800,600,100}; // zone où afficher le message
+    SDL_Rect rect ={100,800,1000,100}; // zone où afficher le message
     SDL_RenderFillRect(app->rRenderer,&rect);
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
@@ -203,4 +205,45 @@ void show_SM(View_elements * app,int ligne,int colonne){
     SDL_Rect rect=app->VBattlefield->Carte[ligne][colonne];
     SDL_RenderCopy(app->rRenderer,app->VBattlefield->Sous_marin,NULL,&rect);
     SDL_RenderPresent(app->rRenderer);
+}
+
+void coche_case(View_elements * app){
+    if (app->IA==0){
+        app->IA=1;
+        SDL_RenderCopy(app->rRenderer,app->valide,NULL,NULL);
+    }else{
+        app->IA=0;
+        SDL_RenderClear(app->rRenderer);
+        SDL_RenderCopy(app->rRenderer,app->cCarte,NULL,NULL);
+    }
+    SDL_RenderPresent(app->rRenderer);
+}
+
+int init_coche_case(View_elements * app){
+    app->IA=0;
+    SDL_Texture * tmp=NULL;
+    SDL_Surface * surface=NULL;
+    surface=IMG_Load("Ressources/Valide.png");
+    if (surface==NULL){
+        fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(tmp);
+        return EXIT_FAILURE;
+    }
+    Uint32 colorkey = SDL_MapRGB(surface->format,255,255,255);
+    SDL_SetColorKey(surface,SDL_TRUE,colorkey);
+    tmp=SDL_CreateTextureFromSurface(app->rRenderer,surface);
+    if (tmp==NULL){
+        fprintf(stderr, "Erreur SDL_CreateTexture: %s", SDL_GetError());
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(tmp);
+        return EXIT_FAILURE;
+    }
+    SDL_SetRenderTarget(app->rRenderer, app->valide);
+    SDL_RenderCopy(app->rRenderer, tmp, NULL, &app->CCarte[4]);
+    SDL_DestroyTexture(tmp);
+    SDL_FreeSurface(surface);
+    SDL_SetTextureBlendMode(app->valide,SDL_BLENDMODE_BLEND);
+    SDL_SetRenderTarget(app->rRenderer, NULL);
+    return EXIT_SUCCESS;
 }

@@ -200,6 +200,13 @@ void free_joueur(JOUEUR *j);
 void energie_up(JOUEUR *j);
 
 /**
+ * \fn void energie_down(JOUEUR *j,int nb)
+ * @param j Joueur sélectionné
+ * @param nb valeur d'énergie à retirer
+ */
+void energie_down(JOUEUR *j,int nb);
+
+/**
  * \fn void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d)
  * \brief déplace un sous-marin
  * Déplace le sous-marin du joueur actif dans la direction indiquée et augmente son énergie
@@ -309,16 +316,19 @@ int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne,char me
 int enough_energie(Playground *pg,enum Actif actif,enum OPTION option);
 
 /**
- * \fn void action(Playground *pg,enum Actif actif,enum OPTION option)
+ * \fn void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message [])
  * Réalise l'option passé en paramètre en appelant les fonction précédentes
  * ex : result missile
  * Et retourne une chaîne de caractère qui correspond à l'action éffectuée
- * @param pg
- * @param actif
- * @param option
- * @return renvoie un pointeur vers une chaîne de caractère
+ * @param pg Structure du modèle
+ * @param actif permet de savoir le joueur qui est en train de jouer
+ * @param option Permet de savoir l'action que le jouer veut faire
+ * @param d Direction dans laquelle se déplacer
+ * @param ligne ligne sélectionné par le joueur pour le missile
+ * @param colonne colonne sélectionné par le joueur pour le missile
+ * @param message Stocke le message de retour
  */
-void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,char message []);
+void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []);
 
 //Création Carte
 

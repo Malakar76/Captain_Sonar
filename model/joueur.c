@@ -12,6 +12,10 @@ void energie_up(JOUEUR *j){
         }
     }
 
+void energie_down(JOUEUR *j,int nb){
+    j->energie=j->energie-nb;
+}
+
 void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
     JOUEUR * j;
     if (actif==J1) {
@@ -251,13 +255,16 @@ int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne, char  
     switch (missile(pg, actif, ligne, colonne)) {
         case 0:
             strcpy(message, "Zut, vous n'avez rien touché");
-            break;
+            return 0;
+
         case 1:
             strcpy(message, "Bravo vous avez touché l'adversaire");
-            break;
+            return 1;
+
         case -1:
             strcpy(message, "Mince alors, vous vous êtes touché vous même!");
-            break;
+            return -1;
+
     }
 }
 
@@ -267,11 +274,15 @@ void sonar(Playground * pg, enum Actif actif, char message[]){
     if (actif==J1) {
         if (val%2==1){
 
-            valeur=pg->J2->S_M->colonne+'0';
+            //valeur=pg->J2->S_M->colonne+'0';
+            valeur = '5';
+            fprintf(stderr,"%c",valeur);
             strcpy(message,"L'ennemi se trouve dans la colonne ");
             strcat(message,&valeur);
         }else{
-            valeur=pg->J2->S_M->ligne+'0';
+            //valeur=pg->J2->S_M->ligne+'0';
+            valeur = '5';
+            fprintf(stderr,"%c",valeur);
             strcpy(message,"L'ennemi se trouve dans la ligne ");
             strcat(message,&valeur);
         }
@@ -287,6 +298,108 @@ void sonar(Playground * pg, enum Actif actif, char message[]){
             strcat(message,&valeur);
         }
     }
+}
+
+void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []){
+    JOUEUR * j;
+    if (pg->actif==J1){
+        j=pg->J1;
+    }else{
+        j=pg->J2;
+    }
+    switch (option) {
+        case MIS: {
+
+            if (enough_energie(pg, actif, MIS)) {
+                result_missile(pg, actif, ligne, colonne, message);
+                energie_down(j,4);
+            } else {
+                printf("Pas assez d'energie pour missille");
+            }
+            break;
+        }
+
+        case SURF: {
+            surface(pg,actif,message);
+            break;
+        }
+
+
+        case SON: {
+            if (enough_energie(pg, actif, SON)) {
+                sonar(pg, actif, message);
+                energie_down(j,2);
+            } else {
+                strcpy(message, "Pas d'energie pour sonar");
+            }
+            break;
+        }
+
+
+        case SIL: {
+            if (enough_energie(pg, actif, SIL)) {
+                energie_down(j,3);
+            } else {
+                strcpy(message, "Pas d'energie pour silence");
+            }
+            break;
+        }
+
+
+        case DEPLCMNT: {
+
+            switch (d) {
+                case haut: {
+                    if (deplacement_possible(pg, actif, d)) {
+                        result_deplacement(pg, actif, d, message);
+                    }else {
+                        strcpy(message, "Impossible de se deplacer en haut");
+                    }
+                    break;
+                }
+
+
+                case bas: {
+
+                    if (deplacement_possible(pg, actif, d)) {
+                        result_deplacement(pg, actif, d, message);
+                    } else {
+                        strcpy(message, "Impossible de se deplacer en bas");
+                    }
+                    break;
+                }
+
+
+                case droite: {
+                    if (deplacement_possible(pg, actif, d)) {
+                        result_deplacement(pg, actif, d, message);
+                    } else {
+                        strcpy(message, "Impossible de se deplacer à droite");
+                    }
+                    break;
+                }
+
+
+
+                case gauche: {
+                    if (deplacement_possible(pg, actif, d)) {
+                        result_deplacement(pg, actif, d, message);
+                    } else {
+                        strcpy(message, "Impossible de se deplacer à gauche");
+                    }
+                    break;
+                }
+
+            }
+            break;
+        }
+
+
+    }
+}
+
+void surface(Playground *pg,enum Actif actif,char message[]){
+
 }
 
 

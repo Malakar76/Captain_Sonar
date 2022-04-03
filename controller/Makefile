@@ -9,7 +9,7 @@ all: libcontroller.a
 
 
 
-libcontroller.a: main_controller.o
+libcontroller.a: main_controller.o control_battlefield.o
 	ar -rv $(DIRLIB)/$@ $^
 
 %.o: %.c

@@ -64,6 +64,11 @@ int init_view(View_elements * app) {
         fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
         return statut;
     }
+    app->valide= SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,Resolution_x,Resolution_y);
+    if(NULL == app->valide) {
+        fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
+        return statut;
+    }
     app->VBattlefield->Battlefield_blank =SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,Resolution_x,Resolution_y);
     if(NULL == app->VBattlefield->Battlefield_blank) {
         fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
@@ -91,6 +96,7 @@ void free_view(View_elements *app){
     SDL_DestroyTexture(app->rRegles);
     SDL_DestroyTexture(app->cCredit);
     SDL_DestroyTexture(app->cCarte);
+    SDL_DestroyTexture(app->valide);
     SDL_DestroyTexture(app->VBattlefield->Sous_marin);
     SDL_DestroyTexture(app->VBattlefield->Battlefield_current);
     SDL_DestroyTexture(app->VBattlefield->Battlefield_blank);
@@ -114,6 +120,9 @@ int init_all_view(View_elements *app){
         return EXIT_FAILURE;
     }
     if(init_credit(app) !=EXIT_SUCCESS){
+        return EXIT_FAILURE;
+    }
+    if(init_coche_case(app)!=EXIT_SUCCESS){
         return EXIT_FAILURE;
     }
     init_rbutton(app);
