@@ -1,241 +1,125 @@
 //
-// Created by robin on 07/02/2022.
+// Created by robin on 03/04/2022.
 //
+
+
 /**
- * \file main_view.h
- * \brief Fichier principal de la vue.
+ * \file control_battlefield.c
+ * \brief gestion du controller du champ de bataille.
  *
- * Fichier principal pour la gestion de la vue du projet
+ * Fichier qui permet de gérer le corps pur du jeu avec la gestion du champ de bataille
  */
+#include "main_controller.h"
 
-#ifndef PROJET_C_MAIN_VIEW_H
-#define PROJET_C_MAIN_VIEW_H
+void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix,int IA){
+    if (IA==0){
+        controller_battlefield_Joueur(app,pg,choix);
+    }else if (IA==1){
+        controller_battlefield_IA(app,pg,choix);
+    }
+}
 
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
-#include "SDL2/SDL_mixer.h"
+void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte choix){
+    int start=0;
+    char message [100];
+    SDL_Event event;
+    SDL_Point point= {-1,-1};
+    init_view_battlefield(app,choix);
+    show_battlefield(app);
+    choix_carte(pg,choix);
+    init_calque(pg->J1);
+    init_calque(pg->J2);
+    int run=1;
+    while (run==1){
+        SDL_WaitEvent(&event);
+        switch(event.type){
+            case SDL_QUIT:
+                run =0;
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                point.x=event.button.x;
+                point.y=event.button.y;
+                if ((event.button.button==SDL_BUTTON_LEFT) && (event.button.windowID== SDL_GetWindowID(app->wwindow))) {
+                    if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[10])){
+                        run=0;
+                    }
+                    else if ((start==0) && (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[11]))){
+                        int tab[2];
+                        case_choisie(app,point,tab);
+                        if (est_occupe(&pg->map->carte[tab[0]][tab[1]])!=1){
+                            start_Sous_Marin(pg->J1,tab[0],tab[1],pg->map);
+                            start_Sous_Marin(pg->J2,5,5,pg->map);
+                            show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            if (tab[0]!=-1){
+                                start=1;
+                                print_message(app,"Vous avez choisi votre case");
+                            }
+                        }else{
+                            print_message(app,"Case inaccessible");
+                        }
 
-/**
- * \enum Window
- * \brief Permet de savoir quelle fenêtre est affichée
- *
- * Enumération qui permet de savoir quelle est la fenêtre affichée
- */
-enum Window {
-    Menu, /**< Fenêtre du menu */
-    Battlefield, /**< Fenêtre du champ de bataille */
-    Choix_Carte, /**< fenêtre du choix de la carte */
-    Rules, /**< Fenêtre des règles */
-    Credits /**< Fenêtre des Crédits */
-};
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[9])){
+                        //couper ou remettre le son
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[8])){
+                        //clean map
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[7]) && start==1){
+                        //missile
+                        action(pg,pg->actif,MIS,0,0,0,message);
+                        print_message(app,message);
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[6]) && start==1){
+                        //silence
+                        action(pg,pg->actif,SIL,0,0,0,message);
+                        print_message(app,message);
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[5]) && start==1){
+                        action(pg,pg->actif,SON,0,0,0,message);
+                        print_message(app,message);
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[4]) && start==1){
+                        //surface
+                        action(pg,pg->actif,SURF,0,0,0,message);
+                        print_message(app,message);
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[3]) && start==1){
+                        //droite
+                        action(pg,pg->actif,DEPLCMNT,droite,0,0,message);
+                        show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                        trace_deplacement(app, 3, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
+                        print_message(app,message);
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[2]) && start==1){
+                        //gauche
+                        action(pg,pg->actif,DEPLCMNT,gauche,0,0,message);
+                        show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                        trace_deplacement(app, 2, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
+                        print_message(app,message);
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[1]) && start==1){
+                        //bas
+                        action(pg,pg->actif,DEPLCMNT,bas,0,0,message);
+                        show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                        trace_deplacement(app, 1, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
+                        print_message(app,message);
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[0]) && start==1){
+                        //haut
+                        action(pg,pg->actif,DEPLCMNT,haut,0,0,message);
+                        show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                        trace_deplacement(app, 0, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
+                        print_message(app,message);
+                    }
+                    else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[11]) && start==1){
+                        //sur la carte affichage calque
+                    }
 
-/**
- * \enum Carte
- * \brief Permet de savoir quelle carte a été choisie par le joueur
- *
- * Enumération qui permet de savoir quelle est la carte sélectionnée par le joueur
- */
-enum Carte {
-    Archipelago, /**< Carte 1 */
-    Antartica /**< Carte 2 */
-};
+                }
+        }
+    }
+}
+void controller_battlefield_Joueur(View_elements * app,Playground * pg,enum Carte choix){
 
-/**
- * \struct View_Battlefield
- * \brief Elements de la vue du Battlefield
- *
- * Structure qui regroupe tous les éléments nécessaires pour gérer la vue du champ de bataille
- */
-typedef struct {
-    SDL_Texture *Battlefield_current;/**< Texture qui garde l'aperçu de la fenêtre de jeu affiché */
-    SDL_Texture *Battlefield_blank;/**< Texture qui garde l'aperçu de la fenêtre de jeu clean*/
-    SDL_Texture *Sous_marin;/**< Texture qui garde l'aperçu du sous_marin */
-    SDL_Rect  Bbutton[8] ;/** < Tableau qui stocke l'emplacement des boutons du champ de bataille*/
-    SDL_Rect Carte[10][10];/**< Tableau qui stocke l'emplacement des cases du champ de bataille */
-}View_Battlefield;
-
-/**
- * \struct View_elements
- * \brief Elements de la vue
- *
- * Structure qui regroupe tous les éléments nécessaires pour gérer la vue du projet
- */
-typedef struct {
-    SDL_Window *wwindow; /**< Fenêtre principale SDl */
-    SDL_Renderer *rRenderer; /**<Renderer associé à la fenêtre principale */
-    View_Battlefield * VBattlefield ;/**< Structure qui stocke les inforamtions de la vue du champ de bataille */
-    SDL_Texture *mMenu;/** < Texture qui garde l'aperçu du menu principal */
-    SDL_Rect  Mbutton[4] ;/** < Tableau qui stocke l'emplacement des boutons du menu */
-    SDL_Rect  Rbutton;  /** < Rectangle qui stocke l'emplacement du bouton retour */
-    SDL_Texture *rRegles;/** <Texture qui garde l'aperçu des règles */
-    SDL_Texture *cCredit;/** <Texture qui garde l'aperçu des crédits */
-    SDL_Texture *cCarte; /** <Texture qui garde l'aperçu du choix des cartes */
-    SDL_Rect  CCarte[4] ;/** < Tableau qui stocke l'emplacement des boutons du choix des cartes */
-    enum Window window;/** <Permet de savoir qu'elle est la fenêtre actuellement utilisée */
-
-}View_elements;
-
-
-
-//Fonction Globale
-
-
-int trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
-/**
- * \fn int init_view(View_elements * app)
- * \brief initialise la vue et le renderer de la structure passée.
- * Initialise toutes les textures de la structure passée, le renderer et la fenêtre
- * Mais initialise aussi le module qui permet d'ouvrir les images JPG
- * @param app Structure qui gère la vue
- * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
- */
-int init_view(View_elements * app);
-/**
- * \fn void free_view(View_elements * app)
- * \brief libère la fenêtre,le renderer et les textures de la structure passée.
- * @param app Structure qui gère la vue
- */
-void free_view(View_elements * app);
-/**
- * \fn int init_all_view(View_elements *app)
- * \brief Remplit toutes les textures de la structure.
- * Remplit chaque fenêtre les unes après les autres avec la bonne texture
- * @param app Structure qui gère la vue
- * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
- */
-int init_all_view(View_elements *app);
-
-
-// Fonctions pour le champ de bataille
-
-/**
- * \fn int init_view_battlefield(View_elements * app,enum Carte c)
- * \brief Initialise la Structure VBattlefield.
- * Applique la bonne texture au différentes textures de la structure
- * Crée les différents boutons
- * @param app Structure qui gère la vue
- * @param c Permet de savoir la carte choisie
- * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
- */
-int init_view_battlefield(View_elements * app,enum Carte c);
-/**
- * \fn int init_battlefield_blank(View_elements * app,enum Carte c)
- * \brief Initialise la texture du champ de bataille
- * Applique la bonne texture
- * @param app Structure qui gère la vue
- * @param c Permet de savoir la carte choisie
- * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
- */
-int init_battlefield(View_elements * app,enum Carte c);
-/**
- * \fn int init_sousmarin(View_elements * app)
- * \brief Initialise la texture du sous-marin
- * Applique la bonne texture
- * @param app Structure qui gère la vue
- * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
- */
-int init_sousmarin(View_elements * app);
-
-/**
- * \fn void show_battlefield(View_elements *app)
- * \brief Affiche le battlefield.
- * Remplace la fenêtre précédente par la texture du champ de bataille
- * @param app Structure qui gère la vue
- */
-void show_battlefield(View_elements *app);
-/**
- * \fn int init_choix_carte(View_elements * app)
- * \brief Initialise le choix de carte.
- * Applique la bonne texture au choix de carte
- * @param app Structure qui gère la vue
- * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
- */
-int init_choix_carte(View_elements * app);
-/**
- * \fn void show_choix_carte(View_elements *app)
- * \brief Affiche le choix de carte
- * Remplace la fenêtre précédente par la texture du choix de la carte
- * @param app Structure qui gère la vue
- */
-void show_choix_carte(View_elements *app);
-
-
-// Fonctions pour le Menu
-
-/**
- * \fn int init_menu(View_elements *app)
- * \brief Initialise le Menu.
- * Applique la bonne texture au menu
- * @param app Structure qui gère la vue
- * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
- */
-int init_menu(View_elements *app);
-/**
- * \fn void show_menu(View_elements *app)
- * \brief Affiche le menu
- * Remplace la fenêtre précédente par la texture du menu
- * @param app Structure qui gère la vue
- */
-void show_menu(View_elements *app);
-
-
-//Fonctions pour les Règles
-
-/**
- * \fn int init_rules(View_elements *app)
- * \brief Initialise les règles
- * Applique la bonne texture au règles
- * @param app Structure qui gère la vue
- * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
- */
-int init_rules(View_elements *app);
-/**
- * \fn void show_rules(View_elements *app)
- * \brief Affiche les règles
- * Remplace la fenêtre précédente par la texture des règles
- * @param app Structure qui gère la vue
- */
-void show_rules(View_elements *app);
-
-
-//Fonctions pour les Crédits
-
-/**
- * \fn int init_credit(View_elements *app)
- * \brief Initialise les crédits.
- * Applique la bonne texture aux crédits
- * @param app Structure qui gère la vue
- * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
- */
-int init_credit(View_elements *app);
-/**
- * \fn void show_credit(View_elements *app)
- * \brief Affiche les crédits
- * Remplace la fenêtre précédente par la texture des crédits
- * @param app Structure qui gère la vue
- */
-void show_credit(View_elements *app);
-
-
-//Bouton commun au choix de carte, crédits et règles
-
-/**
- * \fn void init_rbutton(View_elements *app)
- * \brief initialise la position du bouton retour
- * Initialise dans la structure passée la valeur du bouton de retour
- * aka la position du bouton sur l'image
- * @param app Structure qui gère la vue
- */
-void init_rbutton(View_elements *app);
-
-
-//Fonction pour le son
-
-/**
- * \fn void start_music()
- * \brief lance la musique
- * Lance la musique de fond du menu
- */
-void start_music();
-
-#endif //PROJET_C_MAIN_VIEW_H
+}
