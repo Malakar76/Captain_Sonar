@@ -11,7 +11,7 @@
 
 #include "main_view.h"
 
-int trace_deplacement(View_Battlefield *vb, View_elements *ve){
+int trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne){
 
     int i, j; // on cree des mini rect sur la carte pour placer haut du rect pour le trait
     SDL_Rect recti={0,0,4,4};
@@ -25,18 +25,12 @@ int trace_deplacement(View_Battlefield *vb, View_elements *ve){
     }
 
 
-
-    SDL_Rect rect;
-    //on vient recuperer position joueur lettre et num a et b
-    rect.x = tab[a][b].x;
-    rect.y = tab[a][b].y;
+    SDL_Rect rect;    //on vient recuperer position joueur
+    rect.x=(ve->VBattlefield->Carte[pos_joueur_ligne][pos_joueur_colonne]).x;
+    rect.y=(ve->VBattlefield->Carte[pos_joueur_ligne][pos_joueur_colonne]).y;
 
 
-    for (int i = 0; i < dernier_elt ; ++i) { //parcour tableau ou liste des historiques de deplacement et on vient chzrcher le dernier element
-        //on recupere res qui dit dir (enum)
-    }
-
-    if (SDL_SetRenderTarget(ve->rRenderer, vb->Battlefield_current) != 0){
+    if (SDL_SetRenderTarget(ve->rRenderer, ve->VBattlefield->Battlefield_current) != 0){
         SDL_Log("Erreur ciblage %s", SDL_GetError());
         SDL_Quit();
         return EXIT_FAILURE;
@@ -44,9 +38,9 @@ int trace_deplacement(View_Battlefield *vb, View_elements *ve){
 
     SDL_SetRenderDrawColor(ve->rRenderer, 255, 0, 0, SDL_ALPHA_OPAQUE); //modifie couleur trait
 
-    switch (res) {
+    switch (direction) {
 
-        case HAUT:
+        case 0: //haut
             rect.y=rect.y+66;
             rect.w=4;
             rect.h=66;
@@ -57,7 +51,7 @@ int trace_deplacement(View_Battlefield *vb, View_elements *ve){
             }
             break;
 
-        case BAS:
+        case 1: //bas
             rect.w=4;
             rect.h=66;
             if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
@@ -67,7 +61,10 @@ int trace_deplacement(View_Battlefield *vb, View_elements *ve){
             }
             break;
 
-        case DROITE:
+
+
+        case 2: //gauche
+            rect.x=rect.x+66;
             rect.w=66;
             rect.h=4;
             if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
@@ -77,8 +74,7 @@ int trace_deplacement(View_Battlefield *vb, View_elements *ve){
             }
             break;
 
-        case GAUCHE:
-            rect.x=rect.x+66;
+        case 3: //droite
             rect.w=66;
             rect.h=4;
             if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){

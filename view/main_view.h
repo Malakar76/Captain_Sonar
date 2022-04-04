@@ -79,6 +79,8 @@ typedef struct {
 
 //Fonction Globale
 
+
+int trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
 /**
  * \fn int init_view(View_elements * app)
  * \brief initialise la vue et le renderer de la structure passée.
