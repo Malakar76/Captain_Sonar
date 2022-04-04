@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g 
-LDFLAGS= -lSDL2 -lSDL2_image -lSDL2_mixer
+LDFLAGS= -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 DIRLIB=../lib
 
 
