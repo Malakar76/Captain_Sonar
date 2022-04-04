@@ -44,12 +44,15 @@ void controller(View_elements *app,Playground * pg){
                                 show_menu(app);
                             }
                             else if (SDL_PointInRect(&point,&app->CCarte[0])){
-                                controller_battlefield(app,pg,Archipelago);
+                                controller_battlefield(app,pg,Archipelago,app->IA);
                                 show_menu(app);
                             }
                             else if (SDL_PointInRect(&point,&app->CCarte[1])){
-                                controller_battlefield(app,pg,Antartica);
+                                controller_battlefield(app,pg,Antartica,app->IA);
                                 show_menu(app);
+                            }
+                            else if (SDL_PointInRect(&point,&app->CCarte[5])){
+                                coche_case(app);
                             }
                             break;
                         case Rules:
@@ -65,32 +68,6 @@ void controller(View_elements *app,Playground * pg){
                     }
                 }
                 break;
-
-
-
-
-        }
-    }
-}
-
-void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix){
-    SDL_Event event;
-    SDL_Point point= {-1,-1};
-    init_view_battlefield(app,choix);
-    show_battlefield(app);
-    int run=1;
-    while (run==1){
-        SDL_WaitEvent(&event);
-        switch(event.type){
-            case SDL_QUIT:
-                run =0;
-                break;
-            case SDL_MOUSEBUTTONDOWN:
-                if ((event.button.button==SDL_BUTTON_LEFT) && (event.button.windowID== SDL_GetWindowID(app->wwindow))) {
-                    point.x = event.button.x;
-                    point.y = event.button.y;
-                    run=0;
-                }
         }
     }
 }

@@ -23,7 +23,7 @@
  *      -les règles
  * Passe la main à controller_battlefield pour la gestion de la partie
  * @param app Structure qui gère la vue
- * @param pg Strucutre qui gère le model
+ * @param pg Strucutre qui gère le modèle
  */
 void controller(View_elements * app,Playground * pg);
 /**
@@ -32,8 +32,28 @@ void controller(View_elements * app,Playground * pg);
  * Fonctionnalité :
  *      -gère le champ de bataille
  * @param app Structure qui gère la vue
- * @param pg Strucutre qui gère le model
+ * @param pg Strucutre qui gère le modèle
+ * @param IA Entier valant 0 (joueur) ou 1 (IA) qui permet de savoir si l'on joue contre une IA ou un autre joueur
+ * @param choix
  */
-void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix);
+void controller_battlefield(View_elements * app,Playground * pg,enum Carte choix,int IA);
+
+/**
+ * \fn void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte choix)
+ * Lance le controller dédié aux parties contre l'IA
+ * @param app Structure qui gère la vue
+ * @param pg Strucutre qui gère le modèle
+ * @param choix Choix de la carte à lancer
+ */
+void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte choix);
+
+/**
+ * \fn void controller_battlefield_Joueur(View_elements * app,Playground * pg,enum Carte choix)
+ * Lance le controlleur dédié aux parties JCJ
+ * @param app Structure qui gère la vue
+ * @param pg Strucutre qui gère le modèle
+ * @param choix Choix de la carte à lancer
+ */
+void controller_battlefield_Joueur(View_elements * app,Playground * pg,enum Carte choix);
 
 #endif //PROJET_C_MAIN_CONTROLLER_H
