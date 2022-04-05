@@ -19,15 +19,15 @@ int trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, in
     for (i = 0; i < 10; i++) {
         recti.y=78+i*66;
         for (j = 0;  j< 10; j++) {
-            tab[i][j]= recti; //i ligne j colonne
             recti.x= 84+j*66;
+            tab[i][j]= recti; //i ligne j colonne
         }
     }
 
 
     SDL_Rect rect;    //on vient recuperer position joueur
-    rect.x=(ve->VBattlefield->Carte[pos_joueur_ligne][pos_joueur_colonne]).x;
-    rect.y=(ve->VBattlefield->Carte[pos_joueur_ligne][pos_joueur_colonne]).y;
+    rect.x=(tab[pos_joueur_ligne][pos_joueur_colonne]).x;
+    rect.y=(tab[pos_joueur_ligne][pos_joueur_colonne]).y;
 
 
     if (SDL_SetRenderTarget(ve->rRenderer, ve->VBattlefield->Battlefield_current) != 0){
@@ -41,7 +41,7 @@ int trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, in
     switch (direction) {
 
         case 0: //haut
-            rect.y=rect.y+66;
+            rect.y=rect.y-66;
             rect.w=4;
             rect.h=66;
             if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
@@ -64,7 +64,7 @@ int trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, in
 
 
         case 2: //gauche
-            rect.x=rect.x+66;
+            rect.x=rect.x-66;
             rect.w=66;
             rect.h=4;
             if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
@@ -88,6 +88,10 @@ int trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, in
             break;
 
     }
+
+    SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_current,NULL,&rect);
+    SDL_RenderPresent(app->rRenderer);
+
     return EXIT_SUCCESS;
 }
 
