@@ -51,7 +51,7 @@ void controller(View_elements *app,Playground * pg){
                                 controller_battlefield(app,pg,Antartica,app->IA);
                                 show_menu(app);
                             }
-                            else if (SDL_PointInRect(&point,&app->CCarte[5])){
+                            else if (SDL_PointInRect(&point,&app->CCarte[4])){
                                 coche_case(app);
                             }
                             break;

@@ -48,7 +48,7 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                         case_choisie(app,point,tab);
                         if (est_occupe(&pg->map->carte[tab[0]][tab[1]])!=1){
                             start_Sous_Marin(pg->J1,tab[0],tab[1],pg->map);
-                            start_Sous_Marin(pg->J2,5,5,pg->map);
+                            start_Sous_Marin(pg->J2,5,5,pg->map); //mettre une valeur quelconque pour l'IA
                             show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
                             if (tab[0]!=-1){
                                 start=1;
@@ -67,8 +67,16 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[7]) && start==1){
                         //missile
-                        action(pg,pg->actif,MIS,0,0,0,message);
-                        print_message(app,message);
+                        if (enough_energie(pg,pg->actif,MIS)){
+                            print_message(app,"choississez la case ou tirer");
+
+                            action(pg,pg->actif,MIS,0,0,0,message) ;
+                            actionIA(pg);
+                        }else{
+                            print_message(app,"Pas assez d'energie pour missille");
+                        }
+                    }
+
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[6]) && start==1){
                         //silence
@@ -76,46 +84,60 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                         print_message(app,message);
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[5]) && start==1){
-                        action(pg,pg->actif,SON,0,0,0,message);
+                        if(action(pg,pg->actif,SON,0,0,0,message)){
+                            actionIA(pg);
+                        }
                         print_message(app,message);
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[4]) && start==1){
                         //surface
-                        action(pg,pg->actif,SURF,0,0,0,message);
+                        if(action(pg,pg->actif,SURF,0,0,0,message)){
+                            actionIA(pg);
+                        }
                         print_message(app,message);
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[3]) && start==1){
                         //droite
-                        action(pg,pg->actif,DEPLCMNT,droite,0,0,message);
-                        show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                        if(action(pg,pg->actif,DEPLCMNT,droite,0,0,message)){
+                            show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            trace_deplacement(app,droite,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            actionIA(pg);
+                        }
                         print_message(app,message);
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[2]) && start==1){
                         //gauche
-                        action(pg,pg->actif,DEPLCMNT,gauche,0,0,message);
-                        show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                        if(action(pg,pg->actif,DEPLCMNT,gauche,0,0,message)){
+                            show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            trace_deplacement(app,gauche,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            actionIA(pg);
+                        }
                         print_message(app,message);
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[1]) && start==1){
                         //bas
-                        action(pg,pg->actif,DEPLCMNT,bas,0,0,message);
-                        show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                        if(action(pg,pg->actif,DEPLCMNT,bas,0,0,message)){
+                            show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            trace_deplacement(app,bas,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            actionIA(pg);
+                        }
                         print_message(app,message);
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[0]) && start==1){
                         //haut
-                        action(pg,pg->actif,DEPLCMNT,haut,0,0,message);
-                        show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                        if(action(pg,pg->actif,DEPLCMNT,haut,0,0,message)){
+                            show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            trace_deplacement(app,haut,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            actionIA(pg);
+                        }
                         print_message(app,message);
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[11]) && start==1){
                         //sur la carte affichage calque
                     }
-
                 }
         }
     }
-}
 void controller_battlefield_Joueur(View_elements * app,Playground * pg,enum Carte choix){
 
 }

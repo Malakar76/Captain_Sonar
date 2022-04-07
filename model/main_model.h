@@ -316,7 +316,7 @@ int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne,char me
 int enough_energie(Playground *pg,enum Actif actif,enum OPTION option);
 
 /**
- * \fn void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message [])
+ * \fn int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message [])
  * Réalise l'option passé en paramètre en appelant les fonction précédentes
  * ex : result missile
  * Et retourne une chaîne de caractère qui correspond à l'action éffectuée
@@ -327,8 +327,9 @@ int enough_energie(Playground *pg,enum Actif actif,enum OPTION option);
  * @param ligne ligne sélectionné par le joueur pour le missile
  * @param colonne colonne sélectionné par le joueur pour le missile
  * @param message Stocke le message de retour
+ * @return Renvoi 1 si une action a bien été effectuée, 0 sinon
  */
-void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []);
+int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []);
 
 //Création Carte
 
@@ -345,5 +346,13 @@ void Crea_Archipelago(CARTE * c);
  */
 void Crea_Antartica(CARTE * c);
 
+//IA
+
+/**
+ * \fn void actionIA(Playground * pg)
+ * choisi une action pour l'IA
+ * @param pg Structure du modèle
+ */
+void actionIA(Playground * pg);
 
 #endif //PROJET_C_MAIN_MODEL_H

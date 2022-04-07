@@ -254,15 +254,15 @@ int missile(Playground *pg,enum Actif actif,int ligne,int colonne) {
 int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne, char  message[]) {
     switch (missile(pg, actif, ligne, colonne)) {
         case 0:
-            strcpy(message, "Zut, vous n'avez rien touché");
+            strcpy(message, "Zut, vous n'avez rien touche");
             return 0;
 
         case 1:
-            strcpy(message, "Bravo vous avez touché l'adversaire");
+            strcpy(message, "Bravo vous avez touche l'adversaire");
             return 1;
 
         case -1:
-            strcpy(message, "Mince alors, vous vous êtes touché vous même!");
+            strcpy(message, "Mince alors, vous vous etes touche vous meme!");
             return -1;
 
     }
@@ -300,7 +300,7 @@ void sonar(Playground * pg, enum Actif actif, char message[]){
     }
 }
 
-void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []){
+int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []){
     JOUEUR * j;
     if (pg->actif==J1){
         j=pg->J1;
@@ -313,15 +313,16 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
             if (enough_energie(pg, actif, MIS)) {
                 result_missile(pg, actif, ligne, colonne, message);
                 energie_down(j,4);
+                return 1;
             } else {
                 printf("Pas assez d'energie pour missille");
+                return 0;
             }
-            break;
         }
 
         case SURF: {
             surface(pg,actif,message);
-            break;
+            return 1;
         }
 
 
@@ -329,20 +330,23 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
             if (enough_energie(pg, actif, SON)) {
                 sonar(pg, actif, message);
                 energie_down(j,2);
+                return 1;
             } else {
                 strcpy(message, "Pas d'energie pour sonar");
+                return 0;
             }
-            break;
         }
 
 
         case SIL: {
             if (enough_energie(pg, actif, SIL)) {
+                //rajouter fonction silence
                 energie_down(j,3);
+                return 1;
             } else {
                 strcpy(message, "Pas d'energie pour silence");
+                return 0;
             }
-            break;
         }
 
 
@@ -352,10 +356,11 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
                 case haut: {
                     if (deplacement_possible(pg, actif, d)) {
                         result_deplacement(pg, actif, d, message);
+                        return 1;
                     }else {
                         strcpy(message, "Impossible de se deplacer en haut");
+                        return 0;
                     }
-                    break;
                 }
 
 
@@ -363,20 +368,22 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
 
                     if (deplacement_possible(pg, actif, d)) {
                         result_deplacement(pg, actif, d, message);
+                        return 1;
                     } else {
                         strcpy(message, "Impossible de se deplacer en bas");
+                        return 0;
                     }
-                    break;
                 }
 
 
                 case droite: {
                     if (deplacement_possible(pg, actif, d)) {
                         result_deplacement(pg, actif, d, message);
+                        return 1;
                     } else {
-                        strcpy(message, "Impossible de se deplacer à droite");
+                        strcpy(message, "Impossible de se deplacer a droite");
+                        return 0;
                     }
-                    break;
                 }
 
 
@@ -384,10 +391,11 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
                 case gauche: {
                     if (deplacement_possible(pg, actif, d)) {
                         result_deplacement(pg, actif, d, message);
+                        return 1;
                     } else {
-                        strcpy(message, "Impossible de se deplacer à gauche");
+                        strcpy(message, "Impossible de se deplacer a gauche");
+                        return 0;
                     }
-                    break;
                 }
 
             }

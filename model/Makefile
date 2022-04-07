@@ -9,14 +9,11 @@ all: libmodel.a
 
 
 
-libmodel.a: main_model.o carte.o joueur.o
+libmodel.a: main_model.o IA.o carte.o joueur.o
 	ar -rv $(DIRLIB)/$@ $^
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $<  -o $@
-
-
-
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
 	rm -f *~ *.d *.o

@@ -210,6 +210,16 @@ int init_coche_case(View_elements * app);
  */
 void coche_case(View_elements * app);
 
+/**
+ * \fn void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne)
+ * Trace le dernier déplacement du joueur sur la carte
+ * @param app Structure qui gère la vue
+ * @param direction Direction du dernier déplacement
+ * @param pos_joueur_ligne Nouvelle position du joueur
+ * @param pos_joueur_colonne Nouvelle position du joueur
+ */
+void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
+
 
 // Fonctions pour le Menu
 
