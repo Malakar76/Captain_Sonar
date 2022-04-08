@@ -11,89 +11,6 @@
 
 #include "main_view.h"
 
-int trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne){
-
-    int i, j; // on cree des mini rect sur la carte pour placer haut du rect pour le trait
-    SDL_Rect recti={0,0,4,4};
-    SDL_Rect tab [10][10];
-    for (i = 0; i < 10; i++) {
-        recti.y=78+i*66;
-        for (j = 0;  j< 10; j++) {
-            recti.x= 84+j*66;
-            tab[i][j]= recti; //i ligne j colonne
-        }
-    }
-
-
-    SDL_Rect rect;    //on vient recuperer position joueur
-    rect.x=(tab[pos_joueur_ligne][pos_joueur_colonne]).x;
-    rect.y=(tab[pos_joueur_ligne][pos_joueur_colonne]).y;
-
-
-    if (SDL_SetRenderTarget(ve->rRenderer, ve->VBattlefield->Battlefield_current) != 0){
-        SDL_Log("Erreur ciblage %s", SDL_GetError());
-        SDL_Quit();
-        return EXIT_FAILURE;
-    }
-
-    SDL_SetRenderDrawColor(ve->rRenderer, 255, 0, 0, SDL_ALPHA_OPAQUE); //modifie couleur trait
-
-    switch (direction) {
-
-        case 0: //haut
-            rect.y=rect.y-66;
-            rect.w=4;
-            rect.h=66;
-            if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
-                SDL_Log("Erreur tracage deplacement %s", SDL_GetError());
-                SDL_Quit();
-                return EXIT_FAILURE;
-            }
-            break;
-
-        case 1: //bas
-            rect.w=4;
-            rect.h=66;
-            if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
-                SDL_Log("Erreur tracage deplacement %s", SDL_GetError());
-                SDL_Quit();
-                return EXIT_FAILURE;
-            }
-            break;
-
-
-
-        case 2: //gauche
-            rect.x=rect.x-66;
-            rect.w=66;
-            rect.h=4;
-            if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
-                SDL_Log("Erreur tracage deplacement %s", SDL_GetError());
-                SDL_Quit();
-                return EXIT_FAILURE;
-            }
-            break;
-
-        case 3: //droite
-            rect.w=66;
-            rect.h=4;
-            if  (SDL_RenderFillRect(ve->rRenderer, &rect) != 0){
-                SDL_Log("Erreur tracage deplacement %s", SDL_GetError());
-                SDL_Quit();
-                return EXIT_FAILURE;
-            }
-            break;
-
-        default:
-            break;
-
-    }
-
-    SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_current,NULL,&rect);
-    SDL_RenderPresent(app->rRenderer);
-
-    return EXIT_SUCCESS;
-}
 
 
 
@@ -291,6 +208,63 @@ void show_SM(View_elements * app,int ligne,int colonne){
     SDL_Rect rect=app->VBattlefield->Carte[ligne][colonne];
     SDL_RenderCopy(app->rRenderer,app->VBattlefield->Sous_marin,NULL,&rect);
     SDL_RenderPresent(app->rRenderer);
+}
+
+void trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne){
+
+    int i, j; // on cree des mini rect sur la carte pour placer haut du rect pour le trait
+    SDL_Rect recti={0,0,4,4};
+    SDL_Rect tab [10][10];
+    for (i = 0; i < 10; i++) {
+        recti.y=78+i*66;
+        for (j = 0;  j< 10; j++) {
+            recti.x= 84+j*66;
+            tab[i][j]= recti; //i ligne j colonne
+        }
+    }
+
+    SDL_Rect rect;    //on vient recuperer position joueur
+    rect.x=(tab[pos_joueur_ligne][pos_joueur_colonne]).x;
+    rect.y=(tab[pos_joueur_ligne][pos_joueur_colonne]).y;
+
+    SDL_SetRenderTarget(ve->rRenderer, ve->VBattlefield->Battlefield_current);
+    SDL_SetRenderDrawColor(ve->rRenderer, 255, 0, 0, SDL_ALPHA_OPAQUE); //modifie couleur trait
+
+    switch (direction) {
+
+        case 0: //haut
+            rect.w=4;
+            rect.h=66;
+            SDL_RenderFillRect(ve->rRenderer, &rect);
+            break;
+
+        case 1: //bas
+            rect.y=rect.y-66;
+            rect.w=4;
+            rect.h=66;
+            SDL_RenderFillRect(ve->rRenderer, &rect);
+            break;
+
+        case 2: //gauche
+            rect.w=66;
+            rect.h=4;
+            SDL_RenderFillRect(ve->rRenderer, &rect);
+            break;
+
+        case 3: //droite
+            rect.x=rect.x-66;
+            rect.w=66;
+            rect.h=4;
+            SDL_RenderFillRect(ve->rRenderer, &rect);
+            break;
+
+        default:
+            break;
+    }
+
+    SDL_SetRenderTarget(ve->rRenderer, NULL );
+    SDL_RenderCopy(ve->rRenderer,ve->VBattlefield->Battlefield_current,NULL,NULL);
+    SDL_RenderPresent(ve->rRenderer);
 }
 
 void coche_case(View_elements * app){
