@@ -84,7 +84,7 @@ typedef struct {
 
 //Fonction Globale
 
-int trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
+
 
 /**
  * \fn int init_view(View_elements * app)
@@ -196,6 +196,16 @@ void case_choisie(View_elements * app, SDL_Point point,int tab[]);
  * @param colonne Position actuelle du sous-marin
  */
 void show_SM(View_elements * app,int ligne,int colonne);
+
+/**
+ * \fn void trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
+ * trace les déplacements du sous marins sur la carte du joueur
+ * @param ve
+ * @param direction direction de deplacement
+ * @param pos_joueur_ligne ligne ou se trouve le joueur actuellement
+ * @param pos_joueur_colonne colonne ou se trouve le joueur actuellement
+ */
+void trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
 
 /**
  * \fn int init_coche_case(View_elements * app)
