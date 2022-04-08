@@ -20,8 +20,9 @@ libcontroller.a: main_controller.o control_battlefield.o
 
 clean:
 	rm -f *~ *.d *.o
-
+	
 distclean:
 	rm ../lib/libcontroller.a
 
 include $(wildcart .d)
+

@@ -76,13 +76,13 @@ int init_view(View_elements * app) {
     }
     app->VBattlefield->Battlefield_current =SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,Resolution_x,Resolution_y);
     if(NULL == app->VBattlefield->Battlefield_current) {
-        fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
-        return statut;
+            fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
+            return statut;
     }
     app->VBattlefield->Sous_marin =SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,Resolution_x,Resolution_y);
     if(NULL == app->VBattlefield->Sous_marin) {
-        fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
-        return statut;
+                fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
+                return statut;
     }
     statut=EXIT_SUCCESS;
     return statut;
@@ -132,3 +132,5 @@ int init_all_view(View_elements *app){
 void init_font(View_elements * app){
     app->ttf=TTF_OpenFont("Ressources/SmoochSans-Medium.ttf",50);
 }
+
+

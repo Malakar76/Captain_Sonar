@@ -205,7 +205,7 @@ void show_SM(View_elements * app,int ligne,int colonne);
  * @param pos_joueur_ligne ligne ou se trouve le joueur actuellement
  * @param pos_joueur_colonne colonne ou se trouve le joueur actuellement
  */
-void trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
+void trace_deplacement_joueur(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
 
 /**
  * \fn int init_coche_case(View_elements * app)

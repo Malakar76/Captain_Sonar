@@ -210,7 +210,7 @@ void show_SM(View_elements * app,int ligne,int colonne){
     SDL_RenderPresent(app->rRenderer);
 }
 
-void trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne){
+void trace_deplacement_joueur(View_elements *app, int direction, int pos_joueur_ligne, int pos_joueur_colonne){
 
     int i, j; // on cree des mini rect sur la carte pour placer haut du rect pour le trait
     SDL_Rect recti={0,0,4,4};
@@ -227,45 +227,48 @@ void trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, i
     rect.x=(tab[pos_joueur_ligne][pos_joueur_colonne]).x;
     rect.y=(tab[pos_joueur_ligne][pos_joueur_colonne]).y;
 
-    SDL_SetRenderTarget(ve->rRenderer, ve->VBattlefield->Battlefield_current);
-    SDL_SetRenderDrawColor(ve->rRenderer, 255, 0, 0, SDL_ALPHA_OPAQUE); //modifie couleur trait
+    SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Battlefield_current);
+    SDL_SetRenderDrawColor(app->rRenderer, 255, 0, 0, SDL_ALPHA_OPAQUE); //modifie couleur trait
 
     switch (direction) {
 
         case 0: //haut
             rect.w=4;
             rect.h=66;
-            SDL_RenderFillRect(ve->rRenderer, &rect);
+            SDL_RenderFillRect(app->rRenderer, &rect);
             break;
 
         case 1: //bas
             rect.y=rect.y-66;
             rect.w=4;
             rect.h=66;
-            SDL_RenderFillRect(ve->rRenderer, &rect);
+            SDL_RenderFillRect(app->rRenderer, &rect);
             break;
 
         case 2: //gauche
             rect.w=66;
             rect.h=4;
-            SDL_RenderFillRect(ve->rRenderer, &rect);
+            SDL_RenderFillRect(app->rRenderer, &rect);
             break;
 
         case 3: //droite
             rect.x=rect.x-66;
             rect.w=66;
             rect.h=4;
-            SDL_RenderFillRect(ve->rRenderer, &rect);
+            SDL_RenderFillRect(app->rRenderer, &rect);
             break;
 
         default:
             break;
     }
 
-    SDL_SetRenderTarget(ve->rRenderer, NULL );
-    SDL_RenderCopy(ve->rRenderer,ve->VBattlefield->Battlefield_current,NULL,NULL);
-    SDL_RenderPresent(ve->rRenderer);
+    SDL_SetRenderTarget(app->rRenderer, NULL );
+    SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_current,NULL,NULL);
+    SDL_RenderPresent(app->rRenderer);
 }
+
+
+
 
 void coche_case(View_elements * app){
     if (app->IA==0){

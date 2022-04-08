@@ -33,12 +33,13 @@ Launcher: main.o
 clean:
 	rm -f *~ *.d *.o
 	rm -f  Launcher
-
+	
 distclean:
 	rm ./lib/*.a
-
+	
 clall :
 	$(MAKE) -C ./ clean
-	$(MAKE) -C ./ distclean
+	$(MAKE) -C ./ distclean	
 
 include $(wildcart .d)
+

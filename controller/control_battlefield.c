@@ -88,29 +88,34 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                         //droite
                         action(pg,pg->actif,DEPLCMNT,droite,0,0,message);
                         show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
-                        trace_deplacement(app, 3, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
-                        print_message(app,message);
+                        if (deplacement_possible(pg, pg->actif, gauche)) {
+                            trace_deplacement_joueur(app, 3, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
+                        }                        print_message(app,message);
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[2]) && start==1){
                         //gauche
                         action(pg,pg->actif,DEPLCMNT,gauche,0,0,message);
                         show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
-                        trace_deplacement(app, 2, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
+                        if (deplacement_possible(pg, pg->actif, gauche)) {
+                            trace_deplacement_joueur(app, 2, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
+                        }
                         print_message(app,message);
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[1]) && start==1){
                         //bas
                         action(pg,pg->actif,DEPLCMNT,bas,0,0,message);
                         show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
-                        trace_deplacement(app, 1, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
-                        print_message(app,message);
+                        if (deplacement_possible(pg, pg->actif, gauche)) {
+                            trace_deplacement_joueur(app, 1, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
+                        }                        print_message(app,message);
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[0]) && start==1){
                         //haut
                         action(pg,pg->actif,DEPLCMNT,haut,0,0,message);
                         show_SM(app,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
-                        trace_deplacement(app, 0, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
-                        print_message(app,message);
+                        if (deplacement_possible(pg, pg->actif, gauche)) {
+                            trace_deplacement_joueur(app, 0, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
+                        }                        print_message(app,message);
                     }
                     else if (SDL_PointInRect(&point,&app->VBattlefield->Bbutton[11]) && start==1){
                         //sur la carte affichage calque

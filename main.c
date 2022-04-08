@@ -12,7 +12,7 @@
 int main (){
     View_elements app;
     Playground pg;
-    if((init_view(&app)&& init_model(&pg)) !=EXIT_SUCCESS){
+    if((init_view(&app) || init_model(&pg)) !=EXIT_SUCCESS){
         free_view(&app);
         free_model(&pg);
         return EXIT_FAILURE;
