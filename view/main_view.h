@@ -200,12 +200,20 @@ void show_SM(View_elements * app,int ligne,int colonne);
 /**
  * \fn void trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
  * trace les déplacements du sous marins sur la carte du joueur
- * @param ve
+ * @param app
  * @param direction direction de deplacement
- * @param pos_joueur_ligne ligne ou se trouve le joueur actuellement
- * @param pos_joueur_colonne colonne ou se trouve le joueur actuellement
+ * @param pos_joueur_ligne ligne où se trouve le joueur actuellement
+ * @param pos_joueur_colonne colonne où se trouve le joueur actuellement
  */
-void trace_deplacement_joueur(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
+void trace_deplacement_joueur(View_elements *app, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
+
+/**
+ * void trace_deplacement_adversaire(View_elements *ve, int direction);
+ * trace les déplacements de l'adversaire sur le calque
+ * @param app
+ * @param direction direction de deplacement
+ */
+void trace_deplacement_adversaire(View_elements *app, int direction);
 
 /**
  * \fn int init_coche_case(View_elements * app)

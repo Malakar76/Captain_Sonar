@@ -268,6 +268,76 @@ void trace_deplacement_joueur(View_elements *app, int direction, int pos_joueur_
 }
 
 
+void trace_deplacement_adversaire(View_elements *app, int direction){
+    static int nb_appel_fct=0;
+
+    int i, j; // on cree des mini rect sur la carte pour placer haut du rect pour le trait   //y 425      x1290
+    SDL_Rect recti={0,0,2,2};
+    SDL_Rect tab [19][19];
+    for (i = 0; i < 19; i++) {
+        recti.y=125+i*33;
+        for (j = 0;  j< 19; j++) {
+            recti.x= 994+j*33;
+            tab[i][j]= recti; //i ligne j colonne
+        }
+    }
+
+    SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Battlefield_current);
+    SDL_SetRenderDrawColor(app->rRenderer, 255, 0, 0, SDL_ALPHA_OPAQUE); //modifie couleur trait
+
+    SDL_Rect rect;
+    static int a;
+    static int b;
+
+    if (nb_appel_fct>0){
+        rect=tab[a][b];
+    }else{
+        rect=tab[9][9];
+    }
+
+    switch (direction) {
+
+        case 0: //haut
+            rect.w=4;
+            rect.h=33;
+            SDL_RenderFillRect(app->rRenderer, &rect);
+            b--;
+            break;
+
+        case 1: //bas
+            rect.y=rect.y-33;
+            rect.w=4;
+            rect.h=33;
+            SDL_RenderFillRect(app->rRenderer, &rect);
+            b++;
+            break;
+
+        case 2: //gauche
+            rect.w=33;
+            rect.h=4;
+            SDL_RenderFillRect(app->rRenderer, &rect);
+            a--;
+            break;
+
+        case 3: //droite
+            rect.x=rect.x-33;
+            rect.w=33;
+            rect.h=4;
+            SDL_RenderFillRect(app->rRenderer, &rect);
+            a++;
+            break;
+
+        default:
+            break;
+    }
+
+    SDL_SetRenderTarget(app->rRenderer, NULL );
+    SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_current,NULL,NULL);
+    SDL_RenderPresent(app->rRenderer);
+
+    nb_appel_fct++;
+}
+
 
 
 void coche_case(View_elements * app){
