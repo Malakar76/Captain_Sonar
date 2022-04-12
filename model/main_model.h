@@ -86,6 +86,8 @@ typedef struct{
     int energie; /**< Energie du joueur , entre 0 et 4 */
     int vie; /**< Points de vie du joueur 2 au début */
     int calqueJ[NMAX][NMAX];/**< Carte de 10 par 10 Case qui stocke les informations des cases qui ont été occupée par le joueur vaut 1 si le joueur est passé par là 0 sinon */
+    enum DIRECTION path[NMAX*NMAX]; /** < Tableau qui stocke les différentes directions empruntées par le sous-marin */
+    int nbpath; /** < Stocke le nombre de déplacement du sous-marin */
 
 }JOUEUR;
 

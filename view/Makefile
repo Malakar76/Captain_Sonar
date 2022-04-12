@@ -15,9 +15,6 @@ libview.a: main_view.o Battlefield.o Menu.o rules_and_credit.o music.o
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<  -o $@
 
-
-
-
 clean:
 	rm -f *~ *.d *.o
 	

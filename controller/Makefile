@@ -1,7 +1,8 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g -I./view -I./model
-LDFLAGS=  -L./lib -lview -lmodel -lSDL2
+CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g -I../view -I../model
+LDFLAGS=  -L../lib -lview -lmodel -lSDL2
 DIRLIB=../lib
+
 
 
 

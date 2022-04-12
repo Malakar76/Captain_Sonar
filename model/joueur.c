@@ -33,6 +33,8 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
             j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
+            j->path[j->nbpath]=haut;
+            j->nbpath++;
             break;
         }
 
@@ -43,6 +45,8 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
             j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
+            j->path[j->nbpath]=bas;
+            j->nbpath++;
             break;
         }
 
@@ -53,6 +57,8 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
             j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
+            j->path[j->nbpath]=droite;
+            j->nbpath++;
             break;
         }
 
@@ -63,6 +69,8 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
             j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
+            j->path[j->nbpath]=gauche;
+            j->nbpath++;
             break;
         }
     }
@@ -131,6 +139,7 @@ int init_joueur(JOUEUR *j){
     j->S_M->colonne=0;
     j->S_M->start[0]=0;
     j->S_M->start[1]=0;
+    j->nbpath=0;
     return EXIT_SUCCESS;
 }
 
@@ -407,7 +416,24 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
 }
 
 void surface(Playground *pg,enum Actif actif,char message[]){
+    JOUEUR * j;
+    if (actif==J1){
+        j=pg->J1;
+    }else{
+        j=pg->J2;
+    }
+    init_calque(j);
+    j->nbpath=0;
+    j->S_M->start[0]=j->S_M->ligne;
+    j->S_M->start[1]=j->S_M->colonne;
+    strcpy(message,"Nous faisons surface");
 
 }
 
+//IA
+
+void actionIA(Playground * pg)
+{
+
+}
 

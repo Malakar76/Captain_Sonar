@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g -I./view -I./model -I./controller
+CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g  -I./view -I./model -I./controller
 LDFLAGS=  -L./lib -lview -lmodel -lcontroller  -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 MAKE=/usr/bin/make
 

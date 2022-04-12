@@ -52,6 +52,7 @@ typedef struct {
     SDL_Texture *Battlefield_current;/**< Texture qui garde l'aperçu de la fenêtre de jeu affiché */
     SDL_Texture *Battlefield_blank;/**< Texture qui garde l'aperçu de la fenêtre de jeu clean */
     SDL_Texture *Sous_marin;/**< Texture qui garde l'aperçu du sous_marin */
+    SDL_Texture *Energie; /**< Texture qui garde les niveaux d'énergie */
     SDL_Rect  Bbutton[12] ;/**< Tableau qui stocke l'emplacement des boutons du champ de bataille */
     SDL_Rect Carte[10][10];/**< Tableau qui stocke l'emplacement des cases du champ de bataille */
 }View_Battlefield;
@@ -220,6 +221,30 @@ void coche_case(View_elements * app);
  */
 void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
 
+/**
+ * \fn void clean_map(View_elements * app)
+ * Permet de retirer le tracé du déplacement lorsque le joueur fait surface.
+ * @param app Structure qui gère la vue
+ */
+void clean_map(View_elements * app);
+
+/**
+ * \fn void trace_deplacement_total(View_elements * app, int direction[],int pos_depart[])
+ * permet de retracer tout les déplacements d'un joueur
+ * @param app Structure qui gère la vue
+ * @param direction tableau de toutes les directions à tracer
+ * @param nbdir nombre de direction à tracer
+ * @param pos_depart position de départ du joueur
+ */
+void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[]);
+
+/**
+ * \fn void show_energie(View_elements * app,int energie)
+ * met à jour le niveau d'énergie affiché
+ * @param app Structure qui gère la vue
+ * @param energie niveau d'énergie
+ */
+void show_energie(View_elements * app,int energie);
 
 // Fonctions pour le Menu
 

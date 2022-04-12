@@ -92,9 +92,34 @@ int init_battlefield(View_elements * app,enum Carte c){
     SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Battlefield_blank);
     SDL_Rect rect ={0,0,1600,900};
     SDL_RenderCopy(app->rRenderer, tmp, NULL, &rect);
+    SDL_SetRenderTarget(app->rRenderer, NULL);
     SDL_DestroyTexture(tmp);
     SDL_FreeSurface(surface);
+
+
+    surface=IMG_Load("Ressources/niveau_energie.png");
+    if (surface==NULL){
+        fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(tmp);
+        return EXIT_FAILURE;
+    }
+    tmp=SDL_CreateTextureFromSurface(app->rRenderer,surface);
+    if (tmp==NULL){
+        fprintf(stderr, "Erreur SDL_CreateTexture: %s", SDL_GetError());
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(tmp);
+        return EXIT_FAILURE;
+    }
+    SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Energie);
+    SDL_Rect rect1={0,0,1000,900};
+    SDL_RenderCopy(app->rRenderer, tmp, NULL, &rect1);
     SDL_SetRenderTarget(app->rRenderer, NULL);
+
+
+    SDL_DestroyTexture(tmp);
+    SDL_FreeSurface(surface);
+
     return EXIT_SUCCESS;
 
 }
@@ -175,6 +200,7 @@ void show_choix_carte(View_elements *app){
 void print_message(View_elements *app,char * message){
     SDL_SetRenderDrawColor(app->rRenderer,57,143,70,255);
     SDL_Rect rect ={100,800,1000,100}; // zone où afficher le message
+    SDL_SetRenderTarget(app->rRenderer,app->VBattlefield->Battlefield_current);
     SDL_RenderFillRect(app->rRenderer,&rect);
     SDL_Texture * tmp=NULL;
     SDL_Surface * surface=NULL;
@@ -185,6 +211,8 @@ void print_message(View_elements *app,char * message){
     SDL_RenderCopy(app->rRenderer, tmp, NULL, &rect2);
     SDL_DestroyTexture(tmp);
     SDL_FreeSurface(surface);
+    SDL_SetRenderTarget(app->rRenderer,NULL);
+    SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_current,NULL,NULL);
     SDL_RenderPresent(app->rRenderer);
 }
 
@@ -271,16 +299,17 @@ void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne,
     SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Battlefield_current);
     SDL_SetRenderDrawColor(app->rRenderer, 255, 0, 0, SDL_ALPHA_OPAQUE); //modifie couleur trait
 
+
     switch (direction) {
 
         case 0: //haut
-            rect.y=rect.y-66;
             rect.w=4;
             rect.h=66;
             SDL_RenderFillRect(app->rRenderer, &rect);
             break;
 
         case 1: //bas
+            rect.y=rect.y-66;
             rect.w=4;
             rect.h=66;
             SDL_RenderFillRect(app->rRenderer, &rect);
@@ -289,13 +318,13 @@ void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne,
 
 
         case 2: //gauche
-            rect.x=rect.x-66;
             rect.w=66;
             rect.h=4;
             SDL_RenderFillRect(app->rRenderer, &rect);
             break;
 
         case 3: //droite
+            rect.x=rect.x-66;
             rect.w=66;
             rect.h=4;
             SDL_RenderFillRect(app->rRenderer, &rect);
@@ -309,4 +338,66 @@ void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne,
     SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_current,NULL,NULL);
     SDL_RenderPresent(app->rRenderer);
 }
+
+void clean_map(View_elements * app){
+    SDL_SetRenderTarget(app->rRenderer,app->VBattlefield->Battlefield_current);
+    SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_blank,NULL,NULL);
+    SDL_SetRenderTarget(app->rRenderer,NULL);
+    SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_current,NULL,NULL);
+    SDL_RenderPresent(app->rRenderer);
+
+}
+
+void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[]){
+    int ligne=pos_depart[0];
+    int colonne=pos_depart[1];
+    for (int i=0;i<nbdir;i++){
+        trace_deplacement(app,direction[i],ligne,colonne);
+        switch (direction[i]){
+            case 0: //haut
+                ligne--;
+                break;
+            case 1: //bas
+                ligne++;
+                break;
+            case 2: //gauche
+                colonne--;
+                break;
+            case 3: //droite
+                colonne++;
+                break;
+        }
+    }
+}
+
+void show_energie(View_elements * app,int energie){
+    SDL_Rect rect={720,455,270,190};
+    SDL_Rect rect4={0,0,270,190};
+    SDL_Rect rect3={270,0,270,190};
+    SDL_Rect rect2={540,0,270,190};
+    SDL_Rect rect1={0,190,270,190};
+    SDL_SetRenderTarget(app->rRenderer,app->VBattlefield->Battlefield_current);
+    switch (energie) {
+        case 0:
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_blank,&rect,&rect);
+            break;
+        case 1:
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&rect1,&rect);
+            break;
+        case 2:
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&rect2,&rect);
+            break;
+        case 3:
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&rect3,&rect);
+            break;
+        case 4:
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&rect4,&rect);
+            break;
+    }
+    SDL_SetRenderTarget(app->rRenderer,NULL);
+    SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_current,NULL,NULL);
+    SDL_RenderPresent(app->rRenderer);
+}
+
+
 

@@ -84,6 +84,11 @@ int init_view(View_elements * app) {
                 fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
                 return statut;
     }
+    app->VBattlefield->Energie =SDL_CreateTexture(app->rRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,Resolution_x,Resolution_y);
+    if(NULL == app->VBattlefield->Energie) {
+        fprintf(stderr, "Erreur SDL_CreateTexture : %s", SDL_GetError());
+        return statut;
+    }
     statut=EXIT_SUCCESS;
     return statut;
 
