@@ -4,6 +4,11 @@
  *
  * Fichier pour la gestion du joueur
  */
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> c88329c34942d9c48eea04a49168ce4fee91af04
 #include "main_model.h"
 
 void energie_up(JOUEUR *j){
@@ -135,6 +140,7 @@ void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c){
     c->carte[ligne][colonne].sous_marin=1;
 }
 
+<<<<<<< HEAD
 int missile(Playground *pg,enum Actif actif,int ligne,int colonne) {
     if (actif = J1) {
         j = pg->J1;
@@ -171,3 +177,160 @@ void sonar(Playground * pg, enum Actif actif, char message){
         strcpy(message,pg->J1->S_M->ligne || pg->J1->S_M->colonne);
     }
 }
+=======
+
+
+int enough_energie(Playground *pg,enum Actif actif,enum OPTION option)
+{
+    JOUEUR*j;
+    switch(option)
+    {
+        case MIS:
+        {
+            if(j->energie==4)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+        }
+        case SURF:
+        {
+            if(j->energie>=1)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+        }
+
+
+        case SON:
+        {
+            if(j->energie>=2)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+
+        }
+
+        case SIL:
+        {
+            if(j->energie>=3)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+        }
+
+        case DEPLCMNT:
+        {
+            if(j->energie>=1)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+        }
+
+    }
+
+    if (actif==J1)
+    {
+        j =pg->J1;
+        return (int) j;
+    }
+    else
+    {
+        j = pg->J2;
+        return (int) j;
+    }
+
+
+
+}
+
+char * action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d)
+{
+    Playground * a;
+
+
+
+
+}
+
+char * result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d)
+{
+    JOUEUR * j;
+
+    switch(d)
+    {
+        case haut:
+        {
+            char *ptr = "haut";
+            return ptr;
+
+        }
+            break;
+        case bas:
+        {
+            char *ptr = "Bas";
+            return ptr;
+
+        }
+            break;
+
+        case gauche:
+        {
+            char *ptr = "Gauche";
+            return ptr;
+
+        }
+            break;
+
+        case droite:
+        {
+            char *ptr = "Droite";
+            return ptr;
+        }
+            break;
+    }
+
+
+    if (actif==J1)
+    {
+        j =pg->J1;
+        return (char*) j;
+    }
+    else
+    {
+        j = pg->J2;
+        return (char*) j;
+    }
+    
+}
+
+
+
+
+
+
+>>>>>>> c88329c34942d9c48eea04a49168ce4fee91af04

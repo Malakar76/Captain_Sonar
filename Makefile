@@ -1,6 +1,10 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g -I./view -I./model -I./controller
+<<<<<<< HEAD
 LDFLAGS=  -L./lib -lview -lmodel -lcontroller  -lSDL2 -lcmocka
+=======
+LDFLAGS=  -L./lib -lview -lmodel -lcontroller  -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+>>>>>>> c88329c34942d9c48eea04a49168ce4fee91af04
 MAKE=/usr/bin/make
 
 
