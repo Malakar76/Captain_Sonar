@@ -426,6 +426,7 @@ void surface(Playground *pg,enum Actif actif,char message[]){
     j->nbpath=0;
     j->S_M->start[0]=j->S_M->ligne;
     j->S_M->start[1]=j->S_M->colonne;
+    j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
     strcpy(message,"Nous faisons surface");
 
 }

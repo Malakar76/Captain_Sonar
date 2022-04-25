@@ -68,6 +68,7 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                         //missile
                         if (enough_energie(pg, pg->actif, MIS)) {
                             print_message(app, "choississez la case ou tirer");
+                            show_SM(app,pg->J1->S_M->ligne, pg->J1->S_M->colonne);
                             tir=1;
                             while (tir==1){
                                 SDL_WaitEvent(&event);
@@ -112,6 +113,7 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                         //surface
                         if (action(pg, pg->actif, SURF, 0, 0, 0, message)) {
                             clean_map(app);
+                            show_energie(app,pg->J1->energie);
                             show_SM(app,pg->J1->S_M->ligne, pg->J1->S_M->colonne);
                         }
                         print_message(app, message);

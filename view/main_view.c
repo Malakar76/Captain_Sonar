@@ -105,6 +105,7 @@ void free_view(View_elements *app){
     SDL_DestroyTexture(app->VBattlefield->Sous_marin);
     SDL_DestroyTexture(app->VBattlefield->Battlefield_current);
     SDL_DestroyTexture(app->VBattlefield->Battlefield_blank);
+    SDL_DestroyTexture(app->VBattlefield->Energie);
     IMG_Quit();
     TTF_Quit();
     while (Mix_Init(0)){

@@ -399,5 +399,28 @@ void show_energie(View_elements * app,int energie){
     SDL_RenderPresent(app->rRenderer);
 }
 
+void show_vie(View_elements * app, int vieA,int vieNA){
+
+    SDL_Rect P1V={0,380,226,64};
+    SDL_Rect P0V={0,444,226,64};
+    SDL_Rect Pos1={741,78,226,64};
+    SDL_Rect Pos2={741,645,226,64};
+    SDL_SetRenderTarget(app->rRenderer,app->VBattlefield->Battlefield_current);
+    switch (vieA) {
+        case 0:
+
+            break;
+        case 1:
+
+            break;
+
+        case 2:
+
+            break;
+
+
+    }
+}
+
 
 

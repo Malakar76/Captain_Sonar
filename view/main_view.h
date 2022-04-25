@@ -246,6 +246,15 @@ void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int 
  */
 void show_energie(View_elements * app,int energie);
 
+/**
+ * \fn void show_vie(View_elements * app, int vieJ1,int vieJ2)
+ * met à jour le niveau de vie affiché
+ * @param app Structure qui gère la vue
+ * @param vieA Points de vie du Joueur Actif
+ * @param vieNA Points de vie du Joueur Non-Actif
+ */
+void show_vie(View_elements * app, int vieA,int vieNA);
+
 // Fonctions pour le Menu
 
 /**
