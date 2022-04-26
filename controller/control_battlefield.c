@@ -31,6 +31,8 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
     choix_carte(pg, choix);
     init_calque(pg->J1);
     init_calque(pg->J2);
+    reset_joueur(pg->J1);
+    reset_joueur(pg->J2);
     int run = 1;
     while (run == 1) {
         SDL_WaitEvent(&event);
@@ -156,6 +158,7 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
 
                 }
                 show_energie(app,pg->J1->energie);
+                show_vie(app,pg->J1->vie,pg->J2->vie);
                 show_SM(app, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
                 break;
         }

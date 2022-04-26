@@ -400,7 +400,7 @@ void show_energie(View_elements * app,int energie){
 }
 
 void show_vie(View_elements * app, int vieA,int vieNA){
-
+    SDL_Rect P2V={0,508,226,64};
     SDL_Rect P1V={0,380,226,64};
     SDL_Rect P0V={0,444,226,64};
     SDL_Rect Pos1={741,78,226,64};
@@ -408,18 +408,34 @@ void show_vie(View_elements * app, int vieA,int vieNA){
     SDL_SetRenderTarget(app->rRenderer,app->VBattlefield->Battlefield_current);
     switch (vieA) {
         case 0:
-
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&P0V,&Pos2);
             break;
         case 1:
-
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&P1V,&Pos2);
             break;
 
         case 2:
-
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&P2V,&Pos2);
             break;
 
 
     }
+    switch (vieNA) {
+        case 0:
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&P0V,&Pos1);
+            break;
+        case 1:
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&P1V,&Pos1);
+            break;
+
+        case 2:
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&P2V,&Pos1);
+            break;
+
+    }
+    SDL_SetRenderTarget(app->rRenderer,NULL);
+    SDL_RenderCopy(app->rRenderer,app->VBattlefield->Battlefield_current,NULL,NULL);
+    SDL_RenderPresent(app->rRenderer);
 }
 
 

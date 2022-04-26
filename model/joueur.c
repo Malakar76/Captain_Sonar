@@ -153,6 +153,16 @@ void init_calque(JOUEUR * joueur){
     }
 }
 
+void reset_joueur(JOUEUR * j){
+    j->energie=0;
+    j->vie=2;
+    j->S_M->ligne=0;
+    j->S_M->colonne=0;
+    j->S_M->start[0]=0;
+    j->S_M->start[1]=0;
+    j->nbpath=0;
+}
+
 void free_joueur(JOUEUR * j){
     free(j->S_M);
     free(j);
@@ -279,32 +289,27 @@ int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne, char  
 
 void sonar(Playground * pg, enum Actif actif, char message[]){
     int val= rand();
-    char valeur;
+    char valeur [2];
     if (actif==J1) {
         if (val%2==1){
-
-            //valeur=pg->J2->S_M->colonne+'0';
-            valeur = '5';
-            fprintf(stderr,"%c",valeur);
+            sprintf(valeur,"%c",pg->J2->S_M->colonne + 65);
             strcpy(message,"L'ennemi se trouve dans la colonne ");
-            strcat(message,&valeur);
+            strcat(message, valeur);
         }else{
-            //valeur=pg->J2->S_M->ligne+'0';
-            valeur = '5';
-            fprintf(stderr,"%c",valeur);
+            sprintf(valeur,"%d",pg->J2->S_M->ligne + 1);
             strcpy(message,"L'ennemi se trouve dans la ligne ");
-            strcat(message,&valeur);
+            strcat(message, valeur);
         }
     }
     else if (pg->actif==J2){
         if (val%2==1){
-            valeur=pg->J1->S_M->colonne;
+            sprintf(valeur,"%c",pg->J1->S_M->colonne+65);
             strcpy(message,"L'ennemi se trouve dans la colonne ");
-            strcat(message,&valeur);
+            strcat(message, valeur);
         }else{
-            valeur=pg->J1->S_M->ligne;
+            sprintf(valeur,"%d",pg->J1->S_M->ligne+1);
             strcpy(message,"L'ennemi se trouve dans la ligne ");
-            strcat(message,&valeur);
+            strcat(message, valeur);
         }
     }
 }

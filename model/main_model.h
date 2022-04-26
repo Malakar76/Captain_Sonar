@@ -188,6 +188,13 @@ void choix_carte(Playground * pg,int a);
 int init_joueur(JOUEUR *j);
 
 /**
+ * \fn void reset_joueur(JOUEUR * j)
+ * Reinitialise le joueur
+ * @param j Structure Joueur
+ */
+void reset_joueur(JOUEUR * j);
+
+/**
  * \fn void free_joueur(JOUEUR *j)
  * Libère la structure joueur
  * @param j Structure Joueur
