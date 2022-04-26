@@ -4,12 +4,8 @@
  *
  * Fichier pour la gestion du joueur
  */
-<<<<<<< HEAD
-=======
-
-
->>>>>>> c88329c34942d9c48eea04a49168ce4fee91af04
 #include "main_model.h"
+#include <stdio.h>
 
 void energie_up(JOUEUR *j){
         if (j->energie<4){
@@ -140,44 +136,47 @@ void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c){
     c->carte[ligne][colonne].sous_marin=1;
 }
 
-<<<<<<< HEAD
 int missile(Playground *pg,enum Actif actif,int ligne,int colonne) {
-    if (actif = J1) {
-        j = pg->J1;
+
+    if (actif == J1) {
         if (pg->J1->S_M->colonne = colonne && pg->J1->S_M->ligne == ligne)
             return -1;
-        if (g->J2->S_M->colonne = colonne && pg->J2->S_M->ligne == ligne)
+        if (pg->J2->S_M->colonne = colonne && pg->J2->S_M->ligne == ligne)
             return 1;
         else return 0;
-    } else {
-        j = pg->J2;
+    }
+    else {
         if (pg->J1->S_M->colonne = colonne && pg->J1->S_M->ligne == ligne)
             return 1;
-        if (g->J2->S_M->colonne = colonne && pg->J2->S_M->ligne == ligne)
+        if (pg->J2->S_M->colonne = colonne && pg->J2->S_M->ligne == ligne)
             return -1;
         else return 0;
     }
 }
 
-void result_missile(Playground *pg,enum Actif actif,int ligne,int colonne, char message);
-    if (missile(pg,Actif actif, ligne, colonne)==0)
+void result_missile(Playground *pg, enum Actif actif, int ligne, int colonne, char *message){
+    if (missile(pg,actif, ligne, colonne)==0)
         strcpy(message,"Zut, vous n\'avez rien touché");
-    if (missile(pg,Actif actif, ligne, colonne)==-1)
+    if (missile(pg,actif, ligne, colonne)==-1)
         strcpy(message,"Mince alors, vous vous êtes touché vous même!");
-    if (missile(pg,Actif actif, ligne, colonne)==-1)
+    if (missile(pg,actif, ligne, colonne)==-1)
         strcpy(message,"Bravo vous avez touché l'adversaire");
+}
 
 
 
-void sonar(Playground * pg, enum Actif actif, char message){
+void sonar(Playground * pg, enum Actif actif, char *message){
+    int choix, données;
     if (pg->actif==J1) {
-       strcpy(message,pg->J2->S_M->ligne || pg->J2->S_M->colonne);
+        printf("vous devez donnez votre ligne ou votre colonne, faites votre choix:\n");
+       strcpy(message, (char*) scanf("%d", données));
     }
     if (pg->actif==J2){
-        strcpy(message,pg->J1->S_M->ligne || pg->J1->S_M->colonne);
+        printf("vous devez donnez votre ligne ou votre colonne, faites votre choix:\n");
+        strcpy(message,(char*) scanf("%d",données));
     }
 }
-=======
+
 
 
 int enough_energie(Playground *pg,enum Actif actif,enum OPTION option)
@@ -285,7 +284,7 @@ char * result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d)
     {
         case haut:
         {
-            char *ptr = "haut";
+            char *ptr = "Haut";
             return ptr;
 
         }
@@ -328,9 +327,20 @@ char * result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d)
     
 }
 
+void change_tour(Playground *pg, enum Actif actif, enum DIRECTION d,int ligne, int colonne) {
+    if (actif==J1) {
+        if (sizeof(result_deplacement(pg, actif, d))|| sizeof(result_missile(pg,actif,ligne,colonne)) || sizeof(sonar(pg,actif)!= 0))
+        {
+            pg->actif = J2;
+
+        }
+    }
+    if (actif==J2){
+        if (sizeof(result_deplacement(pg, actif, d))|| sizeof(result_missile(pg,actif,ligne,colonne)) || sizeof(sonar(pg,actif)!= 0))
+        {
+             pg->actif = J1;
+        }
+    }
+}
 
 
-
-
-
->>>>>>> c88329c34942d9c48eea04a49168ce4fee91af04
