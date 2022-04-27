@@ -298,6 +298,10 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
                     {
                         result_deplacement(pg, actif,d,message);
                     }
+                    else
+                    {
+                        strcpy(message, "pas possible de se deplacer");
+                    }
 
                 }
                     break;
@@ -416,4 +420,87 @@ char* result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d,char m
         return (char*) j;
     }
 
+}
+
+
+void action_random(Playground *pg,enum Actif actif,char* message )
+
+{
+    int a = rand() % 5;
+    int b = rand() % 4;
+    int i = rand() % 10;
+    int j = rand() % 10;
+
+    enum OPTION choix;
+    enum DIRECTION choix_deplacement;
+
+
+    switch (a) {
+        case 1:
+        {
+            choix = MIS;
+
+        }
+            break;
+        case 2: {
+            choix = SURF;
+
+        }
+            break;
+
+        case 3: {
+            choix = SON;
+
+
+        }
+            break;
+
+        case 4: {
+            choix = SIL;
+
+
+        }
+
+
+        case 5: {
+            choix = DEPLCMNT;
+        }
+            break;
+
+
+    }
+
+
+if (a == 5)
+{
+        switch (b)
+        {
+            case 1:
+            {
+                choix_deplacement = haut;
+
+            }
+                break;
+
+            case 2:
+            {
+                choix_deplacement = bas;
+            }
+                break;
+
+            case 3:
+            {
+                choix_deplacement = gauche;
+            }
+                break;
+
+
+            case 4:
+            {
+                choix_deplacement = droite;
+            }
+            break;
+        }
+    }
+    action(pg, actif, choix, choix_deplacement, message,i,j );
 }

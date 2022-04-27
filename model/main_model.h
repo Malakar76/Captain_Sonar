@@ -22,7 +22,7 @@
  */
 enum Actif{
     J1, /**< Le joueur actif est le J1 */
-    J2  /**< Le joueur actif est le J2 */
+    J2,  /**< Le joueur actif est le J2 */
 };
 
 /**
@@ -335,5 +335,11 @@ void Crea_Archipelago(CARTE * c);
  */
 void Crea_Antartica(CARTE * c);
 
+/**
+ * \fn void action_random (CARTE * c)
+ * Initialise les rochers sur la carte
+ * @param c carte de jeu
+ */
+void action_random(Playground *pg,enum Actif actif,char* message );
 
 #endif //PROJET_C_MAIN_MODEL_H
