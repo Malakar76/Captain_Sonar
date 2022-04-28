@@ -24,11 +24,16 @@ UTest_modele: CFLAGS+= -coverage
 UTest_modele: UTest_modele.o joueur_gcov.o
 	$(CC) $^ $(LDFLAGS)  -o $@
 
+UTest_modele.o: UTest_modele.c
+	$(CC) -c $(LDFLAGS) $< -o $@
+
 joueur_gcov.o: joueur.c
-	$(CC) -c  $(CFLAGS)  $< -o $@
+	$(CC) -c $(LDFLAGS) $< -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<  -o $@
+
+include $(wildcart .d)
 
 clean:
 	rm -f *~ *.d *.o
@@ -36,4 +41,4 @@ clean:
 distclean:
 	rm ../lib/libmodel.a
 
-include $(wildcart .d)
+

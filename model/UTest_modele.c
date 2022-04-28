@@ -2,12 +2,6 @@
 // Created by audrey on 21/04/22.
 //
 #include "main_model.h"
-#include "carte.c"
-#include "joueur.c"
-#include "main_model.c"
-
-
-
 
 #include <stdio.h>
 
@@ -27,6 +21,8 @@ static int setup_joueur(void **state){
     }
     j->energie=0;
     j->vie=0;
+    j->S_M->ligne=5;
+    j->S_M->colonne=5;
 
 
 
@@ -45,11 +41,47 @@ static int teardown(void **state){
 
 static void test_energie_up(void **state){
     JOUEUR *j =(JOUEUR *)* state;
-
     energie_up(j);
     assert_int_equal(j->energie, 1);
+}
+
+static void test_energie_down(void **state){
+    JOUEUR *j =(JOUEUR *)* state;
+    energie_up(j);
+    energie_up(j);
+    energie_down(j,1);
+    assert_int_equal(j->energie, 1);
+}
+
+static void test_deplacement_haut(void **state){
+    JOUEUR *j =(JOUEUR *)* state;
+    deplacement(, J1, haut);
+    assert_int_equal(j->S_M->ligne, 4); //pas 1 mais +1 de la ou ca a commence
+    assert_int_equal(j->S_M->colonne, 5);
 
 }
+
+static void test_deplacement_bas(void **state){
+    JOUEUR *j =(JOUEUR *)* state;
+    deplacement(, J1, bas);
+    assert_int_equal(j->S_M->ligne, 6); //pas 1 mais +1 de la ou ca a commence
+    assert_int_equal(j->S_M->colonne, 5);
+}
+static void test_deplacement_droite(void **state){
+    JOUEUR *j =(JOUEUR *)* state;
+    deplacement(, J1, droite);
+    assert_int_equal(j->S_M->ligne, 5); //pas 1 mais +1 de la ou ca a commence
+    assert_int_equal(j->S_M->colonne, 6);
+}
+static void test_deplacement_gauche(void **state){
+    JOUEUR *j =(JOUEUR *)* state;
+    deplacement(, J1, droite);
+    assert_int_equal(j->S_M->ligne, 5); //pas 1 mais +1 de la ou ca a commence
+    assert_int_equal(j->S_M->colonne, 4);
+}
+
+
+
 
 int main(void)
 {

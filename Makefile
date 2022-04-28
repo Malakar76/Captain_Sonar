@@ -9,7 +9,6 @@ MAKE=/usr/bin/make
 
 all:  view_Make model_Make controller_Make Launcher
 
-
 view_Make :
 	$(MAKE) -C ./view
 	$(MAKE) -C ./view clean
