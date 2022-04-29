@@ -6,6 +6,7 @@
  * \brief Fichier Règles et Crédits.
  *
  * Fichier qui gère la création et l'affichage des règles et des crédits
+ * mais aussi la musique
  */
 
 #include "main_view.h"
@@ -79,4 +80,26 @@ void show_credit(View_elements *app){
     SDL_RenderCopy(app->rRenderer,app->cCredit,NULL,NULL);
     SDL_RenderPresent(app->rRenderer);
     app->window=Credits;
+}
+
+int start_music(Mix_Music * music){
+    music=Mix_LoadMUS("Ressources/music_sample.mp3");
+    if(!music) {
+        printf("Mix_LoadMUS(\"Ressources/music_sample.mp3\"): %s\n", Mix_GetError());
+    }
+    if(Mix_PlayMusic(music, -1)==-1) {
+        printf("Mix_PlayMusic: %s\n", Mix_GetError());
+    }
+    Mix_VolumeMusic(128);
+    return 1;
+}
+
+int resume_music(){
+    Mix_ResumeMusic();
+    return 1;
+}
+
+int pause_music(){
+    Mix_PauseMusic();
+    return 0;
 }

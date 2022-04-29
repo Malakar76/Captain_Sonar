@@ -438,8 +438,7 @@ void surface(Playground *pg,enum Actif actif,char message[]){
 
 //IA
 
-void actionIA(Playground * pg)
-{
+void actionIA(Playground * pg){
 
 }
 

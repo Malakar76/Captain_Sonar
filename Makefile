@@ -35,7 +35,7 @@ clean:
 	rm -f  Launcher
 	
 distclean:
-	rm ./lib/*.a
+	rm -f ./lib/*.a
 	
 clall :
 	$(MAKE) -C ./ clean

@@ -77,6 +77,8 @@ typedef struct {
     SDL_Rect  CCarte[5] ;/** < Tableau qui stocke l'emplacement des boutons du choix des cartes */
     enum Window window;/** < Permet de savoir qu'elle est la fenêtre actuellement utilisée */
     TTF_Font * ttf;/** < Structure qui permet de régler la police d'écriture des messages */
+    Mix_Music * music ; /** < Musique à jouer */
+    int state; /** < Vaut 0 (musique en pause) ou 1 (musique en cours) */
     int IA ; /** < Permet de savoir si l'on va jouer contre une IA ou un vrai joueur (0=Joueur , 1=IA) */
 
 }View_elements;
@@ -327,10 +329,26 @@ void init_rbutton(View_elements *app);
 //Fonction pour le son
 
 /**
- * \fn void start_music()
+ * \fn void start_music(Mix_Music * music)
  * \brief lance la musique
  * Lance la musique de fond du menu
+ * @param music Strucure de la musique à jouer
+ * @return retourne 1
  */
-void start_music();
+int start_music(Mix_Music * music);
+
+/**
+ * \fn void resume_music(Mix_Music * music,int state)
+ * joue la musique après une pause
+ * @return retourne 1
+ */
+int resume_music();
+
+/**
+ * \fn void pause_music(int  state)
+ * Met en pause la musique
+ * @return retourne 0
+ */
+int pause_music();
 
 #endif //PROJET_C_MAIN_VIEW_H

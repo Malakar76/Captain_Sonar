@@ -31,6 +31,12 @@ int init_view(View_elements * app) {
         fprintf(stderr, "Erreur SDL_Init : %s", SDL_GetError());
         return statut;
     }
+
+    Mix_Init(MIX_INIT_MP3);
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1){
+        printf("%s", Mix_GetError());
+    }
+
     if (0 != SDL_CreateWindowAndRenderer(Resolution_x, Resolution_y, SDL_WINDOW_SHOWN, &app->wwindow, &app->rRenderer)) {
         fprintf(stderr, "Erreur SDL_CreateWindowAndRenderer : %s", SDL_GetError());
         return statut;
@@ -106,8 +112,10 @@ void free_view(View_elements *app){
     SDL_DestroyTexture(app->VBattlefield->Battlefield_current);
     SDL_DestroyTexture(app->VBattlefield->Battlefield_blank);
     SDL_DestroyTexture(app->VBattlefield->Energie);
+    Mix_FreeMusic(app->music);
     IMG_Quit();
     TTF_Quit();
+    //Mix_CloseAudio();
     while (Mix_Init(0)){
         Mix_Quit();
     }

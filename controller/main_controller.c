@@ -14,6 +14,7 @@ void controller(View_elements *app,Playground * pg){
     SDL_Point point= {-1,-1};
     show_menu(app);
     int run =1;
+    app->state=start_music(app->music);
     while (run ==1){
         SDL_WaitEvent(&event);
         switch(event.type){

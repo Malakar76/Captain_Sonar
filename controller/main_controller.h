@@ -56,4 +56,12 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
  */
 void controller_battlefield_Joueur(View_elements * app,Playground * pg,enum Carte choix);
 
+/**
+ * \fn void actionIA_ctrl(View_elements * app,Playground * pg)
+ * Gère l'affichage de l'action de l'IA et ses conséquences dans la vue
+ * @param app Structure qui gère la vue
+ * @param pg Strucutre qui gère le modèle
+ */
+void actionIA_ctrl(View_elements * app,Playground * pg);
+
 #endif //PROJET_C_MAIN_CONTROLLER_H
