@@ -340,6 +340,20 @@ int enough_energie(Playground *pg,enum Actif actif,enum OPTION option);
  */
 int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []);
 
+/**
+* \fn void change_tour(Playground *pg,enum Actif actif,enum DIRECTION d,int ligne,colonne)
+ * Prend en compte le message affiché apès les actions et si ce dernier est différent de vide
+ * Alors une action a été réaliser ainsi on peut changer de tour.
+ * @param pg
+ * @param actif
+ * @param d
+ * @param ligne
+ * @param colonne
+ * @return change de carte et de tour après chaque tour du joueur actif
+*/
+void change_tour(Playground *pg, enum Actif actif,enum DIRECTION d,int ligne,colonne);
+
+
 //Création Carte
 
 /**
@@ -363,5 +377,8 @@ void Crea_Antartica(CARTE * c);
  * @param pg Structure du modèle
  */
 void actionIA(Playground * pg);
+
+
+
 
 #endif //PROJET_C_MAIN_MODEL_H

@@ -5,6 +5,7 @@
  * Fichier pour la gestion du joueur
  */
 #include "main_model.h"
+#include <stdio.h>
 
 void energie_up(JOUEUR *j){
         if (j->energie<4){
@@ -177,6 +178,7 @@ void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c){
     j->calqueJ[ligne][colonne]=1;
 }
 
+<<<<<<< HEAD
 int enough_energie(Playground *pg, enum Actif actif, enum OPTION option) {
     JOUEUR *j;
     if (actif == J1) {
@@ -442,3 +444,213 @@ void actionIA(Playground * pg){
 
 }
 
+=======
+int missile(Playground *pg,enum Actif actif,int ligne,int colonne) {
+
+    if (actif == J1) {
+        if (pg->J1->S_M->colonne = colonne && pg->J1->S_M->ligne == ligne)
+            return -1;
+        if (pg->J2->S_M->colonne = colonne && pg->J2->S_M->ligne == ligne)
+            return 1;
+        else return 0;
+    }
+    else {
+        if (pg->J1->S_M->colonne = colonne && pg->J1->S_M->ligne == ligne)
+            return 1;
+        if (pg->J2->S_M->colonne = colonne && pg->J2->S_M->ligne == ligne)
+            return -1;
+        else return 0;
+    }
+}
+
+void result_missile(Playground *pg, enum Actif actif, int ligne, int colonne, char *message){
+    if (missile(pg,actif, ligne, colonne)==0)
+        strcpy(message,"Zut, vous n\'avez rien touché");
+    if (missile(pg,actif, ligne, colonne)==-1)
+        strcpy(message,"Mince alors, vous vous êtes touché vous même!");
+    if (missile(pg,actif, ligne, colonne)==-1)
+        strcpy(message,"Bravo vous avez touché l'adversaire");
+}
+
+
+
+void sonar(Playground * pg, enum Actif actif, char *message){
+    int choix, données;
+    if (pg->actif==J1) {
+        printf("vous devez donnez votre ligne ou votre colonne, faites votre choix:\n");
+       strcpy(message, (char*) scanf("%d", données));
+    }
+    if (pg->actif==J2){
+        printf("vous devez donnez votre ligne ou votre colonne, faites votre choix:\n");
+        strcpy(message,(char*) scanf("%d",données));
+    }
+}
+
+
+
+int enough_energie(Playground *pg,enum Actif actif,enum OPTION option)
+{
+    JOUEUR*j;
+    switch(option)
+    {
+        case MIS:
+        {
+            if(j->energie==4)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+        }
+        case SURF:
+        {
+            if(j->energie>=1)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+        }
+
+
+        case SON:
+        {
+            if(j->energie>=2)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+
+        }
+
+        case SIL:
+        {
+            if(j->energie>=3)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+        }
+
+        case DEPLCMNT:
+        {
+            if(j->energie>=1)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+        }
+
+    }
+
+    if (actif==J1)
+    {
+        j =pg->J1;
+        return (int) j;
+    }
+    else
+    {
+        j = pg->J2;
+        return (int) j;
+    }
+
+
+
+}
+
+char * action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d)
+{
+    Playground * a;
+
+
+
+
+}
+
+char * result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d)
+{
+    JOUEUR * j;
+
+    switch(d)
+    {
+        case haut:
+        {
+            char *ptr = "Haut";
+            return ptr;
+
+        }
+            break;
+        case bas:
+        {
+            char *ptr = "Bas";
+            return ptr;
+
+        }
+            break;
+
+        case gauche:
+        {
+            char *ptr = "Gauche";
+            return ptr;
+
+        }
+            break;
+
+        case droite:
+        {
+            char *ptr = "Droite";
+            return ptr;
+        }
+            break;
+    }
+
+
+    if (actif==J1)
+    {
+        j =pg->J1;
+        return (char*) j;
+    }
+    else
+    {
+        j = pg->J2;
+        return (char*) j;
+    }
+    
+}
+
+void change_tour(Playground *pg, enum Actif actif, enum DIRECTION d,int ligne, int colonne) {
+    if (actif==J1) {
+        if (sizeof(result_deplacement(pg, actif, d))|| sizeof(result_missile(pg,actif,ligne,colonne)) || sizeof(sonar(pg,actif)!= 0))
+        {
+            pg->actif = J2;
+
+        }
+    }
+    if (actif==J2){
+        if (sizeof(result_deplacement(pg, actif, d))|| sizeof(result_missile(pg,actif,ligne,colonne)) || sizeof(sonar(pg,actif)!= 0))
+        {
+             pg->actif = J1;
+        }
+    }
+}
+
+
+>>>>>>> b6eaf27f77578ef7d7f17db53ece4ea93b74268f
