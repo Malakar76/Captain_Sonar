@@ -42,8 +42,11 @@ void free_model(Playground * pg){
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> b6eaf27f77578ef7d7f17db53ece4ea93b74268f
 int test_unitaire (){
     Playground *pg;
 
@@ -140,4 +143,7 @@ int test_unitaire (){
     display_test_string("test result droite\n",result_deplacement(Playground *pg,1,3),"Droite");
 
 }
+<<<<<<< HEAD
+>>>>>>> b6eaf27f77578ef7d7f17db53ece4ea93b74268f
+=======
 >>>>>>> b6eaf27f77578ef7d7f17db53ece4ea93b74268f

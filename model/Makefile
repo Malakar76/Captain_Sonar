@@ -19,6 +19,9 @@ libmodel.a: main_model.o carte.o joueur.o
 	$(CC) $(CFLAGS) -c $<  -o $@
 
 
+<<<<<<< HEAD
+>>>>>>> b6eaf27f77578ef7d7f17db53ece4ea93b74268f
+=======
 >>>>>>> b6eaf27f77578ef7d7f17db53ece4ea93b74268f
 
 clean:

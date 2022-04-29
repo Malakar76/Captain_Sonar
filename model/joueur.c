@@ -438,6 +438,7 @@ void surface(Playground *pg,enum Actif actif,char message[]){
 
 }
 
+<<<<<<< HEAD
 //IA
 
 void actionIA(Playground * pg){
@@ -445,6 +446,8 @@ void actionIA(Playground * pg){
 }
 
 =======
+=======
+>>>>>>> b6eaf27f77578ef7d7f17db53ece4ea93b74268f
 int missile(Playground *pg,enum Actif actif,int ligne,int colonne) {
 
     if (actif == J1) {
@@ -653,4 +656,7 @@ void change_tour(Playground *pg, enum Actif actif, enum DIRECTION d,int ligne, i
 }
 
 
+<<<<<<< HEAD
+>>>>>>> b6eaf27f77578ef7d7f17db53ece4ea93b74268f
+=======
 >>>>>>> b6eaf27f77578ef7d7f17db53ece4ea93b74268f
