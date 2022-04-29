@@ -7,10 +7,10 @@
 #include "main_model.h"
 
 void energie_up(JOUEUR *j){
-        if (j->energie<4){
-            j->energie++;
-        }
+    if (j->energie<4){
+        j->energie++;
     }
+}
 
 void energie_down(JOUEUR *j,int nb){
     j->energie=j->energie-nb;
@@ -19,7 +19,7 @@ void energie_down(JOUEUR *j,int nb){
 void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
     JOUEUR * j;
     if (actif==J1) {
-       j =pg->J1;
+        j =pg->J1;
     }
     else {
         j =pg->J2;
@@ -33,6 +33,8 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
             j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
+            j->path[j->nbpath]=haut;
+            j->nbpath++;
             break;
         }
 
@@ -43,6 +45,8 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
             j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
+            j->path[j->nbpath]=bas;
+            j->nbpath++;
             break;
         }
 
@@ -53,6 +57,8 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
             j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
+            j->path[j->nbpath]=droite;
+            j->nbpath++;
             break;
         }
 
@@ -63,6 +69,8 @@ void deplacement(Playground * pg,enum Actif actif,enum DIRECTION d){
             energie_up(j);
             pg->map->carte[j->S_M->ligne][j->S_M->colonne].sous_marin=1;
             j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
+            j->path[j->nbpath]=gauche;
+            j->nbpath++;
             break;
         }
     }
@@ -79,7 +87,7 @@ int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d){
     switch(d){
         case haut:
         {
-                if (j->S_M->ligne>0){
+            if (j->S_M->ligne>0){
                 if ((est_occupe(&pg->map->carte[j->S_M->ligne-1][j->S_M->colonne])==0) && (j->calqueJ[j->S_M->ligne-1][j->S_M->colonne]==0)){
                     return 1;
                 }
@@ -90,7 +98,7 @@ int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d){
         {
             if (j->S_M->ligne<9){
                 if ((est_occupe(&pg->map->carte[j->S_M->ligne+1][j->S_M->colonne])==0)&&(j->calqueJ[j->S_M->ligne+1][j->S_M->colonne]==0)){
-                return 1;
+                    return 1;
                 }
             }
             break;
@@ -131,6 +139,7 @@ int init_joueur(JOUEUR *j){
     j->S_M->colonne=0;
     j->S_M->start[0]=0;
     j->S_M->start[1]=0;
+    j->nbpath=0;
     return EXIT_SUCCESS;
 }
 
@@ -142,6 +151,16 @@ void init_calque(JOUEUR * joueur){
 
         }
     }
+}
+
+void reset_joueur(JOUEUR * j){
+    j->energie=0;
+    j->vie=2;
+    j->S_M->ligne=0;
+    j->S_M->colonne=0;
+    j->S_M->start[0]=0;
+    j->S_M->start[1]=0;
+    j->nbpath=0;
 }
 
 void free_joueur(JOUEUR * j){
@@ -234,7 +253,7 @@ int missile(Playground *pg,enum Actif actif,int ligne,int colonne) {
             return 1;
         }
         else{
-          return 0;
+            return 0;
         }
     } else {
         if (pg->J1->S_M->colonne == colonne && pg->J1->S_M->ligne == ligne) {
@@ -254,15 +273,15 @@ int missile(Playground *pg,enum Actif actif,int ligne,int colonne) {
 int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne, char  message[]) {
     switch (missile(pg, actif, ligne, colonne)) {
         case 0:
-            strcpy(message, "Zut, vous n'avez rien touché");
+            strcpy(message, "Zut, vous n'avez rien touche");
             return 0;
 
         case 1:
-            strcpy(message, "Bravo vous avez touché l'adversaire");
+            strcpy(message, "Bravo vous avez touche l'adversaire");
             return 1;
 
         case -1:
-            strcpy(message, "Mince alors, vous vous êtes touché vous même!");
+            strcpy(message, "Mince alors, vous vous etes touche vous meme!");
             return -1;
 
     }
@@ -270,37 +289,32 @@ int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne, char  
 
 void sonar(Playground * pg, enum Actif actif, char message[]){
     int val= rand();
-    char valeur;
+    char valeur [2];
     if (actif==J1) {
         if (val%2==1){
-
-            //valeur=pg->J2->S_M->colonne+'0';
-            valeur = '5';
-            fprintf(stderr,"%c",valeur);
+            sprintf(valeur,"%c",pg->J2->S_M->colonne + 65);
             strcpy(message,"L'ennemi se trouve dans la colonne ");
-            strcat(message,&valeur);
+            strcat(message, valeur);
         }else{
-            //valeur=pg->J2->S_M->ligne+'0';
-            valeur = '5';
-            fprintf(stderr,"%c",valeur);
+            sprintf(valeur,"%d",pg->J2->S_M->ligne + 1);
             strcpy(message,"L'ennemi se trouve dans la ligne ");
-            strcat(message,&valeur);
+            strcat(message, valeur);
         }
     }
     else if (pg->actif==J2){
         if (val%2==1){
-            valeur=pg->J1->S_M->colonne;
+            sprintf(valeur,"%c",pg->J1->S_M->colonne+65);
             strcpy(message,"L'ennemi se trouve dans la colonne ");
-            strcat(message,&valeur);
+            strcat(message, valeur);
         }else{
-            valeur=pg->J1->S_M->ligne;
+            sprintf(valeur,"%d",pg->J1->S_M->ligne+1);
             strcpy(message,"L'ennemi se trouve dans la ligne ");
-            strcat(message,&valeur);
+            strcat(message, valeur);
         }
     }
 }
 
-void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []){
+int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []){
     JOUEUR * j;
     if (pg->actif==J1){
         j=pg->J1;
@@ -313,15 +327,16 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
             if (enough_energie(pg, actif, MIS)) {
                 result_missile(pg, actif, ligne, colonne, message);
                 energie_down(j,4);
+                return 1;
             } else {
                 printf("Pas assez d'energie pour missille");
+                return 0;
             }
-            break;
         }
 
         case SURF: {
             surface(pg,actif,message);
-            break;
+            return 1;
         }
 
 
@@ -329,20 +344,23 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
             if (enough_energie(pg, actif, SON)) {
                 sonar(pg, actif, message);
                 energie_down(j,2);
+                return 1;
             } else {
                 strcpy(message, "Pas d'energie pour sonar");
+                return 0;
             }
-            break;
         }
 
 
         case SIL: {
             if (enough_energie(pg, actif, SIL)) {
+                //rajouter fonction silence
                 energie_down(j,3);
+                return 1;
             } else {
                 strcpy(message, "Pas d'energie pour silence");
+                return 0;
             }
-            break;
         }
 
 
@@ -352,10 +370,11 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
                 case haut: {
                     if (deplacement_possible(pg, actif, d)) {
                         result_deplacement(pg, actif, d, message);
+                        return 1;
                     }else {
                         strcpy(message, "Impossible de se deplacer en haut");
+                        return 0;
                     }
-                    break;
                 }
 
 
@@ -363,20 +382,22 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
 
                     if (deplacement_possible(pg, actif, d)) {
                         result_deplacement(pg, actif, d, message);
+                        return 1;
                     } else {
                         strcpy(message, "Impossible de se deplacer en bas");
+                        return 0;
                     }
-                    break;
                 }
 
 
                 case droite: {
                     if (deplacement_possible(pg, actif, d)) {
                         result_deplacement(pg, actif, d, message);
+                        return 1;
                     } else {
-                        strcpy(message, "Impossible de se deplacer à droite");
+                        strcpy(message, "Impossible de se deplacer a droite");
+                        return 0;
                     }
-                    break;
                 }
 
 
@@ -384,10 +405,11 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
                 case gauche: {
                     if (deplacement_possible(pg, actif, d)) {
                         result_deplacement(pg, actif, d, message);
+                        return 1;
                     } else {
-                        strcpy(message, "Impossible de se deplacer à gauche");
+                        strcpy(message, "Impossible de se deplacer a gauche");
+                        return 0;
                     }
-                    break;
                 }
 
             }
@@ -399,7 +421,24 @@ void action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,
 }
 
 void surface(Playground *pg,enum Actif actif,char message[]){
+    JOUEUR * j;
+    if (actif==J1){
+        j=pg->J1;
+    }else{
+        j=pg->J2;
+    }
+    init_calque(j);
+    j->nbpath=0;
+    j->S_M->start[0]=j->S_M->ligne;
+    j->S_M->start[1]=j->S_M->colonne;
+    j->calqueJ[j->S_M->ligne][j->S_M->colonne]=1;
+    strcpy(message,"Nous faisons surface");
 
 }
 
+//IA
 
+void actionIA(Playground * pg)
+{
+
+}
