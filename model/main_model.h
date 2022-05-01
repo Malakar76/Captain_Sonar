@@ -92,6 +92,15 @@ typedef struct{
 }JOUEUR;
 
 /**
+ * \struct IA
+ * Structure qui permet de stocker des informations relatives à l'IA
+ */
+typedef struct {
+   enum OPTION lastaction; /**< Dernière action effectuée par l'IA */
+   int  nbaction ; /**< Nombre d'actions depuis la dernière surface */
+}IA;
+
+/**
  * \struct Playground
  * \brief Structure principale du modèle
  * Structure qui regroupe tout les éléments nécessaires pour gérer le modèle du projet
@@ -101,6 +110,7 @@ typedef struct {
     JOUEUR * J1;/**<Structure du joueur 1  */
     JOUEUR * J2; /**<Structure du joueur 2 */
     enum Actif actif;/**< Joueur actif du tour */
+    IA * ia; /**< Structure pour l'IA */
 }Playground;
 
 /**
@@ -361,7 +371,8 @@ void Crea_Antartica(CARTE * c);
  * \fn void actionIA(Playground * pg)
  * choisi une action pour l'IA
  * @param pg Structure du modèle
+ * @return renvoi un entier qui contient l'action
  */
-void actionIA(Playground * pg);
+enum OPTION actionIA(Playground * pg);
 
 #endif //PROJET_C_MAIN_MODEL_H

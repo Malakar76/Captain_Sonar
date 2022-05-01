@@ -316,7 +316,7 @@ void sonar(Playground * pg, enum Actif actif, char message[]){
 
 int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []){
     JOUEUR * j;
-    if (pg->actif==J1){
+    if (actif==J1){
         j=pg->J1;
     }else{
         j=pg->J2;
@@ -329,7 +329,7 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
                 energie_down(j,4);
                 return 1;
             } else {
-                printf("Pas assez d'energie pour missille");
+                strcpy(message,"Pas assez d'energie pour missille");
                 return 0;
             }
         }
@@ -437,8 +437,32 @@ void surface(Playground *pg,enum Actif actif,char message[]){
 }
 
 //IA
-
-void actionIA(Playground * pg){
-
+/* Rappel
+MIS,  MISSILE interdit
+SURF,  SURFACE
+SON,  SONAR interdit
+SIL, SILENCE interdit
+DEPLCMNT  DEPLACEMENT
+*/
+enum OPTION actionIA(Playground * pg){
+    char message[100];
+    enum OPTION choix;
+    int dir;
+    choix =rand()%5;
+    while (enough_energie(pg,J2,choix)!=1 || (choix==SIL) || ((choix==SURF)&&pg->ia->nbaction<10)){
+        choix=rand()%5;
+    }
+    if (choix==DEPLCMNT){
+        dir=rand()%4;
+        while (deplacement_possible(pg,J2,dir)!=1){
+            dir=rand()%4;
+        }
+    }
+    if (choix==SURF){
+        pg->ia->nbaction=0;
+    }
+    pg->ia->nbaction++;
+    action(pg,J2,choix,dir,rand()%10,rand()%10,message);
+    return choix;
 }
 

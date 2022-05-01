@@ -53,7 +53,7 @@ typedef struct {
     SDL_Texture *Battlefield_blank;/**< Texture qui garde l'aperçu de la fenêtre de jeu clean */
     SDL_Texture *Sous_marin;/**< Texture qui garde l'aperçu du sous_marin */
     SDL_Texture *Energie; /**< Texture qui garde les niveaux d'énergie */
-    SDL_Rect  Bbutton[12] ;/**< Tableau qui stocke l'emplacement des boutons du champ de bataille */
+    SDL_Rect  Bbutton[13] ;/**< Tableau qui stocke l'emplacement des boutons du champ de bataille */
     SDL_Rect Carte[10][10];/**< Tableau qui stocke l'emplacement des cases du champ de bataille */
 }View_Battlefield;
 
@@ -175,10 +175,20 @@ void show_choix_carte(View_elements *app);
 /**
  * \fn void print_message(View_elements *app,char * message)
  * Affiche le message passé en parmètre avec la typo initialisé dans la structure app. Le message est affiché dans l'interface utilisateur
+ * dans la zone action allié
  * @param app Structure qui gère la vue
  * @param message message à afficher
  */
 void print_message(View_elements *app,char * message);
+
+/**
+ * \fn void print_message_adversaire(View_elements *app,char * message)
+ * Affiche le message passé en parmètre avec la typo initialisé dans la structure app. Le message est affiché dans l'interface utilisateur
+ * dans la zone action de l'adversaire
+ * @param app Structure qui gère la vue
+ * @param message message à afficher
+ */
+void print_message_adversaire(View_elements *app,char * message);
 
 /**
  * \fn void case_choisie(View_elements * app, SDL_Point point,int tab[])
@@ -239,6 +249,33 @@ void clean_map(View_elements * app);
  * @param pos_depart position de départ du joueur
  */
 void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[]);
+
+/**
+ * \fn void trace_deplacement_calque(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne)
+ * Trace le dernier déplacement du joueur adverse sur le calque
+ * @param app Structure qui gère la vue
+ * @param direction Direction du dernier déplacement
+ * @param pos_joueur_ligne Nouvelle position du joueur
+ * @param pos_joueur_colonne Nouvelle position du joueur
+ */
+void trace_deplacement_calque(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
+
+/**
+ * \fn void trace_deplacement_total_calque(View_elements * app, int direction[],int pos_depart[])
+ * permet de retracer tout les déplacements d'un joueur sur le calque
+ * @param app Structure qui gère la vue
+ * @param direction tableau de toutes les directions à tracer
+ * @param nbdir nombre de direction à tracer
+ * @param pos_depart position de départ du joueur
+ */
+void trace_deplacement_total_calque(View_elements * app, int direction[],int nbdir);
+
+/**
+ * \fn void clean_calque(View_elements * app)
+ * Permet de retirer le tracé du déplacement sur le calque lorsque le joueur fait surface.
+ * @param app Structure qui gère la vue
+ */
+void clean_calque(View_elements * app);
 
 /**
  * \fn void show_energie(View_elements * app,int energie)
