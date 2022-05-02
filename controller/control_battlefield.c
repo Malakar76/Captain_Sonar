@@ -79,6 +79,9 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                         }
                     } else if (SDL_PointInRect(&point, &app->VBattlefield->Bbutton[8])) {
                         //clean map
+                        clean_map(app);
+                        trace_deplacement_total(app,(int *)pg->J1->path,pg->J1->nbpath,pg->J1->S_M->start,0);
+                        trace_deplacement_total_calque(app,(int *)pg->J2->path,pg->J2->nbpath);
                     } else if (SDL_PointInRect(&point, &app->VBattlefield->Bbutton[7]) && start == 1) {
                         //missile
                         if (enough_energie(pg, pg->actif, MIS)) {
@@ -136,7 +139,7 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                     } else if (SDL_PointInRect(&point, &app->VBattlefield->Bbutton[3]) && start == 1) {
                         //droite
                         if (action(pg, pg->actif, DEPLCMNT, droite, 0, 0, message)) {
-                            trace_deplacement(app,droite,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            trace_deplacement(app,droite,pg->J1->S_M->ligne,pg->J1->S_M->colonne,0);
                             show_SM(app, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
                             actionIA_ctrl(app,pg,messageIA);
                         }
@@ -144,7 +147,7 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                     } else if (SDL_PointInRect(&point, &app->VBattlefield->Bbutton[2]) && start == 1) {
                         //gauche
                         if (action(pg, pg->actif, DEPLCMNT, gauche, 0, 0, message)) {
-                            trace_deplacement(app,gauche,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            trace_deplacement(app,gauche,pg->J1->S_M->ligne,pg->J1->S_M->colonne,0);
                             show_SM(app, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
                             actionIA_ctrl(app,pg,messageIA);
                         }
@@ -152,7 +155,7 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                     } else if (SDL_PointInRect(&point, &app->VBattlefield->Bbutton[1]) && start == 1) {
                         //bas
                         if (action(pg, pg->actif, DEPLCMNT, bas, 0, 0, message)) {
-                            trace_deplacement(app,bas,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            trace_deplacement(app,bas,pg->J1->S_M->ligne,pg->J1->S_M->colonne,0);
                             show_SM(app, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
                             actionIA_ctrl(app,pg,messageIA);
                         }
@@ -160,13 +163,15 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                     } else if (SDL_PointInRect(&point, &app->VBattlefield->Bbutton[0]) && start == 1) {
                         //haut
                         if (action(pg, pg->actif, DEPLCMNT, haut, 0, 0, message)) {
-                            trace_deplacement(app,haut,pg->J1->S_M->ligne,pg->J1->S_M->colonne);
+                            trace_deplacement(app,haut,pg->J1->S_M->ligne,pg->J1->S_M->colonne,0);
                             show_SM(app, pg->J1->S_M->ligne, pg->J1->S_M->colonne);
                             actionIA_ctrl(app,pg,messageIA);
                         }
                         print_message(app, message);
                     } else if (SDL_PointInRect(&point, &app->VBattlefield->Bbutton[11]) && start == 1) {
-                        //sur la carte affichage calque
+                        //trace calque sur map
+                        case_choisie(app,point,tab);
+                        trace_deplacement_total(app,(int *)pg->J2->path,pg->J2->nbpath,tab,1);
                     }
 
                 }

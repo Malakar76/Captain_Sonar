@@ -224,14 +224,15 @@ int init_coche_case(View_elements * app);
 void coche_case(View_elements * app);
 
 /**
- * \fn void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne)
+ * \fn void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne,int color)
  * Trace le dernier déplacement du joueur sur la carte
  * @param app Structure qui gère la vue
  * @param direction Direction du dernier déplacement
  * @param pos_joueur_ligne Nouvelle position du joueur
+ * @param color Permet de choisir la couleur entre rouge (0) et vert (1)
  * @param pos_joueur_colonne Nouvelle position du joueur
  */
-void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
+void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne,int color);
 
 /**
  * \fn void clean_map(View_elements * app)
@@ -241,14 +242,15 @@ void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne,
 void clean_map(View_elements * app);
 
 /**
- * \fn void trace_deplacement_total(View_elements * app, int direction[],int pos_depart[])
+ * \fn void trace_deplacement_total(View_elements * app, int direction[],int pos_depart[],int color)
  * permet de retracer tout les déplacements d'un joueur
  * @param app Structure qui gère la vue
  * @param direction tableau de toutes les directions à tracer
  * @param nbdir nombre de direction à tracer
+ * @param color Permet de choisir la couleur entre rouge (0) et vert (1)
  * @param pos_depart position de départ du joueur
  */
-void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[]);
+void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[],int color);
 
 /**
  * \fn void trace_deplacement_calque(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne)

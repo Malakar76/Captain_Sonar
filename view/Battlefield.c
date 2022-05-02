@@ -298,7 +298,7 @@ int init_coche_case(View_elements * app){
 }
 
 
-void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne){
+void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne,int color){
 
     int i, j; // on cree des mini rect sur la carte pour placer haut du rect pour le trait
     SDL_Rect recti={0,0,4,4};
@@ -318,7 +318,12 @@ void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne,
 
 
     SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Battlefield_current);
-    SDL_SetRenderDrawColor(app->rRenderer, 255, 0, 0, SDL_ALPHA_OPAQUE); //modifie couleur trait
+    if (color==1){
+        SDL_SetRenderDrawColor(app->rRenderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+    }else{
+        SDL_SetRenderDrawColor(app->rRenderer, 255, 0, 0, SDL_ALPHA_OPAQUE);//modifie couleur trait
+    }
+
 
 
     switch (direction) {
@@ -369,11 +374,10 @@ void clean_map(View_elements * app){
 
 }
 
-void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[]){
+void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[],int color){
     int ligne=pos_depart[0];
     int colonne=pos_depart[1];
     for (int i=0;i<nbdir;i++){
-        trace_deplacement(app,direction[i],ligne,colonne);
         switch (direction[i]){
             case 0: //haut
                 ligne--;
@@ -388,17 +392,18 @@ void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int 
                 colonne++;
                 break;
         }
+        trace_deplacement(app,direction[i],ligne,colonne,color);
     }
 }
 
 void trace_deplacement_calque(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne){
     int i, j;
-    SDL_Rect recti={0,0,4,4}; //à vérifier
+    SDL_Rect recti={0,0,6,6};
     SDL_Rect tab [19][19];
     for (i = 0; i < 19; i++) {
-        recti.y=124+i*32; //à vérifier
+        recti.y=132+i*32.114;
         for (j = 0;  j< 19; j++) {
-            recti.x= 992+j*32; //à vérifier
+            recti.x= 1001+j*32.2;
             tab[i][j]= recti; //i ligne j colonne
         }
     }
@@ -416,30 +421,31 @@ void trace_deplacement_calque(View_elements * app, int direction, int pos_joueur
     switch (direction) {
 
         case 0: //haut
-            rect.w=4;
-            rect.h=32;
+            rect.y=rect.y-32.114;
+            rect.w=6;
+            rect.h=39;
             SDL_RenderFillRect(app->rRenderer, &rect);
             break;
 
         case 1: //bas
-            rect.y=rect.y-32;
-            rect.w=4;
-            rect.h=32;
+
+            rect.w=6;
+            rect.h=39;
             SDL_RenderFillRect(app->rRenderer, &rect);
             break;
 
 
 
         case 2: //gauche
-            rect.w=32;
-            rect.h=4;
+            rect.x=rect.x-32.2;
+            rect.w=40;
+            rect.h=6;
             SDL_RenderFillRect(app->rRenderer, &rect);
             break;
 
         case 3: //droite
-            rect.x=rect.x-32;
-            rect.w=32;
-            rect.h=4;
+            rect.w=40;
+            rect.h=6;
             SDL_RenderFillRect(app->rRenderer, &rect);
             break;
 
@@ -454,7 +460,6 @@ void trace_deplacement_calque(View_elements * app, int direction, int pos_joueur
 void trace_deplacement_total_calque(View_elements * app, int direction[],int nbdir){
     int ligne=9;
     int colonne=9;
-    fprintf(stderr,"%d\n",nbdir);
     for (int i=0;i<nbdir;i++){
         trace_deplacement_calque(app,direction[i],ligne,colonne);
         switch (direction[i]){
