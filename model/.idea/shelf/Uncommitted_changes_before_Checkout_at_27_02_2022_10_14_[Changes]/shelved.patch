@@ -1,0 +1,245 @@
+Index: test.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by eii on 16/02/2022.\n//\n\n#include \"test.h\"\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/test.c b/test.c
+--- a/test.c	
++++ b/test.c	
+@@ -1,5 +1,71 @@
+-//
+-// Created by eii on 16/02/2022.
+-//
+ 
++/*!
++* \file test.c
++* \brief Provides basic unit testing functions definitions
++*/
++
++#include <stdio.h>
++#include <string.h>
+ #include "test.h"
++
++/*!
++* \brief Displays a test whose result has to be checked by the user.
++* The test message is displayed in blue.
++* \param[in] message the message indicating what it is tested  and what value should be expected
++*/
++void display_test_check_by_user(char * message)
++{
++    printf("\033[36m%s\033[0m :\n",message);
++}
++
++/*!
++* \brief Displays the result of a test returning an int
++* The test message is displayed in green is the test has passed, in red otherwise.
++* \param[in] message the message indicating what it is tested
++* \param[in] expected_value the expected value
++* \param[in] obtained_value the tested value
++*/
++void display_test_int(char * message, int expected_value, int obtained_value)
++{
++    (expected_value == obtained_value)? fprintf(stdout,"\033[32m%s : %s\033[0m\n",message,"PASSED"):fprintf(stdout,"\033[31m%s : %s\033[0m\n",message,"FAILED");
++}
++
++
++/*!
++* \brief Displays the result of a test returning an int
++* The test message is displayed in green is the test has passed, in red otherwise.
++* \param[in] message the message indicating what it is tested
++* \param[in] expected_value the expected value
++* \param[in] obtained_value the tested value
++*/
++void display_test_uint(char * message, unsigned int expected_value, unsigned int obtained_value)
++{
++    (expected_value == obtained_value)? fprintf(stdout,"\033[32m%s : %s\033[0m\n",message,"PASSED"):fprintf(stdout,"\033[31m%s : %s\033[0m\n",message,"FAILED");
++}
++
++/*!
++* \brief Displays the result of a test returning a string
++* The test message is displayed in green is the test has passed, in red otherwise.
++* \param[in] message the message indicating what it is tested
++* \param[in] expected_value the expected value
++* \param[in] obtained_value the tested value
++*/
++void display_test_string(char * message, char * expected_value, char * obtained_value)
++{
++    (strcmp(expected_value,obtained_value) == 0 )?
++    fprintf(stdout,"\033[32m%s : %s\033[0m\n",message,"PASSED"):
++    fprintf(stdout,"\033[31m%s : %s\033[0m\n",message,"FAILED");
++}
++
++
++/*!
++* \brief Displays the result of a test returning an float
++* The test message is displayed in green is the test has passed, in red otherwise.
++* \param[in] message the message indicating what it is tested
++* \param[in] expected_value the expected value
++* \param[in] obtained_value the tested value
++*/
++void display_test_float(char * message, float expected_value, float obtained_value)
++{
++    (expected_value == obtained_value)? fprintf(stdout,"\033[32m%s : %s\033[0m\n",message,"PASSED"):fprintf(stdout,"\033[31m%s : %s\033[0m\n",message,"FAILED");
++}
+\ No newline at end of file
+Index: carte.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"carte.h\"\ninclude <string.h>\n#include <stdlib.h>\n#include <time.h>\n\nint crea_tableau (int colonne, int ligne){\n    int i, int j;\n    TABLEAU* t[]={(TABLEAU*)malloc(sizeof(TABLEAU)*colonne),(TABLEAU*)malloc(sizeof(TABLEAU)*colonne)};\n    for (i=0;i<colonne;i++){\n        for (j=0;j<ligne;j++){\n            t[i][j]=rand () % 256;\n            printf(\"%d \", t[i][j]);\n        }\n        printf(\"\\n\");\n    }\n\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/carte.c b/carte.c
+--- a/carte.c	
++++ b/carte.c	
+@@ -3,16 +3,21 @@
+ #include <stdlib.h>
+ #include <time.h>
+ 
+-int crea_tableau (int colonne, int ligne){
++void init_map (int colonne, int ligne){
+     int i, int j;
+-    TABLEAU* t[]={(TABLEAU*)malloc(sizeof(TABLEAU)*colonne),(TABLEAU*)malloc(sizeof(TABLEAU)*colonne)};
++    CARTE* C[]={(CARTE*)malloc(sizeof(CARTE)*colonne),(CARTE*)malloc(sizeof(CARTE)*colonne)};
+     for (i=0;i<colonne;i++){
+         for (j=0;j<ligne;j++){
+-            t[i][j]=rand () % 256;
+-            printf("%d ", t[i][j]);
++            t[i][j]='.';
+         }
+-        printf("\n");
++    if (i==5 && j==5 || i==5 && j==6 || i==6 && j==5 || j==6 && i==6){
++        t[i][j]='X';
++    }
++    printf("\n");
+     }
++}
+ 
+-
+-}
+\ No newline at end of file
++char acces (CARTE* C)
++ switch(C->caractere)
++     case:C->caractere=='.'
++        return
+\ No newline at end of file
+Index: test.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by eii on 16/02/2022.\n//\n\n#ifndef MODEL_TEST_H\n#define MODEL_TEST_H\n\n#endif //MODEL_TEST_H\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/test.h b/test.h
+--- a/test.h	
++++ b/test.h	
+@@ -1,8 +1,21 @@
+-//
+-// Created by eii on 16/02/2022.
+-//
++/*!
++* \file test.h
++* \brief Provides basic unit testing functions declaration
++*/
++
++#ifndef TEST_H_INC
++#define TEST_H_INC
++
++
++void display_test_check_by_user(char * message);
+ 
+-#ifndef MODEL_TEST_H
+-#define MODEL_TEST_H
++void display_test_int(char * message, int expected_value, int obtained_value);
++void display_test_uint(char * message, unsigned int expected_value, unsigned int obtained_value);
+ 
+-#endif //MODEL_TEST_H
++void display_test_string(char * message, char * expected_value, char * obtained_value);
++
++
++void display_test_float(char * message, float expected_value, float obtained_value);
++
++
++#endif
+\ No newline at end of file
+Index: carte.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#ifndef MODEL_CARTE_H\n#define MODEL_CARTE_H\n\n#define NMAX 11\n\ntypedef {\n    int ligne;\n    int colonne;\n    int RGB[3];\n}TABLEAU;\n\n\n\n\n#endif //MODEL_CARTE_H\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/carte.h b/carte.h
+--- a/carte.h	
++++ b/carte.h	
+@@ -10,6 +10,4 @@
+ }TABLEAU;
+ 
+ 
+-
+-
+ #endif //MODEL_CARTE_H
+Index: Makefile
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>CC=gcc\nCFLAGS=-Wall -Wextra -pedantic-errors -MMD -g \nLDFLAGS= -lSDL2\nDIRLIB=../lib\n\n\n\nall: libmodel.a main_model\n\n\n\nlibmodel.a: main_model.o carte.o sous_marin.o joueur.o\n\tar -rv $(DIRLIB)/$@ $^\n\nmain_model:main_model.o carte.o sous_marin.o joueur.o test.o\n\t$(CC) $(CFLAGS) -c $<  -o $@\n\n%.o: %.c\n\t$(CC) $(CFLAGS) -c $<  -o $@\n\n\n\n\nclean:\n\trm -f *~ *.d *.o\n\t\ndistclean:\n\trm ../lib/libmodel.a\n\ninclude $(wildcart .d)\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Makefile b/Makefile
+--- a/Makefile	
++++ b/Makefile	
+@@ -12,7 +12,7 @@
+ libmodel.a: main_model.o carte.o sous_marin.o joueur.o
+ 	ar -rv $(DIRLIB)/$@ $^
+ 
+-main_model:main_model.o carte.o sous_marin.o joueur.o test.o
++main_model:main_model.o carte.o joueur.o test.o
+ 	$(CC) $(CFLAGS) -c $<  -o $@
+ 
+ %.o: %.c
+@@ -20,7 +20,6 @@
+ 
+ 
+ 
+-
+ clean:
+ 	rm -f *~ *.d *.o
+ 	
+Index: main_model.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"main_model.h\"\n#include <stdio.h>\n#include \"carte.h\"\n#include \"joueur.h\"\n#include \"sous_marin.h\"\n\nint main(){\n    printf(\"hello!\");\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main_model.c b/main_model.c
+--- a/main_model.c	
++++ b/main_model.c	
+@@ -4,6 +4,7 @@
+ #include "joueur.h"
+ #include "sous_marin.h"
+ 
++
+ int main(){
+     printf("hello!");
+ }
+\ No newline at end of file
+Index: main_model.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#ifndef PROJET_C_MAIN_MODEL_H\n#define PROJET_C_MAIN_MODEL_H\n\nvoid init_model();\n\n#endif\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main_model.h b/main_model.h
+--- a/main_model.h	
++++ b/main_model.h	
+@@ -3,4 +3,5 @@
+ 
+ void init_model();
+ 
++
+ #endif

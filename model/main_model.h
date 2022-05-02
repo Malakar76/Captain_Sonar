@@ -374,5 +374,6 @@ void Crea_Antartica(CARTE * c);
  * @return renvoi un entier qui contient l'action
  */
 enum OPTION actionIA(Playground * pg);
+enum OPTION actionIA2(Playground * pg);
 
 #endif //PROJET_C_MAIN_MODEL_H

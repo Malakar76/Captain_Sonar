@@ -459,8 +459,32 @@ enum OPTION actionIA(Playground * pg){
         }
     }
     if (choix==SURF){
-        pg->ia->nbaction=0;
+       pg->ia->nbaction=0;
     }
+    pg->ia->nbaction++;
+    action(pg,J2,choix,dir,rand()%10,rand()%10,message);
+    return choix;
+}
+
+enum OPTION actionIA2(Playground * pg){
+    char message[100];
+    enum OPTION choix;
+    int dir;
+
+    if (pg->ia->nbaction<6){
+        if(pg->ia->nbaction%3 <2){
+            choix = DEPLCMNT;
+            dir=rand()%4;
+            while (deplacement_possible(pg,J2,dir)!=1){
+                dir=rand()%4;
+            }
+        }else{
+            choix = SON;
+        }
+    } else {
+
+    }
+
     pg->ia->nbaction++;
     action(pg,J2,choix,dir,rand()%10,rand()%10,message);
     return choix;

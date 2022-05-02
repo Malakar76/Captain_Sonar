@@ -183,7 +183,7 @@ void actionIA_ctrl(View_elements * app,Playground * pg,char message []){
     int choix;
     char valeur1 [2];
     char valeur2 [2];
-    choix=actionIA(pg);
+    choix=actionIA2(pg);
     if (choix==DEPLCMNT){
         clean_calque(app);
         trace_deplacement_total_calque(app,(int *)pg->J2->path,pg->J2->nbpath);

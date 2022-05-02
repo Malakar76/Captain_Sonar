@@ -1,0 +1,25 @@
+Index: sous_marin.c
+===================================================================
+diff --git a/sous_marin.c b/sous_marin.c
+deleted file mode 100644
+--- a/sous_marin.c	
++++ /dev/null	
+@@ -1,5 +0,0 @@
+-//
+-// Created by eii on 15/02/2022.
+-//
+-
+-#include "sous_marin.h"
+Index: sous_marin.h
+===================================================================
+diff --git a/sous_marin.h b/sous_marin.h
+deleted file mode 100644
+--- a/sous_marin.h	
++++ /dev/null	
+@@ -1,6 +0,0 @@
+-
+-
+-#ifndef MODEL_SOUS_MARIN_H
+-#define MODEL_SOUS_MARIN_H
+-
+-#endif
