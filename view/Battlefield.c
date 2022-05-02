@@ -201,7 +201,7 @@ void show_choix_carte(View_elements *app){
 
 void print_message(View_elements *app,char * message){
     SDL_SetRenderDrawColor(app->rRenderer,57,143,70,255);
-    SDL_Rect rect ={25,760,695,100}; // zone où afficher le message
+    SDL_Rect rect ={25,760,700,100}; // zone où afficher le message
     SDL_SetRenderTarget(app->rRenderer,app->VBattlefield->Battlefield_current);
     SDL_RenderFillRect(app->rRenderer,&rect);
     SDL_Texture * tmp=NULL;
@@ -220,7 +220,7 @@ void print_message(View_elements *app,char * message){
 
 void print_message_adversaire(View_elements *app,char * message){
     SDL_SetRenderDrawColor(app->rRenderer,57,143,70,255);
-    SDL_Rect rect ={770,760,831,100}; // zone où afficher le message
+    SDL_Rect rect ={725,760,831,100}; // zone où afficher le message
     SDL_SetRenderTarget(app->rRenderer,app->VBattlefield->Battlefield_current);
     SDL_RenderFillRect(app->rRenderer,&rect);
     SDL_Texture * tmp=NULL;
