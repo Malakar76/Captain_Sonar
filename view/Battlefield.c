@@ -339,18 +339,22 @@ void trace_deplacement_adversaire(View_elements *app, int direction){
 }
 
 void show_finpartie(View_elements * app, int res){ // res=0: victoire, res=1: defaite
-    SDL_Rect rect={437,160,722, 565};
-    SDL_Rect victoire={1822,202,1402,1038};
-    SDL_Rect defaite={358,204,1320,1034};
+    SDL_Rect rect={437,160,0,0};
+    SDL_Rect victoire={1094,255,760,570};
+    SDL_Rect defaite={282,215,766,601};
 
     SDL_SetRenderTarget(app->rRenderer,app->VBattlefield->Battlefield_current);
 
     switch  (res){
         case 0:
+        rect.x=victoire.x;
+        rect.y=victoire.y;
             SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&victoire,&rect);
             break;
 
         case 1:
+        rect.x=defaite.x;
+        rect.y=defaite.y;
             SDL_RenderCopy(app->rRenderer,app->VBattlefield->Energie,&defaite,&rect);
             break;
 
