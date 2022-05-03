@@ -131,3 +131,22 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
 void controller_battlefield_Joueur(View_elements * app,Playground * pg,enum Carte choix){
 
 }
+int fin_partie(View_elements * app,Playground * pg){
+    SDL_Event event;
+    int run=1;
+    if (pg->J1->vie==0 || pg->J2->vie==0){
+       // show_finpartie(app);
+        while (run == 1) {
+            SDL_WaitEvent(&event);
+                   if ((event.button.button == SDL_BUTTON_LEFT) && (event.button.windowID == SDL_GetWindowID(app->wwindow))) {
+                    show_menu(app);
+                    run =0;
+                    }
+                }
+
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}

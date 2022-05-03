@@ -198,6 +198,13 @@ void case_choisie(View_elements * app, SDL_Point point,int tab[]);
 void show_SM(View_elements * app,int ligne,int colonne);
 
 /**
+ * \fn show_finpartie(View_elements * app, int res)
+ * affiche la fin de la partie si le joueur a perdu ou gagné
+ * @param res 0 si victoire, 1 si defaite
+ */
+void show_finpartie(View_elements * app, int res);
+
+/**
  * \fn void trace_deplacement(View_elements *ve, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
  * trace les déplacements du sous marins sur la carte du joueur
  * @param app
@@ -205,6 +212,7 @@ void show_SM(View_elements * app,int ligne,int colonne);
  * @param pos_joueur_ligne ligne où se trouve le joueur actuellement
  * @param pos_joueur_colonne colonne où se trouve le joueur actuellement
  */
+ 
 void trace_deplacement_joueur(View_elements *app, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
 
 /**
