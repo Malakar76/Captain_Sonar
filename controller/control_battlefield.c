@@ -35,6 +35,7 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
     reset_joueur(pg->J1);
     reset_joueur(pg->J2);
     int run = 1;
+    pg->ia->nbaction = 0;
     print_message(app,"Choisissez votre case de depart");
     while (run == 1) {
         SDL_WaitEvent(&event);

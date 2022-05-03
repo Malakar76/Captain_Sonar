@@ -472,7 +472,7 @@ enum OPTION actionIA2(Playground * pg){
     int dir;
 
     if (pg->ia->nbaction<6){
-        if(pg->ia->nbaction%3 <2){
+        if((pg->ia->nbaction%3) <2){
             choix = DEPLCMNT;
             dir=rand()%4;
             while (deplacement_possible(pg,J2,dir)!=1){
@@ -481,12 +481,13 @@ enum OPTION actionIA2(Playground * pg){
         }else{
             choix = SON;
         }
-    } else {
+    }else{
 
     }
 
     pg->ia->nbaction++;
     action(pg,J2,choix,dir,rand()%10,rand()%10,message);
+
     return choix;
 }
 
