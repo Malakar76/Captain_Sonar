@@ -15,11 +15,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f4c2399-6159-4e8f-9f82-ab6723367926" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Launcher" beforeDir="false" afterPath="$PROJECT_DIR$/../Launcher" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/libcontroller.a" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/libcontroller.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/libmodel.a" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/libmodel.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/libview.a" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/libview.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/model.dir/joueur.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/model.dir/joueur.c.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/joueur.c" beforeDir="false" afterPath="$PROJECT_DIR$/joueur.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +60,8 @@
     "WebServerToolWindowFactoryState": "false",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "cmake.loaded.for.project": "true"
+    "cmake.loaded.for.project": "true",
+    "nodejs_package_manager_path": "npm"
   }
 }]]></component>
   <component name="RunManager" selected="CTest Application.main">
@@ -106,7 +106,7 @@
       <option name="presentableId" value="Default" />
       <updated>1651563376645</updated>
       <workItem from="1651563380735" duration="89000" />
-      <workItem from="1651563605198" duration="1611000" />
+      <workItem from="1651563605198" duration="6313000" />
     </task>
     <servers />
   </component>
