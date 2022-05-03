@@ -470,22 +470,51 @@ enum OPTION actionIA2(Playground * pg){
     char message[100];
     enum OPTION choix;
     int dir;
+    int nbaction= 0;
 
-    if (pg->ia->nbaction<6){
-        if((pg->ia->nbaction%3) <2){
-            choix = DEPLCMNT;
-            dir=rand()%4;
-            while (deplacement_possible(pg,J2,dir)!=1){
-                dir=rand()%4;
+    for(pg->ia->nbaction;pg->ia->nbaction<100;nbaction ++)
+    {
+        if (pg->ia->nbaction < 6)
+        {
+            if ((pg->ia->nbaction % 3) < 2)
+            {
+                    choix = DEPLCMNT;
+                    dir = rand() % 4;
+                    while (deplacement_possible(pg, J2, dir) != 1)
+                    {
+                        dir = rand() % 4;
+                    }
+                    action(pg,J2,choix,dir,rand()%10,rand()%10,message);
             }
-        }else{
-            choix = SON;
+            else
+            {
+                    choix = SON;
+                    action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
+                    if (SURF == 1 && pg->ia->nbaction > 4)
+                    {
+                        choix = DEPLCMNT;
+                        dir = rand() % 4;
+                        while (deplacement_possible(pg, J2, dir) != 1)
+                        {
+                            dir = rand() % 4;
+                        }
+                        action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
+                }
+            }
         }
-    }else{
-
+        else
+        {
+            if(pg->ia->nbaction<10)
+                dir=rand()%4;
+                while(deplacement_possible(pg,J2,dir)!=1)
+                {
+                    dir=rand()%4;
+                }
+            action(pg,J2,choix,dir,rand()%10,rand()%10,message);
+        }
     }
 
-    pg->ia->nbaction++;
+
     action(pg,J2,choix,dir,rand()%10,rand()%10,message);
 
     return choix;
