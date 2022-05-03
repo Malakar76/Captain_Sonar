@@ -459,43 +459,51 @@ enum OPTION actionIA2(Playground *pg) {
     char message[100];
     enum OPTION choix;
     int dir;
-    pg->ia->nbaction = 0;
     enum OPTION last = pg->ia->lastaction;
 
     if (pg->ia->nbaction < 6) {
-        if ((pg->ia->nbaction % 3) < 2) {
+        if ((pg->ia->nbaction % 3) < 2)
+        {
             choix = DEPLCMNT;
             dir = rand() % 4;
             while (deplacement_possible(pg, J2, dir) != 1) {
                 dir = rand() % 4;
             }
-            action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
-            pg->ia->nbaction++;
-        } else {
-            choix = SURF;
-            action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
 
-            pg->ia->nbaction++;
-            if (pg->ia->nbaction > 4 && last == SURF) {
+        } else
+        {
+            choix = SON;
+
+            /*if (pg->ia->nbaction > 4 && last == SURF) {
                 choix = DEPLCMNT;
                 dir = rand() % 4;
-                while (deplacement_possible(pg, J2, dir) != 1) {
+                while (deplacement_possible(pg, J2, dir) != 1)
+                {
                     dir = rand() % 4;
                 }
                 action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
                 pg->ia->nbaction++;
+            }*/
+        }
+    }
+    else
+    {
+        if ((pg->ia->nbaction % 5) !=0)
+        {
+            choix = DEPLCMNT;
+            dir = rand() % 4;
+            while (deplacement_possible(pg, J2, dir) != 1)
+            {
+                dir = rand() % 4;
             }
         }
-
-    } else {
-        if (pg->ia->nbaction < 20)
-            dir = rand() % 4;
-        while (deplacement_possible(pg, J2, dir) != 1) {
-            dir = rand() % 4;
+        else
+        {
+            choix= MIS;
         }
-        action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
-        pg->ia->nbaction++;
     }
+    action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
+    pg->ia->nbaction++;
     return choix;
 }
 
