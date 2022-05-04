@@ -182,7 +182,9 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                 if (start!=0){show_SM(app, pg->J1->S_M->ligne, pg->J1->S_M->colonne);}
                 break;
         }
-        if(fin_partie(app,pg)){run=0;}
+        if(fin_partie(app,pg)){
+            app->IA=0;
+            run=0;}
     }
 }
 
@@ -190,7 +192,7 @@ void actionIA_ctrl(View_elements * app,Playground * pg,char message []){
     int choix;
     char valeur1 [2];
     char valeur2 [2];
-    choix=actionIA(pg);
+    choix=actionIA2(pg);
     if (choix==DEPLCMNT){
         clean_calque(app);
         trace_deplacement_total_calque(app,(int *)pg->J2->path,pg->J2->nbpath);
@@ -203,6 +205,10 @@ void actionIA_ctrl(View_elements * app,Playground * pg,char message []){
         strcat(message,valeur2);
         print_message_adversaire(app,message);
         clean_calque(app);
+    }
+    else if (choix==MIS) {
+        strcpy(message,"L'ennemi a fait feu, surveillez vos PVs ! ");
+        print_message_adversaire(app,message);
     }
 }
 
