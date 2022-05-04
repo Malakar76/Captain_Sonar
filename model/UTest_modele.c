@@ -23,7 +23,7 @@ static int setup_joueur(void **state){
     j->vie=2;
     j->S_M->ligne=5;
     j->S_M->colonne=5;
-
+    j->nbpath=0;
 
 
     *state=j;
@@ -55,31 +55,78 @@ static void test_energie_down(void **state){
 
 static void test_deplacement_haut(void **state){
     JOUEUR *j =(JOUEUR *)* state;
+    init_calque(j);
     deplacement(, J1, haut);
     assert_int_equal(j->S_M->ligne, 4);
     assert_int_equal(j->S_M->colonne, 5);
+    assert_int_equal(j->nbpath,1);
+    assert_string_equal(j->path, haut);
+    assert_int_equal(j->calqueJ[j->S_M->ligne][j->S_M->colonne],1);
+
+    assert_int_equal(j->energie, 3);
+    energie_up(j);
+    deplacement(, J1, haut);
+    assert_int_equal(j->energie, 4); //test si energie deja a 4, ca bouge pas
+
 
 }
 
 static void test_deplacement_bas(void **state){
     JOUEUR *j =(JOUEUR *)* state;
+    init_calque(j);
     deplacement(, J1, bas);
     assert_int_equal(j->S_M->ligne, 6);
     assert_int_equal(j->S_M->colonne, 5);
+    assert_int_equal(j->nbpath,1);
+    assert_string_equal(j->path, haut);
+    assert_int_equal(j->calqueJ[j->S_M->ligne][j->S_M->colonne],1);
+
+    assert_int_equal(j->energie, 3);
+    energie_up(j);
+    deplacement(, J1, haut);
+    assert_int_equal(j->energie, 4);
 }
 static void test_deplacement_droite(void **state){
     JOUEUR *j =(JOUEUR *)* state;
+    init_calque(j);
     deplacement(, J1, droite);
     assert_int_equal(j->S_M->ligne, 5);
     assert_int_equal(j->S_M->colonne, 6);
+    assert_int_equal(j->nbpath,1);
+    assert_string_equal(j->path, haut);
+    assert_int_equal(j->calqueJ[j->S_M->ligne][j->S_M->colonne],1);
+
+    assert_int_equal(j->energie, 3);
+    energie_up(j);
+    deplacement(, J1, haut);
+    assert_int_equal(j->energie, 4);
 }
 static void test_deplacement_gauche(void **state){
     JOUEUR *j =(JOUEUR *)* state;
-    deplacement(, J1, droite);
+    init_calque(j);
+    deplacement(, J1, gauche);
     assert_int_equal(j->S_M->ligne, 5);
     assert_int_equal(j->S_M->colonne, 4);
+    assert_int_equal(j->nbpath,1);
+    assert_string_equal(j->path, haut);
+    assert_int_equal(j->calqueJ[j->S_M->ligne][j->S_M->colonne],1);
+
+    assert_int_equal(j->energie, 3);
+    energie_up(j);
+    deplacement(, J1, haut);
+    assert_int_equal(j->energie, 4);
 }
-//dplcmnt possible fin carte + rocher
+
+static void not_deplacement_possible_haut(void **state){ //idemn pour les autres directions
+    JOUEUR *j =(JOUEUR *)* state;
+    deplacement(, J1, haut);
+    deplacement(, J1, haut);
+    deplacement(, J1, haut);
+    deplacement(, J1, haut); //arrivé en haut de la carte
+    assert_int_equal(deplacement_possible(, J1, haut), 0); //impossible car carte fini
+    assert_int_equal(deplacement_possible(, J1, haut), 0); //impossible car deja passe
+}
+//dplcmnt possible fin carte + rocher + deja passé
 
 static void enough_energie_missile(void **state){
     JOUEUR *j =(JOUEUR *)* state;
