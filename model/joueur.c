@@ -459,27 +459,26 @@ enum OPTION actionIA2(Playground *pg) {
     char message[100];
     enum OPTION choix;
     int dir;
-    /*enum OPTION last = pg->ia->lastaction;
-*/if (pg->ia->vie==2)
-    if (pg->ia->nbaction < 6) {
-        if ((pg->ia->nbaction % 3) < 2) {
-            choix = DEPLCMNT;
-            dir = rand() % 4;
-            while (deplacement_possible(pg, J2, dir) != 1) {
-                dir = rand() % 4;
-            }
-        } else {
-            choix = SON;
-            if (pg->ia->nbaction > 4) {
+    /*enum OPTION last = pg->ia->lastaction;*/
+    if (pg->J2->vie==2) {
+        if (pg->ia->nbaction < 6) {
+            if ((pg->ia->nbaction % 3) < 2) {
                 choix = DEPLCMNT;
                 dir = rand() % 4;
                 while (deplacement_possible(pg, J2, dir) != 1) {
                     dir = rand() % 4;
                 }
+            } else {
+                choix = SON;
+                if (pg->ia->nbaction > 4) {
+                    choix = DEPLCMNT;
+                    dir = rand() % 4;
+                    while (deplacement_possible(pg, J2, dir) != 1) {
+                        dir = rand() % 4;
+                    }
+                }
             }
         }
-    }
-    if (pg->ia->vie == 2) {
         if ((pg->ia->nbaction % 5) != 0) {
             choix = DEPLCMNT;
             dir = rand() % 4;
@@ -489,20 +488,20 @@ enum OPTION actionIA2(Playground *pg) {
         } else {
             choix = MIS;
         }
+        action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
+        pg->ia->nbaction++;
     }
-    else if (pg->ia->vie!=2) {
-        if (( pg->ia->nbaction>25 && pg->ia->nbaction % 5) != 0) {
+    else {
+        if ((pg->ia->nbaction > 25 && pg->ia->nbaction % 5) != 0) {
             choix = DEPLCMNT;
             dir = rand() % 4;
             while (deplacement_possible(pg, J2, dir) != 1) {
                 dir = rand() % 4;
             }
-            action(pg, J2, choix, dir, pg->J1->S_M->ligne, pg->J1->S_M->colonne, message);
-            pg->ia->nbaction++;
         }
         choix = MIS;
-        }
-    action(pg, J2, choix, dir, pg->J1->S_M->ligne, pg->J1->S_M->colonne, message);
-    pg->ia->nbaction++;
+        action(pg, J2, choix, dir, pg->J1->S_M->ligne, pg->J1->S_M->colonne, message);
+        pg->ia->nbaction++;
+    }
     return choix;
 }

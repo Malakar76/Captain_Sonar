@@ -98,7 +98,6 @@ typedef struct{
 typedef struct {
    enum OPTION lastaction; /**< Dernière action effectuée par l'IA */
    int  nbaction ; /**< Nombre d'actions depuis la dernière surface */
-   int vie;
 }IA;
 
 /**
