@@ -284,6 +284,11 @@ int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne, char  
             strcpy(message, "Mince alors, vous vous etes touche vous meme!");
             return -1;
 
+        default:
+            strcpy(message,"Erreur missile");
+            return -2;
+
+
     }
 }
 
@@ -377,7 +382,6 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
                     }
                 }
 
-
                 case bas: {
 
                     if (deplacement_possible(pg, actif, d)) {
@@ -389,7 +393,6 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
                     }
                 }
 
-
                 case droite: {
                     if (deplacement_possible(pg, actif, d)) {
                         result_deplacement(pg, actif, d, message);
@@ -399,8 +402,6 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
                         return 0;
                     }
                 }
-
-
 
                 case gauche: {
                     if (deplacement_possible(pg, actif, d)) {
@@ -412,9 +413,14 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
                     }
                 }
 
+                default:
+                    strcpy(message,"Erreur déplacement");
+                    return -1;
+
             }
-            break;
         }
+        default:
+            return -1;
 
 
     }

@@ -1,0 +1,13 @@
+digraph "controller/main_controller.h"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="controller/main_controller.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Fichier principal du controller."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="controller/control\l_battlefield.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$control__battlefield_8c.html",tooltip="gestion du controller du champ de bataille."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="controller/main_controller.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main__controller_8c.html",tooltip="Fichier principal du controller."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="main.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_8c.html",tooltip="Fichier principal du projet."];
+}

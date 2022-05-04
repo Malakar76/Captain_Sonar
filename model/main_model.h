@@ -15,6 +15,11 @@
 #include "string.h"
 #include "stdio.h"
 #include "math.h"
+
+/**
+ * \def NMAX
+ * définie la largeur et longeur max de la carte
+ */
 #define NMAX 10
 
 /**
@@ -180,10 +185,10 @@ void init_map (CARTE * carte);
 void init_calque(JOUEUR * joueur);
 
 /**
- * \fn void choix_carte(Playground * pg,enum Carte carte)
+ * \fn void choix_carte(Playground * pg,int a)
  * Initialise la carte de jeu correctement en fonction de la carte choisie
  * @param pg Structure du modèle
- * @param carte Carte de jeu
+ * @param a Entier qui permet de déterminer la carte à charger
  */
 void choix_carte(Playground * pg,int a);
 
@@ -258,7 +263,7 @@ int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d);
 void result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d,char message []);
 
 /**
- * \fn void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,Carte * c)
+ * \fn void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c)
  * Positionne le sous-marin du joueur j à la position indiqué par la ligne et la colonne
  * et met à jour la carte
  * @param j Joueur sélectionné

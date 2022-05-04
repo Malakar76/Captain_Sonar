@@ -27,7 +27,7 @@
  */
 void controller(View_elements * app,Playground * pg);
 /**
- * \fn controller_battlefield(View_elements * app,Playground * pg,enum Carte choix)
+ * \fn controller_battlefield(View_elements * app,Playground * pg,enum Carte choix,int IA)
  * \brief Permet de faire le pont entre la vue et le modèle pour le champ de bataille.
  * Fonctionnalité :
  *      -gère le champ de bataille
@@ -57,7 +57,7 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
 void controller_battlefield_Joueur(View_elements * app,Playground * pg,enum Carte choix);
 
 /**
- * \fn void actionIA_ctrl(View_elements * app,Playground * pg)
+ * \fn void actionIA_ctrl(View_elements * app,Playground * pg,char message [])
  * Gère l'affichage de l'action de l'IA et ses conséquences dans la vue
  * @param app Structure qui gère la vue
  * @param pg Strucutre qui gère le modèle

@@ -1,0 +1,9 @@
+digraph "View_elements"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="View_elements",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Elements de la vue."];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" VBattlefield" ,fontname="Helvetica"];
+  Node2 [label="View_Battlefield",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_view___battlefield.html",tooltip="Elements de la vue du Battlefield."];
+}

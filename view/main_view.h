@@ -133,7 +133,7 @@ void init_font(View_elements *app);
  */
 int init_view_battlefield(View_elements * app,enum Carte c);
 /**
- * \fn int init_battlefield_blank(View_elements * app,enum Carte c)
+ * \fn int init_battlefield(View_elements * app,enum Carte c)
  * \brief Initialise la texture du champ de bataille
  * Applique la bonne texture
  * @param app Structure qui gère la vue
@@ -251,7 +251,7 @@ void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne,
 void clean_map(View_elements * app);
 
 /**
- * \fn void trace_deplacement_total(View_elements * app, int direction[],int pos_depart[],int color)
+ * \fn void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[],int color)
  * permet de retracer tout les déplacements d'un joueur
  * @param app Structure qui gère la vue
  * @param direction tableau de toutes les directions à tracer
@@ -272,12 +272,11 @@ void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int 
 void trace_deplacement_calque(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
 
 /**
- * \fn void trace_deplacement_total_calque(View_elements * app, int direction[],int pos_depart[])
+ * \fn void trace_deplacement_total_calque(View_elements * app, int direction[],int nbdir)
  * permet de retracer tout les déplacements d'un joueur sur le calque
  * @param app Structure qui gère la vue
  * @param direction tableau de toutes les directions à tracer
  * @param nbdir nombre de direction à tracer
- * @param pos_depart position de départ du joueur
  */
 void trace_deplacement_total_calque(View_elements * app, int direction[],int nbdir);
 

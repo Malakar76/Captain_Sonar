@@ -66,6 +66,11 @@ void controller(View_elements *app,Playground * pg){
                                 show_menu(app);
                             }
                             break;
+                        case Battlefield:
+                            break;
+                        default:
+                            fprintf(stderr,"Erreur enumération fenêtre");
+                            break;
                     }
                 }
                 break;

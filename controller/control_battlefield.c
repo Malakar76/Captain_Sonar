@@ -207,10 +207,33 @@ void actionIA_ctrl(View_elements * app,Playground * pg,char message []){
 }
 
 
-
-
-void controller_battlefield_Joueur(View_elements * app,Playground * pg,enum Carte choix){
-
+void controller_battlefield_Joueur(View_elements * app,Playground * pg,enum Carte choix) {
+    //int start = 0;
+    //char messageJ1[100];
+    //char messageJ2[100];
+    //int tab[2];
+    //int tir = 0;
+    SDL_Event event;
+    //SDL_Point point = {-1, -1};
+    init_view_battlefield(app, choix);
+    show_battlefield(app);
+    choix_carte(pg, choix);
+    init_calque(pg->J1);
+    init_calque(pg->J2);
+    reset_joueur(pg->J1);
+    reset_joueur(pg->J2);
+    int run = 1;
+    print_message(app, "Ce mode de jeu n'est pas pret. Fermer la fenetre .");
+    while (run == 1) {
+        SDL_WaitEvent(&event);
+        switch (event.type) {
+            case SDL_QUIT:
+                run = 0;
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 int fin_partie(View_elements * app,Playground * pg){
