@@ -73,9 +73,10 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
 
                     } else if (SDL_PointInRect(&point, &app->VBattlefield->Bbutton[9])) {
                         if(app->state==0){
-                            app->state=resume_music();
+                            app->state=resume_music(app);
+
                         }else{
-                            app->state=pause_music();
+                            app->state=pause_music(app);
                         }
                     } else if (SDL_PointInRect(&point, &app->VBattlefield->Bbutton[8])) {
                         //clean map
@@ -214,9 +215,19 @@ void controller_battlefield_Joueur(View_elements * app,Playground * pg,enum Cart
 int fin_partie(View_elements * app,Playground * pg){
     SDL_Event event;
     SDL_Point point = {-1, -1};
+    SDL_Rect dest={541,165,634,500};
     int run=1;
     if (pg->J1->vie==0 ||pg->J2->vie==0){
-        //affiche fin partie
+        if (pg->J1->vie==0){
+            SDL_Rect src={11,22,460,360};
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->FinSon,&src,&dest);
+            SDL_RenderPresent(app->rRenderer);
+        }
+        else if (pg->J2->vie==0){
+            SDL_Rect src={11,381,460,360};
+            SDL_RenderCopy(app->rRenderer,app->VBattlefield->FinSon,&src,&dest);
+            SDL_RenderPresent(app->rRenderer);
+        }
         SDL_WaitEvent(&event);
         while (run == 1) {
             SDL_WaitEvent(&event);

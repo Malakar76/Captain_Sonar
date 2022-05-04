@@ -53,6 +53,7 @@ typedef struct {
     SDL_Texture *Battlefield_blank;/**< Texture qui garde l'aperçu de la fenêtre de jeu clean */
     SDL_Texture *Sous_marin;/**< Texture qui garde l'aperçu du sous_marin */
     SDL_Texture *Energie; /**< Texture qui garde les niveaux d'énergie */
+    SDL_Texture *FinSon; /**< Texture qui stocke le bouton du son et de la fin de partie */
     SDL_Rect  Bbutton[13] ;/**< Tableau qui stocke l'emplacement des boutons du champ de bataille */
     SDL_Rect Carte[10][10];/**< Tableau qui stocke l'emplacement des cases du champ de bataille */
 }View_Battlefield;
@@ -148,6 +149,14 @@ int init_battlefield(View_elements * app,enum Carte c);
  * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
  */
 int init_sousmarin(View_elements * app);
+
+/**
+ * \fn int init_BoutonSonEtFinPartie(View_elements *app)
+ * Initialise la texture pour les boutons du son et l'écran de défaite
+ * @param app Structure qui gère la vue
+ * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
+ */
+int init_BoutonSonEtFinPartie(View_elements *app);
 
 /**
  * \fn void show_battlefield(View_elements *app)
@@ -377,17 +386,19 @@ void init_rbutton(View_elements *app);
 int start_music(Mix_Music * music);
 
 /**
- * \fn void resume_music(Mix_Music * music,int state)
- * joue la musique après une pause
+ * \fn void resume_music(View_elements * app)
+ * joue la musique après une pause et met à jour le logo du son
+ * @param app Structure qui gère la vue
  * @return retourne 1
  */
-int resume_music();
+int resume_music(View_elements * app);
 
 /**
- * \fn void pause_music(int  state)
- * Met en pause la musique
+ * \fn void pause_music(View_elements * app)
+ * Met en pause la musique et met à jour le logo du son
+ * @param app Structure qui gère la vue
  * @return retourne 0
  */
-int pause_music();
+int pause_music(View_elements * app);
 
 #endif //PROJET_C_MAIN_VIEW_H

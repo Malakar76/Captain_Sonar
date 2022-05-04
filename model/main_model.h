@@ -11,6 +11,7 @@
 #define PROJET_C_MAIN_MODEL_H
 
 #include "stdlib.h"
+#include "time.h"
 #include "string.h"
 #include "stdio.h"
 #include "math.h"

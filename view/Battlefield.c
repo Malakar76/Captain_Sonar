@@ -18,6 +18,9 @@ int init_view_battlefield(View_elements * app,enum Carte c){
     if(init_sousmarin(app)!=EXIT_SUCCESS){
         return EXIT_FAILURE;
     }
+    if(init_BoutonSonEtFinPartie(app)!=EXIT_SUCCESS){
+        return EXIT_FAILURE;
+    }
     SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->Battlefield_current);
     SDL_RenderCopy(app->rRenderer, app->VBattlefield->Battlefield_blank, NULL, NULL);
     SDL_SetRenderTarget(app->rRenderer, NULL);
@@ -54,13 +57,13 @@ int init_view_battlefield(View_elements * app,enum Carte c){
     app->VBattlefield->Bbutton[7]=button; //missile
     SDL_Rect button2={990,10,245,90};
     app->VBattlefield->Bbutton[8]=button2; //clean map
-    SDL_Rect button3={1287,0,125,115};
+    SDL_Rect button3={1287,0,125,117};
     app->VBattlefield->Bbutton[9]=button3; //son
     SDL_Rect button4={1480,0,120,115};
     app->VBattlefield->Bbutton[10]=button4; //retour menu
     SDL_Rect button5={57,53,660,658};
     app->VBattlefield->Bbutton[11]=button5; //sur la carte
-    SDL_Rect button6={0,0,100,100};
+    SDL_Rect button6={708,543,296,114};
     app->VBattlefield->Bbutton[12]=button6; //bouton fin partie
 
     return EXIT_SUCCESS;
@@ -124,6 +127,34 @@ int init_battlefield(View_elements * app,enum Carte c){
 
     return EXIT_SUCCESS;
 
+}
+
+int init_BoutonSonEtFinPartie(View_elements *app){
+    SDL_Texture * tmp=NULL;
+    SDL_Surface * surface=NULL;
+    surface=IMG_Load("Ressources/Fin_Son.png");
+    if (surface==NULL){
+        fprintf(stderr, "Erreur SDL_CreateSurface : %s", SDL_GetError());
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(tmp);
+        return EXIT_FAILURE;
+    }
+    Uint32 colorkey = SDL_MapRGB(surface->format,255,255,255);
+    SDL_SetColorKey(surface,SDL_TRUE,colorkey);
+    tmp=SDL_CreateTextureFromSurface(app->rRenderer,surface);
+    if (tmp==NULL){
+        fprintf(stderr, "Erreur SDL_CreateTexture: %s", SDL_GetError());
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(tmp);
+        return EXIT_FAILURE;
+    }
+    SDL_SetRenderTarget(app->rRenderer, app->VBattlefield->FinSon);
+    SDL_RenderCopy(app->rRenderer, tmp, NULL, NULL);
+    SDL_DestroyTexture(tmp);
+    SDL_FreeSurface(surface);
+    SDL_SetTextureBlendMode(app->VBattlefield->FinSon,SDL_BLENDMODE_BLEND);
+    SDL_SetRenderTarget(app->rRenderer, NULL);
+    return EXIT_SUCCESS;
 }
 
 int init_sousmarin(View_elements * app){

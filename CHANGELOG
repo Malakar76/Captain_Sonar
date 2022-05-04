@@ -50,3 +50,13 @@ EDIT : Plus de soucis avec les makefiles ! Tout est clean pour commencer !
     Grande partie à faire :
         -Test unitaires
         -rapport de projet
+
+02/05 Robin -Ajout de design :
+        -Ecran de fin ok
+        -bouton son coupé/allumé ok
+
+        Choses à rajouter encore :
+                    -IA plus intelligente
+                    -option silence
+                    -design crédits
+                    -design regles
