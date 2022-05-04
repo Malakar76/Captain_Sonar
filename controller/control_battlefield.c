@@ -134,6 +134,7 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                             clean_map(app);
                             show_energie(app,pg->J1->energie);
                             show_SM(app,pg->J1->S_M->ligne, pg->J1->S_M->colonne);
+                            trace_deplacement_total_calque(app,(int *)pg->J2->path,pg->J2->nbpath);
                         }
                         print_message(app, message);
                         actionIA_ctrl(app,pg,messageIA);
