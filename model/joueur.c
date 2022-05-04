@@ -460,48 +460,71 @@ enum OPTION actionIA2(Playground *pg) {
     enum OPTION choix;
     int dir;
     /*enum OPTION last = pg->ia->lastaction;*/
-    if (pg->J2->vie==2) {
-        if (pg->ia->nbaction < 6) {
-            if ((pg->ia->nbaction % 3) < 2) {
+    if (pg->ia->nbaction <= 20)
+    {
+        if (pg->ia->nbaction < 6)
+        {
+            if ((pg->ia->nbaction % 3) < 2)
+            {
                 choix = DEPLCMNT;
                 dir = rand() % 4;
-                while (deplacement_possible(pg, J2, dir) != 1) {
+                while (deplacement_possible(pg, J2, dir) != 1)
+                {
                     dir = rand() % 4;
                 }
-            } else {
+            }
+            else
+            {
                 choix = SON;
-                if (pg->ia->nbaction > 4) {
+                if (pg->ia->nbaction > 4)
+                {
                     choix = DEPLCMNT;
                     dir = rand() % 4;
-                    while (deplacement_possible(pg, J2, dir) != 1) {
+                    while (deplacement_possible(pg, J2, dir) != 1)
+                    {
                         dir = rand() % 4;
                     }
                 }
             }
+            action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
+            pg->ia->nbaction++;
         }
-        if ((pg->ia->nbaction % 5) != 0) {
+        if ((pg->ia->nbaction < 20 && pg->ia->nbaction % 5) != 0)
+        {
             choix = DEPLCMNT;
             dir = rand() % 4;
-            while (deplacement_possible(pg, J2, dir) != 1) {
+            while (deplacement_possible(pg, J2, dir) != 1)
+            {
                 dir = rand() % 4;
             }
-        } else {
+        }
+        else
+        {
+            choix = SURF;
+        }
+    }
+    action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
+    pg->ia->nbaction++;
+    if (pg->ia->nbaction > 20)
+    {
+        if (pg->J2->energie != 4)
+        {
+            choix = DEPLCMNT;
+            dir = rand() % 4;
+            while (deplacement_possible(pg, J2, dir) != 1)
+            {
+                dir = rand() % 4;
+            }
+            action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
+            pg->ia->nbaction++;
+        }
+        else
+        {
             choix = MIS;
+            action(pg, J2, choix, dir, pg->J1->S_M->ligne, pg->J1->S_M->colonne, message);
+            pg->ia->nbaction++;
         }
-        action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
-        pg->ia->nbaction++;
     }
-    else {
-        if ((pg->ia->nbaction > 25 && pg->ia->nbaction % 5) != 0) {
-            choix = DEPLCMNT;
-            dir = rand() % 4;
-            while (deplacement_possible(pg, J2, dir) != 1) {
-                dir = rand() % 4;
-            }
-        }
-        choix = MIS;
-        action(pg, J2, choix, dir, pg->J1->S_M->ligne, pg->J1->S_M->colonne, message);
-        pg->ia->nbaction++;
-    }
-    return choix;
+return choix;
 }
+
