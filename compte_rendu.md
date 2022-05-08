@@ -33,3 +33,8 @@
 - Se focaliser sur l'IA 
 - Avoir une première version finale présentable et jouable
 
+## 6ème rendez-vous (05/05/2022):
+- Avoir un master propre (retirer le protected -> merge -> remettre)
+- Choix de la difficulté de l'IA 
+- Rajouter une croix pour la position de départ sur le calque 
+- 1VS1 (pas assez de temps pour le faire)
