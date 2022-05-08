@@ -9,7 +9,7 @@ all: libmodel.a
 
 
 
-libmodel.a: main_model.o carte.o joueur.o
+libmodel.a: main_model.o carte.o joueur.o IA.o
 	ar -rv $(DIRLIB)/$@ $^
 
 %.o: %.c

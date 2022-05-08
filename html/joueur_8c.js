@@ -1,7 +1,6 @@
 var joueur_8c =
 [
     [ "action", "joueur_8c.html#a56ebe63c1ed186a24a9096e6ac25591a", null ],
-    [ "actionIA", "joueur_8c.html#a91eca205961ed404322301f40208d780", null ],
     [ "deplacement", "joueur_8c.html#a6fb18230d500818134207923c4a5a5bf", null ],
     [ "deplacement_possible", "joueur_8c.html#afb10b02839c7bd780b7c7b658208f563", null ],
     [ "energie_down", "joueur_8c.html#ab6d518c9f15ad67d14f5fdce03a1bc04", null ],

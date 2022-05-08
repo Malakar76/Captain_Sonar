@@ -1,6 +1,7 @@
 var dir_3f14f6767c31cb4a1d22c13c18cc6fc3 =
 [
     [ "carte.c", "carte_8c.html", "carte_8c" ],
+    [ "IA.c", "_i_a_8c.html", "_i_a_8c" ],
     [ "joueur.c", "joueur_8c.html", "joueur_8c" ],
     [ "main_model.c", "main__model_8c.html", "main__model_8c" ],
     [ "main_model.h", "main__model_8h.html", "main__model_8h" ],

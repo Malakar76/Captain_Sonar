@@ -115,13 +115,6 @@ Functions</h2></td></tr>
 <tr class="memitem:aaedbfeafaf89755bd8c78b7dab3b11a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rules__and__credit_8c.html#aaedbfeafaf89755bd8c78b7dab3b11a4">show_credit</a> (<a class="el" href="struct_view__elements.html">View_elements</a> *app)</td></tr>
 <tr class="memdesc:aaedbfeafaf89755bd8c78b7dab3b11a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Affiche les crédits Remplace la fenêtre précédente par la texture des crédits.  <a href="rules__and__credit_8c.html#aaedbfeafaf89755bd8c78b7dab3b11a4">More...</a><br /></td></tr>
 <tr class="separator:aaedbfeafaf89755bd8c78b7dab3b11a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aceeddf699711a502b4bd898aaf2dead6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rules__and__credit_8c.html#aceeddf699711a502b4bd898aaf2dead6">start_music</a> (Mix_Music *music)</td></tr>
-<tr class="memdesc:aceeddf699711a502b4bd898aaf2dead6"><td class="mdescLeft">&#160;</td><td class="mdescRight">lance la musique Lance la musique de fond du menu  <a href="rules__and__credit_8c.html#aceeddf699711a502b4bd898aaf2dead6">More...</a><br /></td></tr>
-<tr class="separator:aceeddf699711a502b4bd898aaf2dead6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5bdf8d1fff1da38fe4c7656786cb194"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rules__and__credit_8c.html#ad5bdf8d1fff1da38fe4c7656786cb194">resume_music</a> (<a class="el" href="struct_view__elements.html">View_elements</a> *app)</td></tr>
-<tr class="separator:ad5bdf8d1fff1da38fe4c7656786cb194"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa06ca311e5f29fe7fac4bfe28cdd2625"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rules__and__credit_8c.html#aa06ca311e5f29fe7fac4bfe28cdd2625">pause_music</a> (<a class="el" href="struct_view__elements.html">View_elements</a> *app)</td></tr>
-<tr class="separator:aa06ca311e5f29fe7fac4bfe28cdd2625"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Fichier Règles et Crédits. </p>
@@ -207,56 +200,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa06ca311e5f29fe7fac4bfe28cdd2625"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa06ca311e5f29fe7fac4bfe28cdd2625">&#9670;&nbsp;</a></span>pause_music()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int pause_music </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_view__elements.html">View_elements</a> *&#160;</td>
-          <td class="paramname"><em>app</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Met en pause la musique et met à jour le logo du son </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">app</td><td>Structure qui gère la vue </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>retourne 0 </dd></dl>
-
-</div>
-</div>
-<a id="ad5bdf8d1fff1da38fe4c7656786cb194"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5bdf8d1fff1da38fe4c7656786cb194">&#9670;&nbsp;</a></span>resume_music()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int resume_music </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_view__elements.html">View_elements</a> *&#160;</td>
-          <td class="paramname"><em>app</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>joue la musique après une pause et met à jour le logo du son </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">app</td><td>Structure qui gère la vue </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>retourne 1 </dd></dl>
-
-</div>
-</div>
 <a id="aaedbfeafaf89755bd8c78b7dab3b11a4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaedbfeafaf89755bd8c78b7dab3b11a4">&#9670;&nbsp;</a></span>show_credit()</h2>
 
@@ -306,33 +249,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="aceeddf699711a502b4bd898aaf2dead6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aceeddf699711a502b4bd898aaf2dead6">&#9670;&nbsp;</a></span>start_music()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int start_music </td>
-          <td>(</td>
-          <td class="paramtype">Mix_Music *&#160;</td>
-          <td class="paramname"><em>music</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>lance la musique Lance la musique de fond du menu </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">music</td><td>Strucure de la musique à jouer </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>retourne 1 </dd></dl>
 
 </div>
 </div>

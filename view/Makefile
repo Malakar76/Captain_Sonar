@@ -9,7 +9,7 @@ all: libview.a
 
 
 
-libview.a: main_view.o Battlefield.o Menu.o rules_and_credit.o
+libview.a: main_view.o Battlefield.o Menu.o rules_and_credit.o Music.o
 	ar -rv $(DIRLIB)/$@ $^
 
 %.o: %.c

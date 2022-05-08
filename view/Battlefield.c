@@ -388,6 +388,9 @@ void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne,
             break;
 
         default:
+            rect.w=10;
+            rect.h=10;
+            SDL_RenderFillRect(app->rRenderer, &rect);
             break;
 
     }
@@ -408,6 +411,7 @@ void clean_map(View_elements * app){
 void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[],int color){
     int ligne=pos_depart[0];
     int colonne=pos_depart[1];
+    trace_deplacement(app,-1,ligne,colonne,0);
     for (int i=0;i<nbdir;i++){
         switch (direction[i]){
             case 0: //haut
@@ -423,6 +427,7 @@ void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int 
                 colonne++;
                 break;
         }
+
         trace_deplacement(app,direction[i],ligne,colonne,color);
     }
 }

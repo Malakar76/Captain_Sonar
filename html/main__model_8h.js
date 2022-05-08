@@ -26,6 +26,7 @@ var main__model_8h =
     ] ],
     [ "action", "main__model_8h.html#a56ebe63c1ed186a24a9096e6ac25591a", null ],
     [ "actionIA", "main__model_8h.html#a834d1f82c3ec54f87cb6a28e47bf1796", null ],
+    [ "actionIA2", "main__model_8h.html#ab3f89b9cce290da83019819ee528aea2", null ],
     [ "choix_carte", "main__model_8h.html#a394ef6f478a83c988e17a9d3c286f1aa", null ],
     [ "Crea_Antartica", "main__model_8h.html#af928b67910fbef0aed56029390c543ff", null ],
     [ "Crea_Archipelago", "main__model_8h.html#a0d3731b9b9970f6c29815b19674b6a9f", null ],
