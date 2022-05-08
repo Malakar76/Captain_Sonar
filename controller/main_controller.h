@@ -27,7 +27,7 @@
  */
 void controller(View_elements * app,Playground * pg);
 /**
- * \fn controller_battlefield(View_elements * app,Playground * pg,enum Carte choix)
+ * \fn controller_battlefield(View_elements * app,Playground * pg,enum Carte choix,int IA)
  * \brief Permet de faire le pont entre la vue et le modèle pour le champ de bataille.
  * Fonctionnalité :
  *      -gère le champ de bataille
@@ -57,11 +57,21 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
 void controller_battlefield_Joueur(View_elements * app,Playground * pg,enum Carte choix);
 
 /**
- * \fn void actionIA_ctrl(View_elements * app,Playground * pg)
+ * \fn void actionIA_ctrl(View_elements * app,Playground * pg,char message [])
  * Gère l'affichage de l'action de l'IA et ses conséquences dans la vue
  * @param app Structure qui gère la vue
  * @param pg Strucutre qui gère le modèle
+ * @param message message de retour éventuel
  */
-void actionIA_ctrl(View_elements * app,Playground * pg);
+void actionIA_ctrl(View_elements * app,Playground * pg,char message []);
+
+/**
+ * \fn int fin_partie(View_elements * app,Playground * pg)
+ * Déclenche la fin de partie si l'un des deux joueurs à perdu et affiche l'écran de fin
+ * @param app Structure qui gère la vue
+ * @param pg Strucutre qui gère le modèle
+ * @return Renvoi 1 si l'un des deux joueurs à perdu et 0 sinon
+ */
+int fin_partie(View_elements * app,Playground * pg);
 
 #endif //PROJET_C_MAIN_CONTROLLER_H

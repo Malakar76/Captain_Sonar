@@ -53,7 +53,8 @@ typedef struct {
     SDL_Texture *Battlefield_blank;/**< Texture qui garde l'aperçu de la fenêtre de jeu clean */
     SDL_Texture *Sous_marin;/**< Texture qui garde l'aperçu du sous_marin */
     SDL_Texture *Energie; /**< Texture qui garde les niveaux d'énergie */
-    SDL_Rect  Bbutton[12] ;/**< Tableau qui stocke l'emplacement des boutons du champ de bataille */
+    SDL_Texture *FinSon; /**< Texture qui stocke le bouton du son et de la fin de partie */
+    SDL_Rect  Bbutton[13] ;/**< Tableau qui stocke l'emplacement des boutons du champ de bataille */
     SDL_Rect Carte[10][10];/**< Tableau qui stocke l'emplacement des cases du champ de bataille */
 }View_Battlefield;
 
@@ -132,7 +133,7 @@ void init_font(View_elements *app);
  */
 int init_view_battlefield(View_elements * app,enum Carte c);
 /**
- * \fn int init_battlefield_blank(View_elements * app,enum Carte c)
+ * \fn int init_battlefield(View_elements * app,enum Carte c)
  * \brief Initialise la texture du champ de bataille
  * Applique la bonne texture
  * @param app Structure qui gère la vue
@@ -148,6 +149,14 @@ int init_battlefield(View_elements * app,enum Carte c);
  * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
  */
 int init_sousmarin(View_elements * app);
+
+/**
+ * \fn int init_BoutonSonEtFinPartie(View_elements *app)
+ * Initialise la texture pour les boutons du son et l'écran de défaite
+ * @param app Structure qui gère la vue
+ * @return EXIT_SUCCES si tout va bien, EXIT_FAILURE sinon.
+ */
+int init_BoutonSonEtFinPartie(View_elements *app);
 
 /**
  * \fn void show_battlefield(View_elements *app)
@@ -175,10 +184,20 @@ void show_choix_carte(View_elements *app);
 /**
  * \fn void print_message(View_elements *app,char * message)
  * Affiche le message passé en parmètre avec la typo initialisé dans la structure app. Le message est affiché dans l'interface utilisateur
+ * dans la zone action allié
  * @param app Structure qui gère la vue
  * @param message message à afficher
  */
 void print_message(View_elements *app,char * message);
+
+/**
+ * \fn void print_message_adversaire(View_elements *app,char * message)
+ * Affiche le message passé en parmètre avec la typo initialisé dans la structure app. Le message est affiché dans l'interface utilisateur
+ * dans la zone action de l'adversaire
+ * @param app Structure qui gère la vue
+ * @param message message à afficher
+ */
+void print_message_adversaire(View_elements *app,char * message);
 
 /**
  * \fn void case_choisie(View_elements * app, SDL_Point point,int tab[])
@@ -214,14 +233,15 @@ int init_coche_case(View_elements * app);
 void coche_case(View_elements * app);
 
 /**
- * \fn void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne)
+ * \fn void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne,int color)
  * Trace le dernier déplacement du joueur sur la carte
  * @param app Structure qui gère la vue
  * @param direction Direction du dernier déplacement
  * @param pos_joueur_ligne Nouvelle position du joueur
+ * @param color Permet de choisir la couleur entre rouge (0) et vert (1)
  * @param pos_joueur_colonne Nouvelle position du joueur
  */
-void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
+void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne,int color);
 
 /**
  * \fn void clean_map(View_elements * app)
@@ -231,14 +251,41 @@ void trace_deplacement(View_elements * app, int direction, int pos_joueur_ligne,
 void clean_map(View_elements * app);
 
 /**
- * \fn void trace_deplacement_total(View_elements * app, int direction[],int pos_depart[])
+ * \fn void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[],int color)
  * permet de retracer tout les déplacements d'un joueur
  * @param app Structure qui gère la vue
  * @param direction tableau de toutes les directions à tracer
  * @param nbdir nombre de direction à tracer
+ * @param color Permet de choisir la couleur entre rouge (0) et vert (1)
  * @param pos_depart position de départ du joueur
  */
-void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[]);
+void trace_deplacement_total(View_elements * app, int direction[],int nbdir,int pos_depart[],int color);
+
+/**
+ * \fn void trace_deplacement_calque(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne)
+ * Trace le dernier déplacement du joueur adverse sur le calque
+ * @param app Structure qui gère la vue
+ * @param direction Direction du dernier déplacement
+ * @param pos_joueur_ligne Nouvelle position du joueur
+ * @param pos_joueur_colonne Nouvelle position du joueur
+ */
+void trace_deplacement_calque(View_elements * app, int direction, int pos_joueur_ligne, int pos_joueur_colonne);
+
+/**
+ * \fn void trace_deplacement_total_calque(View_elements * app, int direction[],int nbdir)
+ * permet de retracer tout les déplacements d'un joueur sur le calque
+ * @param app Structure qui gère la vue
+ * @param direction tableau de toutes les directions à tracer
+ * @param nbdir nombre de direction à tracer
+ */
+void trace_deplacement_total_calque(View_elements * app, int direction[],int nbdir);
+
+/**
+ * \fn void clean_calque(View_elements * app)
+ * Permet de retirer le tracé du déplacement sur le calque lorsque le joueur fait surface.
+ * @param app Structure qui gère la vue
+ */
+void clean_calque(View_elements * app);
 
 /**
  * \fn void show_energie(View_elements * app,int energie)
@@ -338,17 +385,19 @@ void init_rbutton(View_elements *app);
 int start_music(Mix_Music * music);
 
 /**
- * \fn void resume_music(Mix_Music * music,int state)
- * joue la musique après une pause
+ * \fn void resume_music(View_elements * app)
+ * joue la musique après une pause et met à jour le logo du son
+ * @param app Structure qui gère la vue
  * @return retourne 1
  */
-int resume_music();
+int resume_music(View_elements * app);
 
 /**
- * \fn void pause_music(int  state)
- * Met en pause la musique
+ * \fn void pause_music(View_elements * app)
+ * Met en pause la musique et met à jour le logo du son
+ * @param app Structure qui gère la vue
  * @return retourne 0
  */
-int pause_music();
+int pause_music(View_elements * app);
 
 #endif //PROJET_C_MAIN_VIEW_H

@@ -1,10 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g  -I./view -I./model -I./controller
 LDFLAGS=  -L./lib -lview -lmodel -lcontroller  -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
-
-
-
-
+MAKE=/usr/bin/make
 
 
 
@@ -28,10 +25,6 @@ controller_Make :
 Launcher: main.o
 	$(CC) $^ $(LDFLAGS) -o $@
 	rm -f *~ *.d *.o
-
-test:
-	$(MAKE) -C ./cmocka-build
-	$(MAKE) -C ./cmocka-build clean
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<  -o $@

@@ -11,9 +11,15 @@
 #define PROJET_C_MAIN_MODEL_H
 
 #include "stdlib.h"
+#include "time.h"
 #include "string.h"
 #include "stdio.h"
 #include "math.h"
+
+/**
+ * \def NMAX
+ * définie la largeur et longeur max de la carte
+ */
 #define NMAX 10
 
 /**
@@ -92,6 +98,15 @@ typedef struct{
 }JOUEUR;
 
 /**
+ * \struct IA
+ * Structure qui permet de stocker des informations relatives à l'IA
+ */
+typedef struct {
+   enum OPTION lastaction; /**< Dernière action effectuée par l'IA */
+   int  nbaction ; /**< Nombre d'actions depuis la dernière surface */
+}IA;
+
+/**
  * \struct Playground
  * \brief Structure principale du modèle
  * Structure qui regroupe tout les éléments nécessaires pour gérer le modèle du projet
@@ -101,6 +116,7 @@ typedef struct {
     JOUEUR * J1;/**<Structure du joueur 1  */
     JOUEUR * J2; /**<Structure du joueur 2 */
     enum Actif actif;/**< Joueur actif du tour */
+    IA * ia; /**< Structure pour l'IA */
 }Playground;
 
 /**
@@ -169,10 +185,10 @@ void init_map (CARTE * carte);
 void init_calque(JOUEUR * joueur);
 
 /**
- * \fn void choix_carte(Playground * pg,enum Carte carte)
+ * \fn void choix_carte(Playground * pg,int a)
  * Initialise la carte de jeu correctement en fonction de la carte choisie
  * @param pg Structure du modèle
- * @param carte Carte de jeu
+ * @param a Entier qui permet de déterminer la carte à charger
  */
 void choix_carte(Playground * pg,int a);
 
@@ -247,7 +263,7 @@ int deplacement_possible(Playground * pg,enum Actif actif, enum DIRECTION d);
 void result_deplacement(Playground *pg,enum Actif actif,enum DIRECTION d,char message []);
 
 /**
- * \fn void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,Carte * c)
+ * \fn void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c)
  * Positionne le sous-marin du joueur j à la position indiqué par la ligne et la colonne
  * et met à jour la carte
  * @param j Joueur sélectionné
@@ -340,48 +356,6 @@ int enough_energie(Playground *pg,enum Actif actif,enum OPTION option);
  */
 int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []);
 
-/**
-* \fn void change_tour(Playground *pg,enum Actif actif,enum DIRECTION d,int ligne,colonne)
- * Prend en compte le message affiché apès les actions et si ce dernier est différent de vide
- * Alors une action a été réaliser ainsi on peut changer de tour.
- * @param pg
- * @param actif
- * @param d
- * @param ligne
- * @param colonne
- * @return change de carte et de tour après chaque tour du joueur actif
-*/
-void change_tour(Playground *pg, enum Actif actif,enum DIRECTION d,int ligne,colonne);
-
-
-/**
-* \fn void change_tour(Playground *pg,enum Actif actif,enum DIRECTION d,int ligne,colonne)
- * Prend en compte le message affiché apès les actions et si ce dernier est différent de vide
- * Alors une action a été réaliser ainsi on peut changer de tour.
- * @param pg
- * @param actif
- * @param d
- * @param ligne
- * @param colonne
- * @return change de carte et de tour après chaque tour du joueur actif
-*/
-void change_tour(Playground *pg, enum Actif actif,enum DIRECTION d,int ligne,colonne);
-
-
-/**
-* \fn void change_tour(Playground *pg,enum Actif actif,enum DIRECTION d,int ligne,colonne)
- * Prend en compte le message affiché apès les actions et si ce dernier est différent de vide
- * Alors une action a été réaliser ainsi on peut changer de tour.
- * @param pg
- * @param actif
- * @param d
- * @param ligne
- * @param colonne
- * @return change de carte et de tour après chaque tour du joueur actif
-*/
-void change_tour(Playground *pg, enum Actif actif,enum DIRECTION d,int ligne,colonne);
-
-
 //Création Carte
 
 /**
@@ -403,16 +377,16 @@ void Crea_Antartica(CARTE * c);
  * \fn void actionIA(Playground * pg)
  * choisi une action pour l'IA
  * @param pg Structure du modèle
+ * @return renvoi un entier qui contient l'action
  */
-void actionIA(Playground * pg);
+enum OPTION actionIA(Playground * pg);
 
-
-
-
-
-
-
-
-
+/**
+ * \fn enum OPTION actionIA2(Playground * pg);
+ * IA avancée
+ * @param pg Structure du modèle
+ * @return renvoi un entier qui contient l'action
+ */
+enum OPTION actionIA2(Playground * pg);
 
 #endif //PROJET_C_MAIN_MODEL_H

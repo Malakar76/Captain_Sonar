@@ -9,7 +9,6 @@
  */
 
 #include "main_model.h"
-#include "test.h"
 
 int init_model(Playground * pg)
 {
@@ -21,7 +20,8 @@ int init_model(Playground * pg)
     init_map(pg->map);
     pg->J1= malloc(sizeof (JOUEUR));
     pg->J2= malloc(sizeof(JOUEUR));
-    if (pg->J2==NULL || pg->J1==NULL){
+    pg->ia= malloc(sizeof(IA));
+    if (pg->J2==NULL || pg->J1==NULL ||pg->ia==NULL){
         return statut;
     }
     if(init_joueur(pg->J1)==EXIT_FAILURE){
@@ -40,4 +40,5 @@ void free_model(Playground * pg){
     free_joueur(pg->J1);
     free_joueur(pg->J2);
 }
+
 

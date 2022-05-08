@@ -14,7 +14,7 @@ EDIT : Plus de soucis avec les makefiles ! Tout est clean pour commencer !
 	-Reste à finaliser la création du choix de la carte ainsi que les boutons pour le champ 	de bataille.
 	-voir comment redimensionner la fenêtre sans problème ??	
 	
-25/02 Robni -Tout est prêt pour la fusion des parties 
+25/02 Robin -Tout est prêt pour la fusion des parties
 	Choses à faire :
 		-implémenter le modèle et vérifier que tout marche 
 		-rajouter le fichier du sous marin 
@@ -23,3 +23,40 @@ EDIT : Plus de soucis avec les makefiles ! Tout est clean pour commencer !
 		-animations
 		-rajouter les boutons du champs de bataille 
 		-faire le lien entre les boutons et les effets
+
+02/05 Robin -3 mois depuis la dernière update. Projet presque fini
+    Nouveautés :
+        -partie champ de bataille ok
+        -calque opérationnelle
+        -carte joueur ok
+        -clean map ok
+        -musique ok
+        -retour menu ok
+        -déplacment ok
+        -actions toutes ok sauf silence
+
+        partie modèle tout fonctionne
+        avec une IA de base
+
+        Le jeu est jouable dans l'état actuel
+
+    Choses à rajouter bientôt :
+        -Ecran de fin (manque le design)
+        -IA plus intelligente
+        -option silence
+        -design crédits
+        -design regles
+
+    Grande partie à faire :
+        -Test unitaires
+        -rapport de projet
+
+02/05 Robin -Ajout de design :
+        -Ecran de fin ok
+        -bouton son coupé/allumé ok
+
+        Choses à rajouter encore :
+                    -IA plus intelligente
+                    -option silence
+                    -design crédits
+                    -design regles

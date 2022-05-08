@@ -5,7 +5,6 @@
  * Fichier pour la gestion du joueur
  */
 #include "main_model.h"
-#include <stdio.h>
 
 void energie_up(JOUEUR *j){
         if (j->energie<4){
@@ -178,7 +177,6 @@ void start_Sous_Marin(JOUEUR *j,int ligne,int colonne,CARTE * c){
     j->calqueJ[ligne][colonne]=1;
 }
 
-<<<<<<< HEAD
 int enough_energie(Playground *pg, enum Actif actif, enum OPTION option) {
     JOUEUR *j;
     if (actif == J1) {
@@ -286,6 +284,11 @@ int result_missile(Playground *pg,enum Actif actif,int ligne,int colonne, char  
             strcpy(message, "Mince alors, vous vous etes touche vous meme!");
             return -1;
 
+        default:
+            strcpy(message,"Erreur missile");
+            return -2;
+
+
     }
 }
 
@@ -318,7 +321,7 @@ void sonar(Playground * pg, enum Actif actif, char message[]){
 
 int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,int ligne,int colonne,char message []){
     JOUEUR * j;
-    if (pg->actif==J1){
+    if (actif==J1){
         j=pg->J1;
     }else{
         j=pg->J2;
@@ -331,7 +334,7 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
                 energie_down(j,4);
                 return 1;
             } else {
-                printf("Pas assez d'energie pour missille");
+                strcpy(message,"Pas assez d'energie pour missille");
                 return 0;
             }
         }
@@ -379,7 +382,6 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
                     }
                 }
 
-
                 case bas: {
 
                     if (deplacement_possible(pg, actif, d)) {
@@ -391,7 +393,6 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
                     }
                 }
 
-
                 case droite: {
                     if (deplacement_possible(pg, actif, d)) {
                         result_deplacement(pg, actif, d, message);
@@ -401,8 +402,6 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
                         return 0;
                     }
                 }
-
-
 
                 case gauche: {
                     if (deplacement_possible(pg, actif, d)) {
@@ -414,9 +413,14 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
                     }
                 }
 
+                default:
+                    strcpy(message,"Erreur déplacement");
+                    return -1;
+
             }
-            break;
         }
+        default:
+            return -1;
 
 
     }
@@ -437,4 +441,108 @@ void surface(Playground *pg,enum Actif actif,char message[]){
     strcpy(message,"Nous faisons surface");
 
 }
+
+//IA
+/* Rappel
+MIS,  MISSILE interdit
+SURF,  SURFACE
+SON,  SONAR interdit
+SIL, SILENCE interdit
+DEPLCMNT  DEPLACEMENT
+*/
+enum OPTION actionIA(Playground * pg){
+    char message[100];
+    enum OPTION choix;
+    int dir;
+    choix =rand()%5;
+    while (enough_energie(pg,J2,choix)!=1 || (choix==SIL) || ((choix==SURF)&&pg->ia->nbaction<10)){
+        choix=rand()%5;
+    }
+    if (choix==DEPLCMNT){
+        dir=rand()%4;
+        while (deplacement_possible(pg,J2,dir)!=1){
+            dir=rand()%4;
+        }
+    }
+    if (choix==SURF){
+        pg->ia->nbaction=0;
+    }
+    pg->ia->nbaction++;
+    action(pg,J2,choix,dir,rand()%10,rand()%10,message);
+    return choix;
+}
+
+enum OPTION actionIA2(Playground *pg) {
+    char message[100];
+    enum OPTION choix;
+    int dir;
+    /*enum OPTION last = pg->ia->lastaction;*/
+    if (pg->ia->nbaction <= 20)
+    {
+        if (pg->ia->nbaction < 6)
+        {
+            if ((pg->ia->nbaction % 3) < 2)
+            {
+                choix = DEPLCMNT;
+                dir = rand() % 4;
+                while (deplacement_possible(pg, J2, dir) != 1)
+                {
+                    dir = rand() % 4;
+                }
+            }
+            else
+            {
+                choix = SON;
+                if (pg->ia->nbaction > 4)
+                {
+                    choix = DEPLCMNT;
+                    dir = rand() % 4;
+                    while (deplacement_possible(pg, J2, dir) != 1)
+                    {
+                        dir = rand() % 4;
+                    }
+                }
+            }
+            action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
+            pg->ia->nbaction++;
+        }
+        if ((pg->ia->nbaction < 20 && pg->ia->nbaction % 5) != 0)
+        {
+            choix = DEPLCMNT;
+            dir = rand() % 4;
+            while (deplacement_possible(pg, J2, dir) != 1)
+            {
+                dir = rand() % 4;
+            }
+        }
+        else
+        {
+            choix = SURF;
+        }
+    }
+    action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
+    pg->ia->nbaction++;
+    if (pg->ia->nbaction > 20)
+    {
+        if (pg->J2->energie != 4)
+        {
+            choix = DEPLCMNT;
+            dir = rand() % 4;
+            while (deplacement_possible(pg, J2, dir) != 1)
+            {
+                dir = rand() % 4;
+            }
+            action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
+            pg->ia->nbaction++;
+        }
+        else
+        {
+            choix = MIS;
+            action(pg, J2, choix, dir, pg->J1->S_M->ligne, pg->J1->S_M->colonne, message);
+            pg->ia->nbaction++;
+        }
+    }
+    return choix;
+}
+
 
