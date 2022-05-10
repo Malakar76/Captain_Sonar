@@ -1,4 +1,4 @@
-# Install script for directory: /home/eii/GIT/projet/projet_c/model
+# Install script for directory: /home/eii/Images/projet/projet_c/model
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/eii/GIT/projet/projet_c/model/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/eii/Images/projet/projet_c/model/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
