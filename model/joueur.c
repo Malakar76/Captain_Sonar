@@ -461,48 +461,27 @@ enum OPTION actionIA2(Playground *pg) {
     int dir;
     /*enum OPTION last = pg->ia->lastaction;*/
     /*if (surface_joueur != 1){*/
-    if (pg->ia->nbaction < 6)
-    {
-        if ((pg->ia->nbaction % 3) < 2)
-        {
+    if (pg->ia->nbaction < 6) {
+        if ((pg->ia->nbaction % 3) < 2) {
             choix = DEPLCMNT;
             dir = haut;
-            if (deplacement_possible(pg, J2, dir) == 0)
-            {
+            if (deplacement_possible(pg, J2, dir) == 0) {
                 dir = bas;
             }
-            if (deplacement_possible(pg, J2, dir) == 0)
-            {
+            if (deplacement_possible(pg, J2, dir) == 0) {
                 dir = gauche;
             }
-            if (deplacement_possible(pg, J2, dir) == 0)
-            {
+            if (deplacement_possible(pg, J2, dir) == 0) {
                 dir = droite;
             }
-            if (deplacement_possible(pg, J2, dir) == 0)
-            {
+            if (deplacement_possible(pg, J2, dir) == 0) {
                 choix = SURF;
                 pg->ia->nbaction--;
             }
-        } else
-        {
+        } else {
             choix = SON;
         }
     }
-//    if (pg->ia->nbaction > 4)
-//    {
-//        choix = DEPLCMNT;
-//        dir = haut;
-//        if (deplacement_possible(pg, J2, dir) == 0) {
-//            dir = bas;
-//        } else if (deplacement_possible(pg, J2, dir) == 0) {
-//            dir = gauche;
-//        } else if (deplacement_possible(pg, J2, dir) == 0) {
-//            dir = droite;
-//        } else if (deplacement_possible(pg, J2, dir) == 0) {
-//            choix = SURF;
-//        }
-//    }
     if (pg->ia->nbaction > 5 && pg->ia->nbaction < 30)
     {
         if (pg->ia->nbaction % 5 < 4)
@@ -525,7 +504,7 @@ enum OPTION actionIA2(Playground *pg) {
         }
         else
         {
-            choix = MIS;
+            choix = SURF;
         }
     }
     if (pg->ia->nbaction > 29) {
@@ -548,13 +527,16 @@ enum OPTION actionIA2(Playground *pg) {
         }
         else
         {
-            choix = MIS;
+            choix = SURF;
         }
     }
     action(pg, J2, choix, dir, rand() % 10, rand() % 10, message);
     pg->ia->nbaction++;
     return choix;
 }
+
+
+
 
 
 

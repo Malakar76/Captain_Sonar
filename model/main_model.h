@@ -98,6 +98,7 @@ typedef struct{
 typedef struct {
    enum OPTION lastaction; /**< Dernière action effectuée par l'IA */
    int  nbaction ; /**< Nombre d'actions depuis la dernière surface */
+   int surface_joueur; /**< permet de savoir si le joueur à utiliser la fonction Surface*/
 }IA;
 
 /**
