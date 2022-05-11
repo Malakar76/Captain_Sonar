@@ -184,14 +184,6 @@ void actionIA_ctrl(View_elements * app,Playground * pg,char message []){
     int choix;
     char valeur1 [2];
     char valeur2 [2];
-    if (pg->ia->lastaction==SURF){
-        pg->ia->surface_joueur=1;
-    }
-    else{
-        pg->ia->surface_joueur=0;
-    }
-
-
     choix=actionIA2(pg);
     if (choix==DEPLCMNT){
         clean_calque(app);
