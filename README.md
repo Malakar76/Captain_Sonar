@@ -16,6 +16,9 @@
 - `sudo apt install libsdl2-ttf-dev`
 - `sudo apt install libsdl2-mixer-dev`
 
+### **TESTER** le projet, package à installer (dev):
+- `sudo apt-get install valgrind`
+
 ### **INSTALLER** le projet :
 - Se rendre dans le répertoire _./Projet_C_
 - Exécuter la commande `make `

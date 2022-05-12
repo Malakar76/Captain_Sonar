@@ -39,6 +39,7 @@ void free_model(Playground * pg){
     free_Carte(pg->map);
     free_joueur(pg->J1);
     free_joueur(pg->J2);
+    free(pg->ia);
 }
 
 
