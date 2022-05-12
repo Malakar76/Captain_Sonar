@@ -4,7 +4,7 @@ LDFLAGS=  -L./lib -lAll  -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 MAKE=/usr/bin/make
 
 all:  view_Make model_Make controller_Make Launcher
-
+MEM=no
 TEST=no
 ifeq ($(TEST),yes)
 all +:Test_Make
@@ -12,7 +12,7 @@ CFLAGS += -coverage
 LDFLAGS += -coverage
 endif
 
-MEM=no
+
 ifeq ($(MEM),yes)
 all +:Mem_Leak
 endif
@@ -23,7 +23,7 @@ view_Make :
 
 
 model_Make :
-	$(MAKE) -C ./model TEST=yes
+	$(MAKE) -C ./model
 
 
 controller_Make :
@@ -48,7 +48,7 @@ Launcher : main.o
 
 clean :
 	rm -f  Launcher
-	rm -f *~ *.d *.o
+	rm -f *~ *.d *.o *.gcno
 libClean :
 	rm -f ./lib/*.a
 

@@ -3,7 +3,6 @@ CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g
 LDFLAGS= -lSDL2
 DIRLIB=../lib
 
-TEST=no
 ifeq ($(TEST),yes)
 CFLAGS += -coverage
 LDFLAGS += -coverage
