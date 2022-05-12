@@ -308,6 +308,7 @@ action(Playground *pg, enum Actif actif, enum OPTION option, enum DIRECTION d, i
     JOUEUR *j;
     if (actif == J1) {
         j = pg->J1;
+        pg->ia->surface_joueur = 0;
     } else {
         j = pg->J2;
     }
@@ -326,6 +327,8 @@ action(Playground *pg, enum Actif actif, enum OPTION option, enum DIRECTION d, i
 
         case SURF: {
             surface(pg, actif, message);
+            if (pg->actif == J1)
+                pg->ia->surface_joueur = 1;
             return 1;
         }
 
@@ -459,85 +462,83 @@ enum OPTION actionIA2(Playground *pg) {
     char message[100];
     enum OPTION choix;
     int dir;
-    int ligne=rand()%10;
-    int colonne=rand()%10;
+    int deplacement = rand() % 4;
+    int ligne = rand() % 10;
+    int colonne = rand() % 10;
     /*enum OPTION last = pg->ia->lastaction;*/
     /*if (surface_joueur != 1){*/
 
-    if (pg->ia->nbaction < 6) {
-        if ((pg->ia->nbaction % 3) < 2) {
-            choix = DEPLCMNT;
-            dir = haut;
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                dir = bas;
-            }
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                dir = gauche;
-            }
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                dir = droite;
-            }
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                choix = SURF;
-                pg->ia->nbaction--;
-            }
-        } else {
-            choix = SON;
-        }
-    }
-    if (pg->ia->nbaction > 5 && pg->ia->nbaction < 19)
-    {
-        if (pg->ia->nbaction % 5 < 4)
-        {
-            choix = DEPLCMNT;
-            dir = haut;
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                dir = bas;
-            }
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                dir = gauche;
-            }
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                dir = droite;
-            }
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                choix = SURF;
-                pg->ia->nbaction--;
+    if (pg->ia->surface_joueur == 1 && pg->J2->energie == 4) {
+        choix = MIS;
+        ligne = pg->J1->S_M->ligne;
+        colonne = pg->J1->S_M->colonne;
+    } else {
+        if (pg->ia->nbaction < 6) {
+            if ((pg->ia->nbaction % 3) < 2) {
+                choix = DEPLCMNT;
+                dir = deplacement;
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    dir = deplacement;
+                }
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    dir = deplacement;
+                }
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    dir = deplacement;
+                }
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    choix = SURF;
+                    pg->ia->nbaction--;
+                }
+            } else {
+                choix = SON;
             }
         }
-        else
-        {
-            choix = MIS;
-            ligne= pg->J1->S_M->ligne+1-rand()%3;
-            colonne= pg->J1->S_M->colonne+1-rand()%3;
-        }
-    }
-    if (pg->ia->nbaction > 18) {
-        if (pg->J2->energie != 4) {
-            choix = DEPLCMNT;
-            dir = haut;
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                dir = bas;
-            }
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                dir = gauche;
-            }
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                dir = droite;
-            }
-            if (deplacement_possible(pg, J2, dir) == 0) {
-                choix = SURF;
-                pg->ia->nbaction--;
+        if (pg->ia->nbaction > 5 && pg->ia->nbaction < 19) {
+            if (pg->ia->nbaction % 5 < 4) {
+                choix = DEPLCMNT;
+                dir = deplacement;
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    dir = deplacement;
+                }
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    dir = deplacement;
+                }
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    dir = deplacement;
+                }
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    choix = deplacement;
+                    pg->ia->nbaction--;
+                }
+            } else {
+                choix = MIS;
+                ligne = pg->J1->S_M->ligne + 1 - rand() % 3;
+                colonne = pg->J1->S_M->colonne + 1 - rand() % 3;
             }
         }
-        else
-        {
-            choix = MIS;
-            ligne= pg->J1->S_M->ligne+1-rand()%3;
-            colonne= pg->J1->S_M->colonne+1-rand()%3;
-            action(pg, J2, choix, dir, ligne, colonne, message);
-            pg->ia->nbaction++;
-            return choix;
+        if (pg->ia->nbaction > 18) {
+            if (pg->J2->energie != 4) {
+                choix = DEPLCMNT;
+                dir = deplacement;
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    dir = deplacement;
+                }
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    dir = deplacement;
+                }
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    dir = deplacement;
+                }
+                if (deplacement_possible(pg, J2, dir) == 0) {
+                    choix = SURF;
+                    pg->ia->nbaction--;
+                }
+            } else {
+                choix = MIS;
+                ligne = pg->J1->S_M->ligne + 1 - rand() % 3;
+                colonne = pg->J1->S_M->colonne + 1 - rand() % 3;
+            }
         }
     }
     action(pg, J2, choix, dir, ligne, colonne, message);
