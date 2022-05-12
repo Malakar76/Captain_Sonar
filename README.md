@@ -18,6 +18,7 @@
 
 ### **TESTER** le projet, package à installer (dev):
 - `sudo apt-get install valgrind`
+- `sudo apt-get install lcov`
 
 ### **INSTALLER** le projet :
 - Se rendre dans le répertoire _./Projet_C_
