@@ -116,6 +116,7 @@ static int teardown(void **state){
 
 
 
+/***  TESTS initialisations ****/
 
 
 _Noreturn static void test_init_calque(void **state) {
@@ -212,6 +213,92 @@ static void test_init_model(void **state) {
 }
 
 
+
+
+/***  TESTS carte.c ****/
+
+static void test_set_Rocher(void **state){
+    Playground *pg=(Playground *)* state;
+    init_model(pg);
+    set_Rocher(pg->map, 5,5); //creation rocher en 5x5
+    assert_int_equal(pg->map->carte[5][5].accessible,1);
+    assert_int_equal(pg->map->carte[0][0].accessible,0);
+}
+
+static void test_est_occupe(void **state) {
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    est_occupe(&pg->map->carte[5][5]);
+    assert_int_equal(pg->map->carte[5][5].accessible,1);
+    assert_int_equal(pg->map->carte[0][0].accessible,0);
+}
+
+static void test_crea_archipelago(void **state) {
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    Crea_Archipelago(pg->map);
+    assert_int_equal(pg->map->carte[1][6].accessible, 1);
+    assert_int_equal(pg->map->carte[2][2].accessible, 1);
+    assert_int_equal(pg->map->carte[2][7].accessible, 1);
+    assert_int_equal(pg->map->carte[3][8].accessible, 1);
+    assert_int_equal(pg->map->carte[4][3].accessible, 1);
+    assert_int_equal(pg->map->carte[1][8].accessible, 1);
+    assert_int_equal(pg->map->carte[6][1].accessible, 1);
+    assert_int_equal(pg->map->carte[7][2].accessible, 1);
+    assert_int_equal(pg->map->carte[7][2].accessible, 1);
+    assert_int_equal(pg->map->carte[7][5].accessible, 1);
+}
+
+static void test_crea_antartica(void **state) {
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    Crea_Antartica(pg->map);
+    assert_int_equal(pg->map->carte[2][3].accessible, 1);
+    assert_int_equal(pg->map->carte[2][7].accessible, 1);
+    assert_int_equal(pg->map->carte[4][8].accessible, 1);
+    assert_int_equal(pg->map->carte[6][8].accessible, 1);
+    assert_int_equal(pg->map->carte[7][2].accessible, 1);
+    assert_int_equal(pg->map->carte[7][4].accessible, 1);
+    assert_int_equal(pg->map->carte[8][3].accessible, 1);
+}
+
+static void test_choix_carte_archipelago(void **state) {
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    choix_carte(pg, 0);
+    assert_int_equal(pg->map->carte[1][6].accessible, 1);
+    assert_int_equal(pg->map->carte[2][2].accessible, 1);
+    assert_int_equal(pg->map->carte[2][7].accessible, 1);
+    assert_int_equal(pg->map->carte[3][8].accessible, 1);
+    assert_int_equal(pg->map->carte[4][3].accessible, 1);
+    assert_int_equal(pg->map->carte[1][8].accessible, 1);
+    assert_int_equal(pg->map->carte[6][1].accessible, 1);
+    assert_int_equal(pg->map->carte[7][2].accessible, 1);
+    assert_int_equal(pg->map->carte[7][2].accessible, 1);
+    assert_int_equal(pg->map->carte[7][5].accessible, 1);
+}
+static void test_choix_carte_antartica(void **state) {
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    choix_carte(pg, 1);
+    assert_int_equal(pg->map->carte[2][3].accessible, 1);
+    assert_int_equal(pg->map->carte[2][7].accessible, 1);
+    assert_int_equal(pg->map->carte[4][8].accessible, 1);
+    assert_int_equal(pg->map->carte[6][8].accessible, 1);
+    assert_int_equal(pg->map->carte[7][2].accessible, 1);
+    assert_int_equal(pg->map->carte[7][4].accessible, 1);
+    assert_int_equal(pg->map->carte[8][3].accessible, 1);
+}
+
+static void test_free_Carte(void **state) {
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    free_Carte(pg->map);
+    assert_null(pg->map);
+
+}
+
+/***  TESTS joueur.c ****/
 
 
 static void test_energie_up(void **state){
@@ -334,20 +421,16 @@ static void test_deplacement_gauche(void **state){
 
 }
 
-/**
- *
- * attention : tester setRocher ici + est occupe
- */
 
-
-static void test_deplacement_possible(void **state){ //dplcmnt possible fin carte + rocher + deja passé + si j2 y est deja
-
+static void test_deplacement_possible(void **state){ //dplcmnt possible fin carte + rocher + deja passé + si j2 y est deja (c possible)
     Playground *pg=(Playground *)* state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 0, 0, pg->map);
     set_Rocher(pg->map, 0, 2);
 
     assert_int_equal(deplacement_possible(pg, J1, haut), 0); //impossible car bord de la carte
     deplacement(pg, J1, droite);
-    //assert_int_equal(deplacement_possible(pg, J1, gauche), 0); //impossible car deja passe
+    assert_int_equal(deplacement_possible(pg, J1, gauche), 0); //impossible car deja passe
     assert_int_equal(deplacement_possible(pg, J1, droite), 0); //impossible car presence de rocher
     assert_int_equal(deplacement_possible(pg, J1, bas), 1); //il doit pouvoir aller en bas
 
@@ -397,34 +480,145 @@ static void test_enough_energie_dplcmt(void **state){
     assert_int_equal(enough_energie(pg, J1, DEPLCMNT), 1);
 }
 
+static void test_free_joueur(void **state){
+    Playground *pg=(Playground *)* state;
+    init_model(pg);
+    free_joueur(pg->J1);
+    assert_null(pg->J1->S_M);
+    assert_null(pg->J1);
+}
 
+static void test_missile(void **state){ // si j1 tire sur rien , sur j2 et sur lui meme et idem pour j2
 
+    Playground *pg=(Playground *)* state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 0,0, pg->map); //on a placé le j1 à la pos 0x0
+    start_Sous_Marin(pg->J2, 1,1, pg->map); //on a placé le j2 à la pos 1x1
 
-
-
-
-
-/*static void test_missile(void **state){
-    JOUEUR *j1 =(JOUEUR *)* state;
-    pg->J1=j;
-    JOUEUR *j2 =(JOUEUR *)* state;
-    pg->J2=j2;
-    deplacement(pg, J2, droite);
-    deplacement(pg, J2, bas); //on a placé le j2 à la pos 1x1
-    missile(, J1, 1, 1); //j1 tire sur J2
-
-    assert_int_equal(j1->vie, 2); //j1 garde ses 2 vies
-    assert_int_equal(j2->vie, 1); //j2 a ete touché il a perdu 1 vie
+    missile(pg, J1, 1, 1); //j1 tire sur J2
+    assert_int_equal(pg->J1->vie, 2); //j1 garde ses 2 vies
+    assert_int_equal(pg->J2->vie, 1); //j2 a ete touché il a perdu 1 vie
 
     missile(pg, J1, 0, 0); //j1 tire sur lui meme
-
-    assert_int_equal(j1->vie, 1); //j1 perd une vie
+    assert_int_equal(pg->J1->vie, 1); //j1 perd une vie
 
     missile(pg, J1, 0, 0); //j1 tire sur rien
+    assert_int_equal(pg->J1->vie, 1); //j1 n a pas ete touche
+    assert_int_equal(pg->J2->vie, 1); //j2 n a pas ete touche
 
-    assert_int_equal(j1->vie, 1); //j1 n a pas ete touche
-    assert_int_equal(j2->vie, 1); //j2 n a pas ete touche
+    missile(pg, J2, 3, 3); //j2 tire sur rien
+    assert_int_equal(pg->J1->vie, 1); //j1 n a pas ete touche
+    assert_int_equal(pg->J2->vie, 1); //j2 n a pas ete touche
+
+    missile(pg, J2, 3, 3); //j2 tire sur lui meme
+    assert_int_equal(pg->J1->vie, 1); //j1 n a pas ete touche
+    assert_int_equal(pg->J2->vie, 0); //j2 a ete touche
+}
+
+static void test_result_missile(void **state) { /****  manque si touche adversaire ET soi meme en meme temps  ***/
+    char mes[50];
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 0, 0, pg->map); //on a placé le j1 à la pos 0x0
+    start_Sous_Marin(pg->J2, 1, 1, pg->map); //on a placé le j2 à la pos 1x1
+
+    result_missile(pg, J1, 2,2, mes); //renvoie 0 car rien touche
+    assert_string_equal(mes, "Zut, vous n'avez rien touche");
+
+    result_missile(pg, J1, 1,1, mes); //renvoie 1 car touche adversaire
+    assert_string_equal(mes, "Bravo vous avez touche l'adversaire");
+
+    result_missile(pg, J1, 0,0, mes); //renvoie 1 car touche lui meme
+    assert_string_equal(mes, "Mince alors, vous vous etes touche vous meme!");
+
+}
+
+static void test_surface(void **state) {
+    char mes[50];
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 1, 1, pg->map); //on a placé le j1 à la pos 1x1
+    deplacement(pg, J1, droite);
+    deplacement(pg, J1, droite); //j1 est en 0x2
+    surface(pg, J1, mes);
+
+    assert_string_equal(mes, "Nous faisons surface");
+    assert_int_equal(pg->J1->vie, 2);
+    assert_int_equal(pg->J1->energie, 2); //j1 s est deplace 2 fois
+    assert_int_equal(pg->J1->nbpath, 0); //remise a zero
+    assert_int_equal(pg->J1->S_M->start[0], pg->J1->S_M->ligne);
+    assert_int_equal(pg->J1->S_M->start[1], pg->J1->S_M->colonne);
+    assert_int_equal(pg->J1->calqueJ[pg->J1->S_M->ligne][pg->J1->S_M->colonne], 1);
+    assert_int_equal(pg->J1->calqueJ[0][0], 0); //verifier qu ele calque est bien vider la ou le SM est passer avnt de faire surface
+    assert_int_equal(pg->J1->calqueJ[0][1], 0);
+}
+/*static void test_sonar(void **state) {
+    char mes[50];
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 0,0, pg->map);
+    energie_up(pg->J1);
+    energie_up(pg->J1);
+    sonar(pg, J1, mes);
+
+
 }*/
+
+
+
+
+
+
+
+
+static void test_action(void **state) {
+    char mes[50];
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 0,0, pg->map);
+
+    action(pg, J1, MIS, haut, 1,1, mes);
+    assert_string_equal(mes, "Pas assez d'energie pour missille");
+
+    energie_up(pg->J1);
+    energie_up(pg->J1);
+    energie_up(pg->J1);
+    energie_up(pg->J1);
+    assert_string_equal(mes, "Zut, vous n'avez rien touche");
+    assert_int_equal(pg->J1->vie, 0);
+
+    assert_int_equal(action(pg, J1, SURF, haut, 1,1, mes), 1);
+
+    action(pg, J1, SON, haut, 1,1, mes);
+    assert_string_equal(mes, "Pas d'energie pour sonar");
+    assert_int_equal(pg->J1->vie, 2);
+
+    energie_up(pg->J1);
+    energie_up(pg->J1);
+
+    action(pg, J1, SON, haut, 1,1, mes);
+    assert_int_equal(pg->J1->vie, 0);
+
+    action(pg, J1, DEPLCMNT, haut, 1,1, mes); //ideme pour dplcmnt ailleurs
+    assert_string_equal(mes, "Impossible de se deplacer en haut");
+    assert_int_equal(pg->J1->vie, 0);
+
+    action(pg, J1, DEPLCMNT, bas, 1,1, mes);
+    assert_string_equal(mes, "Deplacement en haut");
+    assert_int_equal(pg->J1->vie, 1);
+}
+
+
+/***  TESTS main_model.c ****/
+
+static void test_free_model(void **state) {
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    free_model(pg);
+    assert_null(pg->map);
+    assert_null(pg->J1);
+    assert_null(pg->J2);
+}
 
 
 int main(void)
@@ -454,10 +648,26 @@ int main(void)
                     cmocka_unit_test_setup_teardown(test_enough_energie_surface, setup_playground, teardown),
                     cmocka_unit_test_setup_teardown(test_enough_energie_sonar, setup_playground, teardown),
                     cmocka_unit_test_setup_teardown(test_enough_energie_sonar, setup_playground, teardown),
-                      cmocka_unit_test_setup_teardown(test_enough_energie_dplcmt, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_enough_energie_dplcmt, setup_playground, teardown),
 
-                 /*    cmocka_unit_test_setup_teardown(test_missile, setup_joueur, teardown),*/
+                    cmocka_unit_test_setup_teardown(test_set_Rocher, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_est_occupe, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_crea_antartica, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_crea_archipelago, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_choix_carte_antartica, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_choix_carte_archipelago, setup_playground, teardown),
 
+                    cmocka_unit_test_setup_teardown(test_missile, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_result_missile, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_surface, setup_playground, teardown),
+                    //cmocka_unit_test_setup_teardown(test_sonar, setup_playground, teardown),
+
+                    cmocka_unit_test_setup_teardown(test_action, setup_playground, teardown),
+
+
+                    cmocka_unit_test_setup_teardown(test_free_Carte, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_free_joueur, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_free_model, setup_playground, teardown),
 
 
             };

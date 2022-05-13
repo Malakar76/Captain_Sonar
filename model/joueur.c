@@ -334,6 +334,7 @@ int action(Playground *pg,enum Actif actif,enum OPTION option,enum DIRECTION d,i
                 energie_down(j,4);
                 return 1;
             } else {
+
                 strcpy(message,"Pas assez d'energie pour missille");
                 return 0;
             }
