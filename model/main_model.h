@@ -102,8 +102,10 @@ typedef struct{
  * Structure qui permet de stocker des informations relatives à l'IA
  */
 typedef struct {
-   enum OPTION lastaction; /**< Dernière action effectuée par l'IA */
-   int  nbaction ; /**< Nombre d'actions depuis la dernière surface */
+    enum OPTION lastaction; /**< Dernière action effectuée par l'IA */
+    int  nbaction ; /**< Nombre d'actions depuis la dernière surface */
+    int surface_joueur; /**< permet de savoir si le joueur à utilisé la fonction Surface*/
+
 }IA;
 
 /**

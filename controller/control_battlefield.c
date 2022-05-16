@@ -135,6 +135,7 @@ void controller_battlefield_IA(View_elements * app,Playground * pg,enum Carte ch
                             show_energie(app,pg->J1->energie);
                             show_SM(app,pg->J1->S_M->ligne, pg->J1->S_M->colonne);
                             trace_deplacement_total_calque(app,(int *)pg->J2->path,pg->J2->nbpath);
+                            pg->ia->surface_joueur=1;
                         }
                         print_message(app, message);
                         actionIA_ctrl(app,pg,messageIA);
@@ -210,6 +211,7 @@ void actionIA_ctrl(View_elements * app,Playground * pg,char message []){
         strcpy(message,"L'ennemi a fait feu, surveillez vos PVs ! ");
         print_message_adversaire(app,message);
     }
+    fprintf(stderr,"%d",choix);
 }
 
 
