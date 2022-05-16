@@ -117,10 +117,13 @@ void free_view(View_elements *app){
     SDL_DestroyTexture(app->VBattlefield->Battlefield_current);
     SDL_DestroyTexture(app->VBattlefield->Battlefield_blank);
     SDL_DestroyTexture(app->VBattlefield->Energie);
+    SDL_DestroyTexture(app->VBattlefield->FinSon);
+    free(app->VBattlefield);
+    TTF_CloseFont(app->ttf);
     Mix_FreeMusic(app->music);
     IMG_Quit();
     TTF_Quit();
-    //Mix_CloseAudio();
+    Mix_CloseAudio();
     while (Mix_Init(0)){
         Mix_Quit();
     }

@@ -19,5 +19,7 @@ digraph "view/main_view.h"
   Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node8 [label="view/Menu.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_menu_8c.html",tooltip="Fichier Menu."];
   Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="view/rules_and_credit.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$rules__and__credit_8c.html",tooltip="Fichier Règles et Crédits."];
+  Node9 [label="view/Music.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_music_8c.html",tooltip="Fichier Musique. Fichier qui gère la création et l'utilisation de la musique."];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="view/rules_and_credit.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$rules__and__credit_8c.html",tooltip="Fichier Règles et Crédits."];
 }

@@ -12,6 +12,7 @@ all: libcontroller.a
 
 libcontroller.a: main_controller.o control_battlefield.o
 	ar -rv $(DIRLIB)/$@ $^
+	rm -f *~ *.d *.o
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<  -o $@
