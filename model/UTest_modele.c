@@ -311,8 +311,7 @@ static void test_free_Carte(void **state) {
     Playground *pg = (Playground *) *state;
     init_model(pg);
     free_Carte(pg->map);
-    assert_null(pg->map);
-
+    assert_null(&pg->map);
 }
 
 /***  TESTS joueur.c ****/
@@ -502,7 +501,7 @@ static void test_free_joueur(void **state){
     init_model(pg);
     free_joueur(pg->J1);
     assert_null(pg->J1->S_M);
-    assert_null(pg->J1);
+    //assert_null(pg->J1);
 }
 
 static void test_missile(void **state){ // si j1 tire sur rien , sur j2 et sur lui meme et idem pour j2
@@ -641,9 +640,9 @@ static void test_free_model(void **state) {
     Playground *pg = (Playground *) *state;
     init_model(pg);
     free_model(pg);
-    assert_null(pg->map);
-    assert_null(pg->J1);
-    assert_null(pg->J2);
+    assert_null(&pg->map->carte[0][0]);
+   // assert_null(pg->J1);
+   // assert_null(pg->J1->S_M);
 }
 
 
@@ -685,7 +684,7 @@ int main(void)
 
                     cmocka_unit_test_setup_teardown(test_missile, setup_playground, teardown),
                     cmocka_unit_test_setup_teardown(test_result_missile, setup_playground, teardown),
-                        cmocka_unit_test_setup_teardown(test_surface, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_surface, setup_playground, teardown),
 
                     //cmocka_unit_test_setup_teardown(test_sonar, setup_playground, teardown), //pas fini
 
@@ -693,8 +692,8 @@ int main(void)
 
 
                     //cmocka_unit_test_setup_teardown(test_free_Carte, setup_playground, teardown),
-                    /*cmocka_unit_test_setup_teardown(test_free_joueur, setup_playground, teardown),
-                    cmocka_unit_test_setup_teardown(test_free_model, setup_playground, teardown),*/
+                    //cmocka_unit_test_setup_teardown(test_free_joueur, setup_playground, teardown),
+                  //cmocka_unit_test_setup_teardown(test_free_model, setup_playground, teardown),
 
 
             };
