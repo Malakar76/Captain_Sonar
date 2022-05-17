@@ -13,6 +13,7 @@ endif
 libmodel.a: main_model.o carte.o joueur.o
 	ar -rv $(DIRLIB)/$@ $^
 
+UTest_modele: LDFLAGS+= -Wl,--wrap=rand
 UTest_modele: LDFLAGS+= -lcmocka -coverage
 UTest_modele: CFLAGS+= -coverage
 UTest_modele: UTest_modele.o joueur.o carte.o main_model.o
