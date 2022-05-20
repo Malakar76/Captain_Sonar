@@ -391,4 +391,5 @@ enum OPTION actionIA(Playground * pg);
  */
 enum OPTION actionIA2(Playground * pg);
 
+int deplacementaleatoire();
 #endif //PROJET_C_MAIN_MODEL_H
