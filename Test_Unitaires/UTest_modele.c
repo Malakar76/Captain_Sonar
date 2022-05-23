@@ -1,9 +1,11 @@
 //
-// Created by eii on 12/05/22.
+// Created by audrey on 21/04/22.
 //
-
 #include "UTest_modele.h"
 
+extern int __wrap_rand(){
+    return mock();
+}
 
 static int setup_joueur(void **state){
     JOUEUR *j;
@@ -177,17 +179,16 @@ static void test_init_Case(void **state) {
 }
 
 static void test_init_map(void **state) {
-    // int i, j;
+    int i, j;
     CARTE *c =(CARTE *)* state;
-    init_map(c);
-    assert_int_equal(&c->carte[0][0], 0);
 
-    /*for (i = 0; i < NMAX; i++) {
+    for (i = 0; i < NMAX; i++) {
         for (j = 0; j < NMAX; j++) {
-            assert_int_equal(c->carte[i][j], 0);
+            assert_int_equal(c->carte[i][j].accessible, 0);
+            assert_int_equal(c->carte[i][j].sous_marin, 0);
 
         }
-   }*/
+    }
 
 }
 
@@ -300,13 +301,7 @@ static void test_choix_carte_antartica(void **state) {
     assert_int_equal(pg->map->carte[8][3].accessible, 1);
 }
 
-static void test_free_Carte(void **state) {
-    Playground *pg = (Playground *) *state;
-    init_model(pg);
-    free_Carte(pg->map);
-    assert_null(pg->map);
 
-}
 
 /***  TESTS joueur.c ****/
 
@@ -436,6 +431,8 @@ static void test_deplacement_possible(void **state){ //dplcmnt possible fin cart
     Playground *pg=(Playground *)* state;
     init_model(pg);
     start_Sous_Marin(pg->J1, 0, 0, pg->map);
+    start_Sous_Marin(pg->J2, 1, 1, pg->map);
+
     set_Rocher(pg->map, 0, 2);
 
     assert_int_equal(deplacement_possible(pg, J1, haut), 0); //impossible car bord de la carte
@@ -443,6 +440,7 @@ static void test_deplacement_possible(void **state){ //dplcmnt possible fin cart
     assert_int_equal(deplacement_possible(pg, J1, gauche), 0); //impossible car deja passe
     assert_int_equal(deplacement_possible(pg, J1, droite), 0); //impossible car presence de rocher
     assert_int_equal(deplacement_possible(pg, J1, bas), 1); //il doit pouvoir aller en bas
+    assert_int_equal(deplacement_possible(pg, J1, bas), 1); //il doit pouvoir aller la ou est j2
 
 }
 
@@ -490,13 +488,7 @@ static void test_enough_energie_dplcmt(void **state){
     assert_int_equal(enough_energie(pg, J1, DEPLCMNT), 1);
 }
 
-static void test_free_joueur(void **state){
-    Playground *pg=(Playground *)* state;
-    init_model(pg);
-    free_joueur(pg->J1);
-    assert_null(pg->J1->S_M);
-    assert_null(pg->J1);
-}
+
 
 static void test_missile(void **state){ // si j1 tire sur rien , sur j2 et sur lui meme et idem pour j2
     Playground *pg=(Playground *)* state;
@@ -560,17 +552,6 @@ static void test_surface(void **state) {
     assert_int_equal(pg->J1->calqueJ[0][0], 0); //verifier qu ele calque est bien vider la ou le SM est passer avnt de faire surface
     assert_int_equal(pg->J1->calqueJ[0][1], 0);
 }
-/*static void test_sonar(void **state) {
-    char mes[50];
-    Playground *pg = (Playground *) *state;
-    init_model(pg);
-    start_Sous_Marin(pg->J1, 0,0, pg->map);
-    energie_up(pg->J1);
-    energie_up(pg->J1);
-    sonar(pg, J1, mes);
-
-
-}*/
 
 
 
@@ -613,6 +594,8 @@ static void test_action(void **state) { //sonar pas complété
 
     energie_up(pg->J1);
     energie_up(pg->J1);
+    will_return (__wrap_rand,0);
+
     action(pg, J1, SON, haut, 1,1, mes);
     assert_int_equal(pg->J1->energie,0);
 
@@ -628,16 +611,54 @@ static void test_action(void **state) { //sonar pas complété
 }
 
 
+
+static void test_sonar(void **state) {
+    char mesa[50];
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 0,0, pg->map);
+    start_Sous_Marin(pg->J2, 1,1, pg->map);
+
+    energie_up(pg->J1);
+    energie_up(pg->J1);
+    will_return (__wrap_rand,0);
+    sonar(pg, J1, mesa);
+    assert_string_equal(mesa, "L'ennemi se trouve dans la ligne 2");
+
+    energie_up(pg->J1);
+    energie_up(pg->J1);
+    will_return (__wrap_rand,1);
+    sonar(pg, J1, mesa);
+    assert_string_equal(mesa, "L'ennemi se trouve dans la colonne B");
+}
+
+
 /***  TESTS main_model.c ****/
 
 static void test_free_model(void **state) {
     Playground *pg = (Playground *) *state;
     init_model(pg);
     free_model(pg);
-    assert_null(pg->map);
-    assert_null(pg->J1);
-    assert_null(pg->J2);
+    assert_non_null(pg->map);
+    assert_null(pg->J1->S_M);
+    assert_non_null(pg->J1);
 }
+
+static void test_free_Carte(void **state) {
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    free_Carte(pg->map);
+    assert_non_null(pg->map);
+}
+
+static void test_free_joueur(void **state){
+    Playground *pg=(Playground *)* state;
+    init_model(pg);
+    free_joueur(pg->J1);
+    assert_null(pg->J1->S_M);
+    assert_non_null(pg->J1);
+}
+
 
 
 int main(void)
@@ -650,7 +671,7 @@ int main(void)
                     cmocka_unit_test_setup_teardown(test_init_reset, setup_joueur, teardown),
                     cmocka_unit_test_setup_teardown(test_start_Sous_Marin, setup_joueur, teardown),
                     cmocka_unit_test_setup_teardown(test_init_Case, setup_case, teardown),
-                    /*cmocka_unit_test_setup_teardown(test_init_map, setup_map, teardown),*/
+                    cmocka_unit_test_setup_teardown(test_init_map, setup_map, teardown),
                     cmocka_unit_test_setup_teardown(test_init_model, setup_playground, teardown),
 
                     cmocka_unit_test_setup_teardown(test_energie_up, setup_playground, teardown),
@@ -661,7 +682,7 @@ int main(void)
                     cmocka_unit_test_setup_teardown(test_deplacement_bas, setup_playground, teardown),
                     cmocka_unit_test_setup_teardown(test_deplacement_gauche, setup_playground, teardown),
 
-                    cmocka_unit_test_setup_teardown(test_deplacement_possible, setup_playground, teardown), //pas fini
+                    cmocka_unit_test_setup_teardown(test_deplacement_possible, setup_playground, teardown),
 
                     cmocka_unit_test_setup_teardown(test_enough_energie_missile, setup_playground, teardown),
                     cmocka_unit_test_setup_teardown(test_enough_energie_surface, setup_playground, teardown),
@@ -679,15 +700,15 @@ int main(void)
                     cmocka_unit_test_setup_teardown(test_missile, setup_playground, teardown),
                     cmocka_unit_test_setup_teardown(test_result_missile, setup_playground, teardown),
                     cmocka_unit_test_setup_teardown(test_surface, setup_playground, teardown),
-
-                    //cmocka_unit_test_setup_teardown(test_sonar, setup_playground, teardown), //pas fini
-
-                    cmocka_unit_test_setup_teardown(test_action, setup_playground, teardown), // pas fini pour sonar
+                    cmocka_unit_test_setup_teardown(test_sonar, setup_playground, teardown),
 
 
-                    //cmocka_unit_test_setup_teardown(test_free_Carte, setup_playground, teardown),
-                    /*cmocka_unit_test_setup_teardown(test_free_joueur, setup_playground, teardown),
-                    cmocka_unit_test_setup_teardown(test_free_model, setup_playground, teardown),*/
+                    cmocka_unit_test_setup_teardown(test_action, setup_playground, teardown),
+
+
+                    cmocka_unit_test_setup_teardown(test_free_Carte, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_free_joueur, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_free_model, setup_playground, teardown),
 
 
             };

@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic-errors -MMD -g -coverage -I../model
-LDFLAGS=  -L../lib -lmodel -lSDL2 -lcmocka -coverage
+LDFLAGS=  -L../lib -lmodel -lSDL2 -lcmocka -coverage -Wl,--wrap=rand
 
 all: Run_Test UTest_modele
 

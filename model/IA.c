@@ -39,13 +39,23 @@ enum OPTION actionIA(Playground * pg){
     return choix;
 }
 
+int deplacementaleatoire(Playground*pg)
+{
+    int deplacement = rand() % 4;
+    while(deplacement_possible(pg, J2, deplacement) == 0 )
+    {
+        deplacement = rand() % 4;
+    }
+    return deplacement;
+}
 enum OPTION actionIA2(Playground *pg) {
     char message[100];
     enum OPTION choix;
-    int dir;
-    int deplacement = rand() % 4;
+    int dir =rand()%4;
     int ligne = rand() % 10;
     int colonne = rand() % 10;
+
+
     /*enum OPTION last = pg->ia->lastaction;*/
     /*if (surface_joueur != 1){*/
 
@@ -53,25 +63,43 @@ enum OPTION actionIA2(Playground *pg) {
         choix = MIS;
         ligne = pg->J1->S_M->ligne;
         colonne = pg->J1->S_M->colonne;
-    } else {
+    } else if(pg->ia->surface_joueur == 1 && pg->J2->energie != 4) {
+        choix = DEPLCMNT;
+        if (deplacement_possible(pg, J2, gauche) == 0 && deplacement_possible(pg, J2, droite) == 0 &&
+            deplacement_possible(pg, J2, haut) == 0 && deplacement_possible(pg, J2, bas) == 0) {
+            choix = SURF;
+            pg->ia->nbaction--;
+        } else
+        {
+            if (dir == gauche && deplacement_possible(pg, J2, gauche) == 0) {
+                dir = deplacementaleatoire(pg);
+            }
+            if (dir == droite && deplacement_possible(pg, J2, droite) == 0) {
+                dir = deplacementaleatoire(pg);}
+            if (dir == haut && deplacement_possible(pg, J2, haut) == 0) {
+                dir = deplacementaleatoire(pg);}
+            if (dir == bas && deplacement_possible(pg, J2, bas) == 0) {
+                dir = deplacementaleatoire(pg);}
+        }
+    }
+    else {
         if (pg->ia->nbaction < 6) {
             if ((pg->ia->nbaction % 3) < 2) {
                 choix = DEPLCMNT;
-                dir = deplacement;
+
                 if (deplacement_possible(pg, J2, gauche) == 0 && deplacement_possible(pg, J2, droite) == 0 &&
                     deplacement_possible(pg, J2, haut) == 0 && deplacement_possible(pg, J2, bas) == 0) {
                     choix = SURF;
                     pg->ia->nbaction--;
-                } else if (deplacement_possible(pg, J2, gauche) == 1 || deplacement_possible(pg, J2, droite) == 1 ||
-                           deplacement_possible(pg, J2, haut) == 1 || deplacement_possible(pg, J2, bas) == 1) {
+                } else  {
                     if (dir == gauche && deplacement_possible(pg, J2, gauche) == 0)
-                        dir = deplacement;
+                        dir = deplacementaleatoire(pg);
                     if (dir == droite && deplacement_possible(pg, J2, droite) == 0)
-                        dir = deplacement;
+                        dir = deplacementaleatoire(pg);
                     if (dir == haut && deplacement_possible(pg, J2, haut) == 0)
-                        dir = deplacement;
+                        dir = deplacementaleatoire(pg);
                     if (dir == bas && deplacement_possible(pg, J2, bas) == 0)
-                        dir = deplacement;
+                        dir = deplacementaleatoire(pg);
                 }
             } else {
                 choix = SON;
@@ -81,21 +109,21 @@ enum OPTION actionIA2(Playground *pg) {
         if (pg->ia->nbaction > 5 && pg->ia->nbaction < 19) {
             if (pg->ia->nbaction % 5 < 4) {
                 choix = DEPLCMNT;
-                dir = deplacement;
                 if (deplacement_possible(pg, J2, gauche) == 0 && deplacement_possible(pg, J2, droite) == 0 &&
                     deplacement_possible(pg, J2, haut) == 0 && deplacement_possible(pg, J2, bas) == 0) {
                     choix = SURF;
                     pg->ia->nbaction--;
                 } else if (deplacement_possible(pg, J2, gauche) == 1 || deplacement_possible(pg, J2, droite) == 1 ||
                            deplacement_possible(pg, J2, haut) == 1 || deplacement_possible(pg, J2, bas) == 1) {
+
                     if (dir == gauche && deplacement_possible(pg, J2, gauche) == 0)
-                        dir = deplacement;
+                        dir = deplacementaleatoire(pg);
                     if (dir == droite && deplacement_possible(pg, J2, droite) == 0)
-                        dir = deplacement;
+                        dir = deplacementaleatoire(pg);
                     if (dir == haut && deplacement_possible(pg, J2, haut) == 0)
-                        dir = deplacement;
+                        dir = deplacementaleatoire(pg);
                     if (dir == bas && deplacement_possible(pg, J2, bas) == 0)
-                        dir = deplacement;
+                        dir = deplacementaleatoire(pg);
                 } else {
                     choix = MIS;
                     ligne = pg->J1->S_M->ligne + 1 - rand() % 3;
@@ -106,22 +134,21 @@ enum OPTION actionIA2(Playground *pg) {
         if (pg->ia->nbaction > 18) {
             if (pg->J2->energie != 4) {
                 choix = DEPLCMNT;
-                dir = deplacement;
                 if (deplacement_possible(pg, J2, gauche) == 0 && deplacement_possible(pg, J2, droite) == 0 &&
                     deplacement_possible(pg, J2, haut) == 0 && deplacement_possible(pg, J2, bas) == 0) {
                     choix = SURF;
                     pg->ia->nbaction--;
                 }
                 else if (deplacement_possible(pg, J2, gauche) == 1 || deplacement_possible(pg, J2, droite) == 1 ||
-                    deplacement_possible(pg, J2, haut) == 1 || deplacement_possible(pg, J2, bas) == 1) {
+                         deplacement_possible(pg, J2, haut) == 1 || deplacement_possible(pg, J2, bas) == 1) {
                     if (dir==gauche && deplacement_possible(pg, J2, gauche) == 0 )
-                        dir =deplacement;
+                        dir =deplacementaleatoire(pg);
                     if (dir==droite && deplacement_possible(pg, J2, droite) == 0 )
-                        dir =deplacement;
+                        dir =deplacementaleatoire(pg);
                     if (dir==haut && deplacement_possible(pg, J2, haut) == 0 )
-                        dir =deplacement;
+                        dir =deplacementaleatoire(pg);
                     if (dir==bas && deplacement_possible(pg, J2, bas) == 0 )
-                        dir =deplacement;
+                        dir =deplacementaleatoire(pg);
                 }
             } else {
                 choix = MIS;
@@ -135,5 +162,6 @@ enum OPTION actionIA2(Playground *pg) {
     return choix;
 
 }
+
 
 
