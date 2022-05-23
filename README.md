@@ -3,23 +3,14 @@
 ## **Utilisation de la bibliothèque graphique SDL2**
 
 ### **UTILISER** le projet, dépendances à installer :
-- `sudo apt install libsdl2-2.0-0`
-- `sudo apt install libsdl2-ttf-2.0-0`
-- `sudo apt install libsdl2-mixer-2.0-0`
-- `sudo apt install libsdl2-image-2.0-0`
-- `sudo apt install libsdl2-gfx-1.0-0`
+    sudo apt install libsdl2-2.0-0 libsdl2-ttf-2.0-0 libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-gfx-1.0-0
 
 
 ### **EDITER** le projet, dépendendances à installer (dev):
-- `sudo apt install libsdl2-dev`
-- `sudo apt install libsdl2-gfx-dev`
-- `sudo apt install libsdl2-image-dev`
-- `sudo apt install libsdl2-ttf-dev`
-- `sudo apt install libsdl2-mixer-dev`
-- `sudo apt-get install valgrind`
-- `sudo apt-get install lcov`
+    sudo apt install libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
+    sudo apt-get install valgrind lcov
 
-
+Il faut aussi installer Cmocka pour les tests unitaires : [Site officiel](https://cmocka.org/)
 ### **TESTER** le projet:
 - Se rendre dans le répertoire _./Projet_C_
 - Pour compiler avec les Tests Unitaires : `make TEST=yes`
@@ -45,9 +36,20 @@
 ### **LANCER** le projet :
 - Faire `./Launcher` dans le répertoire _./Projet_C_ pour lancer le jeu
 
+### **EN CAS D'ERREUR** :
+Si vous avez une erreur de librairie malformée, il vous suffit de faire un `make allClean` puis de rebuid le projet depuis
+le dossier _./Projet_C_
 
-## **Projet Réalisé par :**
+## **Projet Réalisé par** :
 - Robin Deplanques
 - Alexis Rabiller 
 - Audrey Cornec
 - Rafael Rojas Galvan
+
+## **Encadrants**:
+Alban Marie
+
+## **Responsables de projet**:
+Karol Desnos
+Muriel Pressigout
+
