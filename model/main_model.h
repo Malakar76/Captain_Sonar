@@ -391,4 +391,11 @@ enum OPTION actionIA(Playground * pg);
  */
 enum OPTION actionIA2(Playground * pg);
 
+/**
+ * \fn int deplacementaleatoire(Playground*pg)
+ * @param pg Structure du modèle
+ * @return Renvoie une direction vers laquelle il est possible de se déplacer.
+ */
+int deplacementaleatoire(Playground*pg);
+
 #endif //PROJET_C_MAIN_MODEL_H
