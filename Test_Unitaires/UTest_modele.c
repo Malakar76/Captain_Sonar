@@ -658,9 +658,79 @@ static void test_free_joueur(void **state){
     assert_null(pg->J1->S_M);
     assert_non_null(pg->J1);
 }
+/*** IA ***/
+static void test_deplacementaleatoire(void **state) {
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    start_Sous_Marin(pg->J2, 1, 1, pg->map);
+    will_return (__wrap_rand, 0);
+    assert_int_equal(deplacement_possible(pg, J2, haut), 1); //possible d aller en haut
+    assert_int_equal(deplacementaleatoire(pg), 0); //renvoie 0 donc ok pour aller en haut
+}
+
+static void test_actionIA2_missile(void **state) {//4 NRJ pour ia + surface pour J1 ->missile
+
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 0, 0, pg->map);
+    start_Sous_Marin(pg->J2, 1, 1, pg->map);
+
+    energie_up(pg->J2);
+    energie_up(pg->J2);
+    energie_up(pg->J2);
+    energie_up(pg->J2);
+
+   // action(pg, J1, SURF, 0, 0, 0, mesa);
+    pg->ia->surface_joueur=1;
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+
+    assert_int_equal(actionIA2(pg), 0); //action renvoye = missile
+
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+    actionIA2(pg);
+    assert_int_equal(pg->J1->vie, 1); //j1 a bien perdu une vie
+
+}
 
 
+static void test_actionIA2_dplcmnt(void **state) { // NRJ ia < 2 + nb avtion ia < 6 -> dplcmnt
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 0, 0, pg->map);
+    start_Sous_Marin(pg->J2, 1, 1, pg->map);
 
+    energie_up(pg->J2);
+    pg->ia->nbaction=3;
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+
+
+    assert_int_equal(actionIA2(pg), 4); //renvoie bien un dpcmnt
+}
+
+static void test_actionIA2_sonar(void **state) { // NRJ ia = 2 + nb action ia < 6 -> sonar
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 0, 0, pg->map);
+    start_Sous_Marin(pg->J2, 1, 1, pg->map);
+
+    energie_up(pg->J2);
+    energie_up(pg->J2);
+
+    pg->ia->nbaction=5;
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+
+
+    assert_int_equal(actionIA2(pg), 2); //renvoie bien un sonar
+}
 int main(void)
 {
 
@@ -710,6 +780,11 @@ int main(void)
                     cmocka_unit_test_setup_teardown(test_free_joueur, setup_playground, teardown),
                     cmocka_unit_test_setup_teardown(test_free_model, setup_playground, teardown),
 
+                    cmocka_unit_test_setup_teardown(test_deplacementaleatoire, setup_playground, teardown),
+
+                    cmocka_unit_test_setup_teardown(test_actionIA2_missile, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_actionIA2_dplcmnt, setup_playground, teardown),
+                    cmocka_unit_test_setup_teardown(test_actionIA2_sonar, setup_playground, teardown),
 
             };
     return cmocka_run_group_tests_name("Test joueur module", tests_joueur, NULL, NULL);
