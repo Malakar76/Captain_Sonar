@@ -125,12 +125,7 @@ _Noreturn static void test_init_calque(void **state) {
     }
 }
 
-/*static void test_init_calque_bis(void **state) { //test que 2 cases mais pb vec le fct originel on ya un _Noreturn
-    JOUEUR *j = (JOUEUR *) *state;
-    init_calque(j);
-    assert_int_equal(j->calqueJ[0][0], 0);
-    assert_int_equal(j->calqueJ[9][9], 0);
-}*/
+
 
 static void test_init_reset(void **state){
     JOUEUR *j =(JOUEUR *)* state;
@@ -208,7 +203,6 @@ static void test_init_model(void **state) {
 
 
 
-
 /***  TESTS carte.c ****/
 
 static void test_set_Rocher(void **state){
@@ -229,6 +223,13 @@ static void test_est_occupe(void **state) {
 
     assert_int_equal(est_occupe(&pg->map->carte[5][5]),1);
     assert_int_equal(est_occupe(&pg->map->carte[0][0]),0);
+}
+
+static void test_free_Carte(void **state) {
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    free_Carte(pg->map);
+    assert_non_null(pg->map);
 }
 
 static void test_crea_archipelago(void **state) {
@@ -309,7 +310,6 @@ static void test_choix_carte_antartica(void **state) {
 static void test_energie_up(void **state){
     Playground *pg=(Playground *)* state;
 
-    //JOUEUR *j =(JOUEUR *)* state;
     energie_up(pg->J1);
     assert_int_equal(pg->J1->energie, 1);
 }
@@ -317,7 +317,6 @@ static void test_energie_up(void **state){
 static void test_energie_down(void **state){
     Playground *pg=(Playground *)* state;
 
-    //JOUEUR *j =(JOUEUR *)* state;
     energie_up(pg->J1);
     energie_up(pg->J1);
     energie_down(pg->J1,1);
@@ -445,7 +444,6 @@ static void test_deplacement_possible(void **state){ //dplcmnt possible fin cart
 }
 
 
-
 static void test_enough_energie_missile(void **state){
     Playground *pg=(Playground *)* state;
 
@@ -487,7 +485,6 @@ static void test_enough_energie_dplcmt(void **state){
     Playground *pg=(Playground *)* state;
     assert_int_equal(enough_energie(pg, J1, DEPLCMNT), 1);
 }
-
 
 
 static void test_missile(void **state){ // si j1 tire sur rien , sur j2 et sur lui meme et idem pour j2
@@ -553,12 +550,12 @@ static void test_surface(void **state) {
     assert_int_equal(pg->J1->calqueJ[0][1], 0);
 }
 
-
-
-
-
-
-
+static void test_free_joueur(void **state){
+    Playground *pg=(Playground *)* state;
+    init_model(pg);
+    free_joueur(pg->J1);
+    assert_null(pg->J1->S_M);
+    assert_non_null(pg->J1);
 
 static void test_action(void **state) { //sonar pas complété
     char mes[50];
@@ -611,7 +608,6 @@ static void test_action(void **state) { //sonar pas complété
 }
 
 
-
 static void test_sonar(void **state) {
     char mesa[50];
     Playground *pg = (Playground *) *state;
@@ -644,21 +640,10 @@ static void test_free_model(void **state) {
     assert_non_null(pg->J1);
 }
 
-static void test_free_Carte(void **state) {
-    Playground *pg = (Playground *) *state;
-    init_model(pg);
-    free_Carte(pg->map);
-    assert_non_null(pg->map);
-}
 
-static void test_free_joueur(void **state){
-    Playground *pg=(Playground *)* state;
-    init_model(pg);
-    free_joueur(pg->J1);
-    assert_null(pg->J1->S_M);
-    assert_non_null(pg->J1);
-}
-/*** IA ***/
+
+/**  IA  **/
+
 static void test_deplacementaleatoire(void **state) {
     Playground *pg = (Playground *) *state;
     init_model(pg);
@@ -731,6 +716,56 @@ static void test_actionIA2_sonar(void **state) { // NRJ ia = 2 + nb action ia < 
 
     assert_int_equal(actionIA2(pg), 2); //renvoie bien un sonar
 }
+
+
+
+static void test_actionIA2_dplcmnt_2(void **state) { // NRJ ia = 2 donc < 4 et j1 fait sufarce -> dplcmnt
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 0, 0, pg->map);
+    start_Sous_Marin(pg->J2, 1, 1, pg->map);
+
+    energie_up(pg->J2);
+    energie_up(pg->J2);
+
+    pg->ia->nbaction=5; //J1 fait surface 
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+
+
+    assert_int_equal(actionIA2(pg), 4); //renvoie bien un dpcmnt
+}
+
+static void test_actionIA2_surface(void **state) { // ia n a plus aucun deplacement dispo -> surface
+    int i,k;
+    Playground *pg = (Playground *) *state;
+    init_model(pg);
+    start_Sous_Marin(pg->J1, 0, 0, pg->map);
+    start_Sous_Marin(pg->J2, 1, 1, pg->map);
+
+    energie_up(pg->J2);
+    energie_up(pg->J2);
+    energie_up(pg->J2);
+    energie_up(pg->J2);
+ 
+    for (i = 0; i < 10; i++) {
+        for (k = 0; k < 10; k++) {
+            (pg->J2->calqueJ[i][k]=1); //toutew les cases sont marquées comme occupées
+        }
+    }
+
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+    will_return (__wrap_rand, 0);
+
+
+    assert_int_equal(actionIA2(pg), 1); //renvoie bien un surface
+}
+
+
 int main(void)
 {
 
@@ -785,6 +820,11 @@ int main(void)
                     cmocka_unit_test_setup_teardown(test_actionIA2_missile, setup_playground, teardown),
                     cmocka_unit_test_setup_teardown(test_actionIA2_dplcmnt, setup_playground, teardown),
                     cmocka_unit_test_setup_teardown(test_actionIA2_sonar, setup_playground, teardown),
+                    //cmocka_unit_test_setup_teardown(test_actionIA2_dplcmnt_2, setup_playground, teardown),
+                    //cmocka_unit_test_setup_teardown(test_actionIA2_surface, setup_playground, teardown),
+
+
+                    
 
             };
     return cmocka_run_group_tests_name("Test joueur module", tests_joueur, NULL, NULL);
